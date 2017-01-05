@@ -3,7 +3,7 @@
 /.idea
 Homestead.json
 Homestead.yaml
-
+.env
 .htaccess
 index.php
 server.php
