@@ -1,5 +1,5 @@
-<div class="col-md-4">
-    <div layout="column" class="right-pad sidebar">
+<div flex="auto">
+    <div layout="column" class=" sidebar p-x-1">
     
     <div class="space1">
         

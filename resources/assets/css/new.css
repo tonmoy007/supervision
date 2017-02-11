@@ -1,7 +1,7 @@
 body{
     background: url(../img/background/13.png) repeat ;
     height: auto;
-    overflow-x: hidden;
+    overflow-x: hidden!important;
     width: 100%;
 }
 menu{
@@ -17,6 +17,7 @@ menu{
 
 md-content{
   min-height: 400px;
+  background-color: transparent;
 }
 
 .cover{
@@ -28,6 +29,12 @@ md-content{
 }
 .content-container{
     background-color: #edeaed;
+}
+.content-container.main{
+  display: block;
+  width: 100%;
+  overflow: auto;
+  overflow-x: hidden;
 }
 .navbar-brand{
   position: absolute;
@@ -408,13 +415,14 @@ md-input-container.md-icon-right>md-icon:last-of-type{
 
 @media(min-width: 768px){
   .content{
-    margin-left: 25px;
-    width: calc(100% - 25px);
   }
 }
 
 .m-r-1{
   margin-right: 8px;
+}
+.p-x-1{
+  padding: 0 8px;
 }
 .data-list{
   padding-left: 24px;

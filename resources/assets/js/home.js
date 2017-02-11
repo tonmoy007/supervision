@@ -1,5 +1,5 @@
-var app=angular.module('mainHome',['components','ngMaterial','ui.router',
-    'ngCookies','ngMessages','ngAnimate','super-controllers','Authentication']);
+var app=angular.module('mainHome',['components','ui.router',
+    'ngCookies','ngMessages','super-controllers','Authentication','super-factory']);
 
 
 
@@ -27,15 +27,17 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider){
     }
 
     $urlRouterProvider.otherwise('/');
+    
     $stateProvider.state(contact_state);
     $stateProvider.state(login_state);
     $stateProvider.state(home_state);
+    
     $interpolateProvider.startSymbol('<%');
     $interpolateProvider.endSymbol('%>');
 });
 
 app.controller('homeCtrl',  function($scope,$http,$location,$state){
-    console.log($scope);
+    // console.log($scope);
     $scope.home=true;
     
 });
@@ -44,23 +46,28 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams){
    // keep user logged in after page refresh
         var page=$location.path().split('/');
         $rootScope.globals = $cookieStore.get('globals') || {};
+        
         if ($rootScope.globals.currentUser) {
             $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
         }
+        
         $rootScope.nav={};
-        console.log($rootScope);
+        // console.log($rootScope);
         
         $rootScope.$on('$stateChangeStart', function (event, toState) {
             
-                console.log(toState);
+                // console.log(toState);
                 $rootScope.nav.current_state=toState.name;
                 $rootScope.nav.current_state_secendary=toState.name;
+                
                 if(toState.name=='inventory.cars' ){
                    $rootScope.nav.current_state='inventory'; 
                 }
+                
                 if(toState.name=='inventory.total' ){
                    $rootScope.nav.current_state='inventory'; 
                 }
+                
                 if(toState.name=='inventory.cars.products'){
                     $rootScope.nav.current_state='inventory';
                     $rootScope.nav.current_state_secendary='inventory.cars' 
@@ -72,7 +79,7 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams){
         });
         
         $rootScope.$on('$locationChangeStart', function (event, next, current){
-            console.log(next);
+            // console.log(next);
             if(!$rootScope.globals.currentUser){
                 $rootScope.login_page=true;
                 $rootScope.body='login_body';

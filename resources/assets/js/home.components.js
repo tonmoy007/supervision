@@ -68,7 +68,10 @@ var components=angular.module('components',['ticker','simpleAngularTicker'])
     }
 }).directive('boxTicker',function(){
     return{
-        templateUrl:'getView/home.ticker'
+        templateUrl:'getView/home.ticker',
+        link:function(scope,elem,attr){
+            
+        }
     }
 
 }).directive('newsTicker',function(){

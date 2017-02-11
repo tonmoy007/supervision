@@ -7,20 +7,19 @@
   z-index: 1
 }
 .ticker-container{
-  padding:0 10px ;
+  padding:0 10px  ;
   position: relative;
   display: inline-block;
   width: 100%;
   overflow: hidden;
-  margin: 10px 0;
+  margin: 10px 0 0;
   margin-left: 0;
   border-radius:3px;
   background-color: #fff;
 }
 @media (min-width: 768px) {
   .ticker-container{
-    margin-left: 25px;
-    width: calc(100% - 25px);
+   
   }
 }
 .ticker .viewport {
@@ -38,14 +37,46 @@
   width: 100px;
   height: 100%;
   margin: 0 5px;
-  text-align: center;
+  text-align: left;
 }
 .ticker .viewport .box{
-  background-color: #abcdef;
-  font-size: 17px;
   font-weight: bolder;
-  color: #fff;
   text-shadow: -1px 0 2px rgba(0,0,0,.3);
+}
+.ticker .viewport .box a{
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+  padding: 4px;
+}
+.ticker .viewport .box a img{
+  position: absolute;
+  max-width: 200px;
+  max-height: 200px;
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  left: 0;
+  z-index: 1;
+}
+.ticker .viewport .box a span{
+  z-index: 2;
+  position: relative;
+  display: inline;
+  word-wrap: break-word;
+  white-space: pre-line;
+  word-spacing: 2px;
+  font-size: 12px;
+  text-align: left;
+  max-width: 100%;
+  background-color: rgba(255,255,255,.5);
+  color: #434343;
+}
+.ticker .box:hover{
+  box-shadow: 0 0 5px 1px rgba(0,0,0,.3);
+  border-top: 2px solid #d55555;
 }
 @-webkit-keyframes moveLeft {
   0% {

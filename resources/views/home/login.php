@@ -1,16 +1,17 @@
 <md-content class="gray" layout-align="center center" layout="row">
-    <div flex layout="row" layout-align="end">
+    <div flex layout="row" layout-align="center center">
         
-        <md-card flex="100"   flex-sm="80" flex-md="60" flex-lg="50">
+        <md-card flex="100"   flex-sm="80" flex-md="50" flex-lg="40">
            
         <div class="card-header cool-shadow rgba-black-strong white-text" layout-padding>
-           <img src="/img/logo.png" alt=""> Login 
+           <i class="fa fa-sign-in"></i> Login 
            <md-progress-circular ng-if="loginChecking" class="md-warn md-hue-3 pull-right" md-diameter="40"></md-progress-circular>
         </div>
 
          <div class="card-block" layout-padding>
-         <div class="alert alert-danger" ng-if="error">
+         <div class="alert alert-danger" ng-show="error!=null" ng-init="error=null">
              <% error %>
+             <a href="" ng-click="error=null" class="pull-right red-text"> <i class="fa fa-times"></i></a>
          </div>
          <form class="" name="loginForm" ng-submit="login(user)">
             <md-form>

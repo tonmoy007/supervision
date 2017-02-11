@@ -3,40 +3,25 @@
 angular.module('Authentication',[])
   
 .factory('AuthenticationService',
-    function (Base64, $http, $cookieStore, $rootScope, $timeout) {
+    function (Base64, $http, $cookieStore, $rootScope, $timeout,SiteEssentials) {
         var service = {};
  
         service.Login = function (username, password, callback,scope) {
  
-            /* Dummy authentication for testing, uses $timeout to simulate api call
-             ----------------------------------------------*/
-            // $timeout(function(){
-            //     var response = { success: username === 'test' && password === 'test' };
-            //     if(!response.success) {
-            //         response.message = 'Username or password is incorrect';
-            //     }
-            //     callback(response);
-            // }, 1000);
- 
- 
-            /* Use this for real authentication
-             ----------------------------------------------*/
-             // console.log(username);
+          
             var parameters={ email: username, password: password };
-            $http(
-                {
-                    url:'api/login',
-                    method:'post',
-                    data:parameters 
-             })
-                
-               .then(function (response) {
-                console.log(response)
+        $http({
+                url:'api/login',
+                method:'POST',
+                data:parameters 
+            }).then(function (response) {
+                console.log(response);
                
                 callback(response);
             },function(response){
+                console.log(response);
                 scope.loginChecking=false;
-                // SiteEssentials.responsCheck(response);
+                SiteEssentials.responsCheck(response);
             });
  
         };
