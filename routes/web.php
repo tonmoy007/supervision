@@ -21,3 +21,4 @@ Route::get('getView/{name}',function($name){
     return view($name);
 });
 
+Route::get('/get_post', 'posts\\SinglePostController@getPost');
