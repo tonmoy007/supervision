@@ -21,7 +21,8 @@ elixir(mix => {
         'font-awesome.min.css',
         'ticker.min.css',
         'angular.ticker.css',
-        'new.css'
+        'new.css',
+        'grid_loading_post.css'
     ],'public/css/supervision.css');
 
     mix.webpack(['classie.js','ticker.min.js',

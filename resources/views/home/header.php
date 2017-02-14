@@ -25,7 +25,7 @@
 
         
     </head>
-    <body ng-app="mainHome">
+    <body ng-app="mainHome" id="body">
         <div class="container ">
         <div class="cool-shadow content-container main">
             <menu ></menu>

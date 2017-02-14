@@ -7,6 +7,7 @@ body{
 menu{
     padding: 0;
     margin:0;
+    min-height: 63px;
 }
 .bg-theme-ash,md-content.gray{
   background-color:#edeaed;
@@ -27,6 +28,17 @@ md-content{
     position: relative;
     z-index: 10;
 }
+.profile.cover{
+    z-index: 100000000;
+    height: 63px;
+    background-color: #666;
+    position: fixed;
+    width: 100%;
+    display: inline-table;
+    left: 0;
+    top: 0;
+}
+
 .content-container{
     background-color: #edeaed;
 }
@@ -43,6 +55,24 @@ md-content{
   z-index: 1000;
   top: 50px;
   padding: 10px;
+  -webkit-transition: all .25s ease;
+     -moz-transition: all .25s ease;
+      -ms-transition: all .25s ease;
+       -o-transition: all .25s ease;
+          transition: all .25s ease;
+}
+.profile.navbar-brand{
+  top: 0px;
+  padding: 5px;
+  width: auto;
+
+}
+.profile.navbar-brand img{
+  width: 60px;
+}
+.profile.navbar-brand a{
+    font-size: 1.2rem;
+    line-height: 55px;
 }
 .navbar-brand>img,.navbar-brand>a{
   display: inline-block;
@@ -65,17 +95,29 @@ md-content{
     height: 100%;
     overflow: hidden;
 }
-.cover-container img{
+.cover-container .img-div{
     position: absolute;
     left: 0;
     top: 0;
     height: auto;
     width: 100%;
     min-height: 260px;
-    max-height: 300px;
-    margin-left: 50%;
+    max-height: 400px;
+    overflow: hidden;
     z-index: -1;
-    transform: translateX(-50%) ;
+    background-color: #efeded;
+    background-size: 100% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.imd-div .progress-loader{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  line-height: 200px;
+  text-align: center;
+
 }
     
 

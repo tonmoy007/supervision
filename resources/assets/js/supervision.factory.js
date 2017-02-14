@@ -63,7 +63,7 @@ angular.module('super-factory',['ngMaterial','ngAnimate'])
       
     return toast;
 })
-.service('super-services',  function($http,$rootScope,$q){
+.service('superServices',  function($http,$rootScope,$q){
   var methods=[];
   this.loadBranches=function($scope){
       var differ=$q.defer();
@@ -96,8 +96,11 @@ angular.module('super-factory',['ngMaterial','ngAnimate'])
         ShowSimpleToast.showAlert(this,'Timeout!!','Net Error Connection Timout');
       }
   }
-  methods.goTop=function(response){
-    $('body,html').animate({scrollTop:0},"slow");
+  methods.goTop=function(index){
+    if(index==undefined||index==null){
+      index=0
+    }
+    $('body,html').animate({scrollTop:index},"slow");
   }
   methods.show_single=function(items,index,r_item,scope){
     if(index==null)return;

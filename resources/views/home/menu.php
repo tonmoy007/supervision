@@ -1,5 +1,7 @@
 <header>
-    <div class="cover cool-shadow">
+<loader  ng-if="menuLoading" ></loader>
+    <div class="cover cool-shadow" ng-class="{profile:nav.current_state=='profile'}" ng-show="!menuLoading&&nav.current_state!=profile">
+    
         <div class="search-form" >
             <form  class="md-no-momentum" method="get" accept-charset="utf-8">
              <md-input-container md-no-float class="md-block cool-shadow cool-border">
@@ -9,17 +11,19 @@
             </md-input-container>
             </form>
             <a ui-sref="login" class="login" ng-show="!globals.currentUser" layout="row"><i  class="fa fa-sign-in"></i> <span>login</span></a>
-            <a href="" ng-click="logout()" ng-show="globals.currentUser" class="login" layout="row"><span><%globals.currentUser.name%></span></a>
+            <a href="" ng-click="logout()" ng-show="globals.currentUser" class="login" layout="row"><i class="fa fa-user"></i>&nbsp;<span><%globals.currentUser.name%></span></a>
         </div>
-        <div class="navbar-brand">
+        <div class="navbar-brand" ng-class="{profile:nav.current_state=='profile'}">
             <img src="/img/logo.png" alt="">
             <a ui-sref="home" class="site-title">একাডেমিক সুপারভিশন</a>
         </div>
 
-        <div class="cover-container">
-            <img ng-src="{{img.src}}" ng-repeat="(key, img) in cover" ng-show="img.active" ng-class="{'animate-in':img.active,'animate-out':!img.active}" alt="">
+        <div class="cover-container" ng-show="nav.current_state!='profile'">
+            <div  preload src-image="{{img.src}}" ng-repeat="(key, img) in cover" class="img-div" ng-show="img.active" ng-class="{'animate-in':img.active,'animate-out':!img.active}" alt="">
+              <loader class="progress-loader" ></loader>
+            </div>
         </div>
-        <nav class="detail-nav no-shadow ">
+        <nav class="detail-nav no-shadow" ng-show="nav.current_state!='profile'">
             <div id="nav-icon" ng-class="{open:showMenu}" ng-click="showMenu=!showMenu">
               <span></span>
               <span></span>

@@ -5,6 +5,7 @@ var components=angular.module('components',['ticker','simpleAngularTicker'])
         controller:'menuCtrl',
         link:function(scope,elem,attr){
             scope.drop=[];
+            scope.menuLoading=true;
             scope.interval=2000;
             scope.cover=[
             {src:'/img/background/1.jpg',active:true},
@@ -45,11 +46,11 @@ var components=angular.module('components',['ticker','simpleAngularTicker'])
                     }
                 })
             }
+            scope.menuLoading=false;
             $('body').click(function(event){
                 if(event.target.className!='dropdown-toggle'){
                       angular.forEach(scope.drop,function(value,key){
 
-                      
                             scope.drop[key]=false;
                        
                     })  
@@ -152,6 +153,37 @@ var components=angular.module('components',['ticker','simpleAngularTicker'])
 }).directive('homePage',function(){
     return{
         templateUrl:'getView/home.homepage'
+    }
+}).directive('preload',function(){
+    return{
+        link:function(scope,elem,attr){
+            elem.ready(function(){
+                src=attr.srcImage;
+                // console.log(attr);
+                img=new Image();
+                img.src=src;
+                $(img).on('load',function(){
+                    
+                    t_src='url("'+this.src+'")';
+                    m_src=decodeURI(t_src);
+
+                    elem[0].style.backgroundImage=t_src;
+                    attr.src=this.src;
+                    elem.find('.progress-loader').hide();
+                });
+               })
+        }
+    }
+}).directive('loader',function(){
+    return{
+        templateUrl:'getView/template.loader',
+        scope:{
+            size:'=?',
+            color:'=?'
+        },
+        link:function(scope,elem,attr){
+            
+        }
     }
 })
 
