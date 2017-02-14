@@ -4,18 +4,25 @@ namespace App\Http\Controllers\posts;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Models\SinglePost;
 
 class SinglePostController extends Controller
 {
-    public function add(Requests\SinglePostRequest $request) {
+    public function list(Request $request) {
+        if($request->isMethod('get')) {
+            $posts = SinglePost::all();
+            return response()->json(['success' =>1, 'message'=>'all posts list', 'posts'=>$posts]);
+        }
+    }
+    public function add(Request $request) {
         if($request->isMethod('post')) {
             $singlePost = new SinglePost();
             $singlePost->title = $request->get('title');
             $singlePost->type = $request->get('type');
             $singlePost->subtitle = $request->get('sub_title');
             $singlePost->content = $request->get('content');
+            $singlePost->featured_image = "lol";
             $singlePost->save();
             return response()->json(['id' => $singlePost->id,'success'=>1,'message'=>'Post successfully added']);
         }
@@ -25,11 +32,11 @@ class SinglePostController extends Controller
 
     }
 
-    public function update(Requests\SinglePostRequest $request)
+    public function update($id, Request $request)
     {
         if ($request->method('put')) {
             try {
-                $post = SinglePost::where('id', $request->get('id'))->first();
+                $post = SinglePost::where('id', $id)->first();
                 $post->title = $request->get('title');
                 $post->type = $request->get('type');
                 $post->subtitle = $request->get('sub_title');

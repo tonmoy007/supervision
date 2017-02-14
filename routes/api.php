@@ -17,7 +17,7 @@ Route::post('/login','UserController@authenticate');
 Route::get('/logout','UserController@logout')->middleware('ability:token');
 Route::get('/users','UserController@index')->middleware('ability:token');
 
-
-Route::post('/add_post', 'posts\\SinglePostController@add');
-Route::put('/update_post', 'posts\\SinglePostController@update');
-Route::delete('/delete_post/{id}', 'posts\\SinglePostController@add');
+Route::get('/posts', 'posts\\SinglePostController@list');
+Route::post('/post', 'posts\\SinglePostController@add');
+Route::put('/post/{id}', 'posts\\SinglePostController@update');
+Route::delete('/post/{id}', 'posts\\SinglePostController@add');
