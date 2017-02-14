@@ -9,7 +9,7 @@ use App\Models\SinglePost;
 
 class SinglePostController extends Controller
 {
-    public function list(Request $request) {
+    public function all(Request $request) {
         if($request->isMethod('get')) {
             $posts = SinglePost::all();
             return response()->json(['success' =>1, 'message'=>'all posts list', 'posts'=>$posts]);
