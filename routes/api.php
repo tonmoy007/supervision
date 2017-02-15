@@ -32,3 +32,8 @@ Route::get('/links', 'link\\LinkController@all');
 Route::post('/link', 'link\\LinkController@add');
 Route::put('/link/{id}', 'link\\LinkController@update');
 Route::delete('/link/{id}', 'link\\LinkController@add');
+
+Route::get('/schools', 'school\\SchoolController@all');
+Route::post('/school', 'school\\SchoolController@add');
+Route::put('/school/{id}', 'school\\SchoolController@update');
+Route::delete('/school/{id}', 'school\\SchoolController@add');
