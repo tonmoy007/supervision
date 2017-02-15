@@ -21,11 +21,9 @@ class SinglePostController extends Controller
     public function add(Request $request) {
         if($request->isMethod('post')) {
             if($request->file("featured_image")) {
-                $file = $request->file('featured_image');
-                $extension = $file->getClientOriginalExtension();
-                Storage::disk('local')->put($file->getFilename().'.'.$extension,  File::get($file));
-                //$dir = "posts";//.$singlePost->id;
-               // $path = $request->file('featured_image')->store($dir);
+                $dir = "posts";
+                //.$singlePost->id;
+               $path = $request->file('featured_image')->store($dir);
                // $path = Storage::put($request->file('featured_image'),'public');
             }
             $singlePost = new SinglePost();
