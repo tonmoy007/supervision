@@ -15,6 +15,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Log;
 use Session;
 use Validator;
+use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 class UserController extends Controller
 {
     //
@@ -87,9 +88,16 @@ class UserController extends Controller
         
         // $user=JWTAuth::parseToken()->toUser();
         // $user->tokens()->where('token',$request->token)->delete();
-        
-            JWTAuth::invalidate($request->token);
-            Auth::logout();
+        $token = JWTAuth::setRequest($request)->parseToken();
+            try{
+                JWTAuth::invalidate();
+                Auth::logout();
+            }catch(TokenBlacklistedException $e){
+                $response['message']='You are not logged in';
+                $response['success']=0;
+                $response['type']='token_blacklisted';
+                return response()->json($response);
+            }
 
         
         

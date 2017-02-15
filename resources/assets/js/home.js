@@ -90,13 +90,13 @@ app.controller('homeCtrl',  function($scope,$http,$location,$state){
     
 });
 
-app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssentials){
+app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssentials,$state){
    // keep user logged in after page refresh
-        var page=$location.path().split('/');
+        
         $rootScope.globals = $cookieStore.get('globals') || {};
         
         if ($rootScope.globals.currentUser) {
-            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+            $http.defaults.headers.common['Authorization'] = 'Bearer ' + $rootScope.globals.currentUser.token; // jshint ignore:line
         }
         
         $rootScope.nav={};
@@ -122,16 +122,25 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssent
         });
         
         $rootScope.$on('$locationChangeStart', function (event, next, current){
+            var page=$location.path().split('/');
             
-            next=next.split('/')
-            console.log(next);
+            
             if(!$rootScope.globals.currentUser){
                 $rootScope.login_page=true;
                 $rootScope.body='login_body';
                 $rootScope.isLoggedin=false;
+                if(page[1]=='profile'){
+                    $location.path('/login');
+                }
 
 
             }else{
+                if(page[1]=='login')
+                   {
+                    logout= confirm('Are you sure ?? will be logged out..');
+                     if(!logout)$location.path('/')
+                   }
+
                 $rootScope.login_page=false;
                 $rootScope.isLoggedin=true;
                 $rootScope.body="home_body"

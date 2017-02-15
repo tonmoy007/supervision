@@ -19,6 +19,7 @@ angular.module('Authentication',[])
                
                 callback(response);
             },function(response){
+                scope.error=response.data.message;
                 console.log(response);
                 scope.loginChecking=false;
                 SiteEssentials.responsCheck(response);
@@ -162,7 +163,7 @@ angular.module('Authentication',[])
                     $scope.user.password,$scope.user);
 
                     console.log($rootScope.globals);
-                    $location.path('#/');
+                    $location.path('/profile');
                 } else {
                     $scope.error = response.data.message;
                     $scope.loginChecking = false;

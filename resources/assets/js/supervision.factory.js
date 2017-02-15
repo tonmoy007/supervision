@@ -94,6 +94,8 @@ angular.module('super-factory',['ngMaterial','ngAnimate'])
   methods.responsCheck=function(response){
     if(response.status==-1){
         ShowSimpleToast.showAlert(this,'Timeout!!','Net Error Connection Timout');
+      }else if(response.status==500){
+        ShowSimpleToast.showAlert(this,response.statusText,'Sorry there might be an internal server problem please try again later');
       }
   }
   methods.goTop=function(index){
