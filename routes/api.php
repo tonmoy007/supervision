@@ -27,3 +27,8 @@ Route::get('/employees', 'employee\\EmployeeController@all');
 Route::post('/employee', 'employee\\EmployeeController@add');
 Route::put('/employee/{id}', 'employee\\EmployeeController@update');
 Route::delete('/employee/{id}', 'employee\\EmployeeController@add');
+
+Route::get('/links', 'link\\LinkController@all');
+Route::post('/link', 'link\\LinkController@add');
+Route::put('/link/{id}', 'link\\LinkController@update');
+Route::delete('/link/{id}', 'link\\LinkController@add');

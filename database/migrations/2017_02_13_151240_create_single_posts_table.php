@@ -13,7 +13,7 @@ class CreateSinglePostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('single_post', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
             $table->string('type');
@@ -31,6 +31,6 @@ class CreateSinglePostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('single_post');
+        Schema::dropIfExists('posts');
     }
 }

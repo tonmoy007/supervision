@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class SinglePost extends Model
 {
-    protected $table = 'single_post';
+    protected $table = 'posts';
     protected $fillable = [
         'title',
         'type',

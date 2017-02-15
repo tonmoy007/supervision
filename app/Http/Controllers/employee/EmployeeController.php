@@ -10,7 +10,8 @@ class EmployeeController extends Controller
 {
     public function all(Request $request) {
         if($request->isMethod('get')) {
-            $employees = Employee::all();
+            $employees = Employee::all()->groupBy(function($employee){ return $employee->designation; });
+
             return response()->json(['success' =>1, 'message'=>'all employee list', 'employees'=>$employees]);
         }
     }
