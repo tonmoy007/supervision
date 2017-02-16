@@ -22,7 +22,7 @@ class SinglePostController extends Controller
         if($request->isMethod('post')) {
             if($request->file("featured_image")) {
                 $dir = "posts";
-               $path = $request->file('featured_image')->store($dir);
+                $path = $request->file('featured_image')->store($dir);
             }
             $singlePost = new SinglePost();
             $singlePost->title = $request->get('title');
@@ -48,6 +48,11 @@ class SinglePostController extends Controller
                 $post->type = $request->get('type');
                 $post->subtitle = $request->get('sub_title');
                 $post->content = $request->get('content');
+                if($request->file("featured_image")) {
+                    $dir = "posts";
+                    $path = $request->file('featured_image')->store($dir);
+                    $post->featured_image = Storage::disk('local')->url($path);
+                }
                 $post->update();
                 return response()->json(['id' => $post->id,'success'=>1,'message'=>'Post successfully updated']);
             } catch (Exception $e) {

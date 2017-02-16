@@ -5,6 +5,7 @@ namespace App\Http\Controllers\employee;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class EmployeeController extends Controller
 {
@@ -23,6 +24,12 @@ class EmployeeController extends Controller
             $employee->rank = $request->get('rank');
             $employee->image = "lol";
             $employee->save();
+            if($request->file("featured_image")) {
+                $dir = "employee/".$employee->id;
+                $path = $request->file('featured_image')->store($dir);
+                $employee->image = Storage::disk('local')->url($path);
+                $employee->update();
+            }
             return response()->json(['id' => $employee->id,'success'=>1,'message'=>'Employee successfully added']);
         }
 
@@ -39,7 +46,11 @@ class EmployeeController extends Controller
                 $employee->name = $request->get('name');
                 $employee->designation = $request->get('designation');
                 $employee->rank = $request->get('rank');
-                $employee->image = 'LOl';
+                if($request->file("featured_image")) {
+                    $dir = "employee/".$employee->id;
+                    $path = $request->file('featured_image')->store($dir);
+                    $employee->image = Storage::disk('local')->url($path);
+                }
                 $employee->update();
                 return response()->json(['id' => $employee->id,'success'=>1,'message'=>'Employee successfully updated']);
             } catch (Exception $e) {
