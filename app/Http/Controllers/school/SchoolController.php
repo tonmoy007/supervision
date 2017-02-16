@@ -10,13 +10,13 @@ use App\Http\Controllers\Controller;
 
 class SchoolController extends Controller
 {
-    public function all(Request $request) {
+    public function index(Request $request) {
         if($request->isMethod('get')) {
-            $schools = School::select('teacher - female_teacher as male')->all();
+            $schools = School::all();
             return response()->json(['success' =>1, 'message'=>'all school list', 'schools'=>$schools]);
         }
     }
-    public function add(Request $request) {
+    public function store(Request $request) {
         if($request->isMethod('post')) {
             $user = new User();
             $user->name = $request->get('name');
@@ -72,7 +72,7 @@ class SchoolController extends Controller
         }
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $school = School::where("id", $id)->first();
         //FileUtils::deleteDir(public_path() . '/image/products/' . $id);
