@@ -22,18 +22,16 @@ class SinglePostController extends Controller
         if($request->isMethod('post')) {
             if($request->file("featured_image")) {
                 $dir = "posts";
-                //.$singlePost->id;
                $path = $request->file('featured_image')->store($dir);
-               // $path = Storage::put($request->file('featured_image'),'public');
             }
             $singlePost = new SinglePost();
             $singlePost->title = $request->get('title');
             $singlePost->type = $request->get('type');
             $singlePost->subtitle = $request->get('sub_title');
             $singlePost->content = $request->get('content');
-            $singlePost->featured_image = asset($path);
+            $singlePost->featured_image = Storage::disk('local')->url($path);
             $singlePost->save();
-            return response()->json(['id' => $singlePost->id,'success'=>1,'message'=>'Post successfully added', 'path'=>asset($path)]);
+            return response()->json(['id' => $singlePost->id,'success'=>1,'message'=>'Post successfully added', 'path'=>$singlePost->featured_image]);
         }
 
         return response()->json(['type' => 'method is not allowed','success'=>0,'message'=>'Not a post method']);
