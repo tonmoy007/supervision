@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\school;
 
+use App\Models\Role;
 use App\Models\School;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -10,18 +12,30 @@ class SchoolController extends Controller
 {
     public function all(Request $request) {
         if($request->isMethod('get')) {
-            $schools = School::all();
+            $schools = School::select('teacher - female_teacher as male')->all();
             return response()->json(['success' =>1, 'message'=>'all school list', 'schools'=>$schools]);
         }
     }
     public function add(Request $request) {
         if($request->isMethod('post')) {
-            $school = new School();
-            $school->name = $request->get('name');
-            $school->email = $request->get('email');
-            $school->password = bcrypt($request->get('password'));
-            $school->save();
-            return response()->json(['id' => $school->id,'success'=>1,'message'=>'school successfully added']);
+            $user = new User();
+            $user->name = $request->get('name');
+            $user->email = $request->get('email');
+            $user->password = bcrypt($request->get('password'));
+            $user->save();
+
+            $user=User::find($user->id);
+
+            $role = Role::where('name', '=', 'school')->first();
+            if($role == null) {
+                $role = new Role();
+                $role->name = 'school';
+                $role->display_name = 'General User';
+                $role->description = 'User Priviledges';
+                $role->save();
+            }
+            $user->roles()->attach($role->id);
+            return response()->json(['id' => $user->id,'success'=>1,'message'=>'school successfully added']);
         }
 
         return response()->json(['type' => 'method is not allowed','success'=>0,'message'=>'Not a post method']);
@@ -34,11 +48,11 @@ class SchoolController extends Controller
         if ($request->method('put')) {
             try {
                 $school = School::where('id', $id)->first();
-                $school->name = $request->get('name');
+               /* $school->name = $request->get('name');
                 $school->email = $request->get('email');
                 if($request->get('password')) {
                     $school->password = bcrypt($request->get('password'));
-                }
+                }*/
                 $school->email = $request->get('category');
                 $school->email = $request->get('teacher');
                 $school->email = $request->get('female_teacher');

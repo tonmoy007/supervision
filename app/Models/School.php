@@ -8,9 +8,9 @@ class School extends Model
 {
     protected $table = 'schools';
     protected $fillable = [
-        'name',
+        /*'name',
         'email',
-        'password',
+        'password',*/
         'category',
         'teacher',
         'female_teacher',

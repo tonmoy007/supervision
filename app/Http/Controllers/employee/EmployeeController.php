@@ -9,14 +9,14 @@ use Illuminate\Support\Facades\Storage;
 
 class EmployeeController extends Controller
 {
-    public function all(Request $request) {
+    public function index(Request $request) {
         if($request->isMethod('get')) {
             $employees = Employee::all()->groupBy(function($employee){ return $employee->designation; });
 
             return response()->json(['success' =>1, 'message'=>'all employee list', 'employees'=>$employees]);
         }
     }
-    public function add(Request $request) {
+    public function store(Request $request) {
         if($request->isMethod('post')) {
             $employee = new Employee();
             $employee->name = $request->get('name');
@@ -60,7 +60,7 @@ class EmployeeController extends Controller
         }
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $employee = Employee::where("id", $id)->first();
         //FileUtils::deleteDir(public_path() . '/image/products/' . $id);

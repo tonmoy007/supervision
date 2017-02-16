@@ -12,13 +12,13 @@ use Illuminate\Http\File;
 
 class SinglePostController extends Controller
 {
-    public function all(Request $request) {
+    public function index(Request $request) {
         if($request->isMethod('get')) {
             $posts = SinglePost::all()->groupBy(function($post){ return $post->type; });
             return response()->json(['success' =>1, 'message'=>'all posts list', 'posts'=>$posts]);
         }
     }
-    public function add(Request $request) {
+    public function store(Request $request) {
         if($request->isMethod('post')) {
             if($request->file("featured_image")) {
                 $dir = "posts";
@@ -62,7 +62,7 @@ class SinglePostController extends Controller
         }
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $post = SinglePost::where("id", $id)->first();
         //FileUtils::deleteDir(public_path() . '/image/products/' . $id);

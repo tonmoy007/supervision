@@ -15,9 +15,9 @@ class CreateSchoolsTable extends Migration
     {
         Schema::create('schools', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('email');
-            $table->string('password');
+            /*$table->string('name');
+            $table->string('email')->unique();
+            $table->string('password');*/
             $table->string('category')->nullable();
             $table->integer('teacher')->default(0);
             $table->integer('female_teacher')->default(0);
