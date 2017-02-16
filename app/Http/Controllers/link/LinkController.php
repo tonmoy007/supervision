@@ -8,13 +8,13 @@ use App\Http\Controllers\Controller;
 
 class LinkController extends Controller
 {
-    public function all(Request $request) {
+    public function index(Request $request) {
         if($request->isMethod('get')) {
             $links = Link::all()->groupBy(function($link){ return $link->type; });
             return response()->json(['success' =>1, 'message'=>'all employee list', 'links'=>$links]);
         }
     }
-    public function add(Request $request) {
+    public function store(Request $request) {
         if($request->isMethod('post')) {
             $link = new Link();
             $link->name = $request->get('name');
@@ -46,7 +46,7 @@ class LinkController extends Controller
         }
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $link = Link::where("id", $id)->first();
         //FileUtils::deleteDir(public_path() . '/image/products/' . $id);

@@ -4,23 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class School extends Model
+class Slider extends Model
 {
-    protected $table = 'schools';
+    protected $table = 'sliders';
     protected $fillable = [
-        /*'name',
-        'email',
-        'password',*/
-        'category',
-        'teacher',
-        'female_teacher',
-        'upozilla',
-        'zilla',
-        'management',
-        'type',
-        'mpo_code',
-        'mpo_date',
-        'eiin_number'
+        'image',
+        'description',
     ];
     public static function boot()
     {
@@ -36,6 +25,6 @@ class School extends Model
     }
 
     public static function getById($id) {
-        return School::where('id', $id)->first();
+        return Product::where('id', $id)->first();
     }
 }

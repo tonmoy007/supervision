@@ -333,6 +333,7 @@ class ComposerStaticInit85be5e74d5864d7ba6c0ff0f73ebfadf
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreateSchoolsTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_180308_create_schools_table.php',
         'CreateSinglePostsTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_13_151240_create_single_posts_table.php',
+        'CreateSlidersTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_16_143348_create_sliders_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
         'EmployeeSeeder' => __DIR__ . '/../..' . '/database/seeds/EmployeeSeeder.php',
