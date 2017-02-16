@@ -32,12 +32,12 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider){
         resolve:{
             Menu:function(){
                 var menu=[
-                {'name':'profile','title':'Home','icon':'img/avatar.png','template':''},
-                {'name':'profile.reports','title':'Reports','icon':'img/avatar.png','template':''},
-                {'name':'profile.notice','title':'Notice','icon':'img/avatar.png','template':''},
-                {'name':'profile.schools','title':'Schools','icon':'img/avatar.png','template':''},
-                {'name':'profile.settings','title':'Settings','icon':'img/avatar.png','template':''},
-                {'name':'profile.home_contents','title':'Home Contents','icon':'img/avatar.png','template':''}
+                {'name':'home','title':'Home','icon':'img/avatar.png','action_template':''},
+                {'name':'profile.reports','title':'Reports','icon':'img/avatar.png','action_template':''},
+                {'name':'profile.notice','title':'Notice','icon':'img/avatar.png','action_template':''},
+                {'name':'profile.schools','title':'Schools','icon':'img/avatar.png','action_template':'getView/template.actions.school'},
+                {'name':'profile.settings','title':'Settings','icon':'img/avatar.png','action_template':''},
+                {'name':'profile.home_contents','title':'Home Contents','icon':'img/avatar.png','action_template':''}
                 ]
                 return menu;
             }
@@ -57,9 +57,14 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider){
     },
     {
         name:'profile.schools',
-        controller:'innerContentCtrl',
+        controller:'schoolCtrl',
         url:'/schools',
-        templateUrl:'getView/profile.schools'
+        templateUrl:'getView/profile.schools',
+        resolve:{
+            Schools:function(superServices){
+                return superServices.getSchools();
+            }
+        }
     },
     {
         name:'profile.settings',
@@ -76,6 +81,7 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider){
     ]
 
     $urlRouterProvider.otherwise('/');
+    
     angular.forEach(home_state,function(value,key){
         $stateProvider.state(value);
     })
@@ -92,7 +98,7 @@ app.controller('homeCtrl',  function($scope,$http,$location,$state){
 
 app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssentials,$state){
    // keep user logged in after page refresh
-        
+       
         $rootScope.globals = $cookieStore.get('globals') || {};
         
         if ($rootScope.globals.currentUser) {
@@ -109,7 +115,9 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssent
                 $rootScope.nav.state=state;
                 $rootScope.nav.current_state=state[0];
                 $rootScope.nav.current_state_secendary=typeof state[1]!=undefined?state[1]:null;
+                $rootScope.nav.item=[];
                 SiteEssentials.goTop();
+
                 if(state.length>1&&state[0]=='profile'){
                     angular.element(document.getElementById('body')).addClass('no_scroll');
                 }else{

@@ -11,7 +11,13 @@
             </md-input-container>
             </form>
             <a ui-sref="login" class="login" ng-show="!globals.currentUser" layout="row"><i  class="fa fa-sign-in"></i> <span>login</span></a>
-            <a href="" ng-click="logout()" ng-show="globals.currentUser" class="login" layout="row"><i class="fa fa-user"></i>&nbsp;<span><%globals.currentUser.name%></span></a>
+            <li class="dropdown right-top" ng-class="{open:drop[5]}" ng-show="globals.currentUser">
+            <a href="" class="dropdown-toggle cool-shadow" ng-click="setVisible(5)"><%globals.currentUser.name%></a>
+                    <ul class="dropdown-menu">
+                        <li><a ui-sref="profile"><i class="fa fa-home"></i> dashboard</a></li>
+                        <li><a href="" ng-click="logout()"><i class="fa fa-sign-out"></i> logout</a></li>
+                    </ul>
+             </li>
         </div>
         <div class="navbar-brand" ng-class="{profile:nav.current_state=='profile'}">
             <img src="/img/logo.png" alt="">

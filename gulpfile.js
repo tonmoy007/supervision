@@ -14,6 +14,7 @@ require('laravel-elixir-vue-2');
  */
 
 elixir(mix => {
+    mix.sass('app.scss');
     mix.styles([
         'normalize.css',
         'bootstrap.min.css',
@@ -22,7 +23,8 @@ elixir(mix => {
         'ticker.min.css',
         'angular.ticker.css',
         'new.css',
-        'grid_loading_post.css'
+        'grid_loading_post.css',
+        './public/css/app.css'
     ],'public/css/supervision.css');
 
     mix.webpack(['classie.js','ticker.min.js',

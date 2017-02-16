@@ -8795,7 +8795,7 @@ md-content{
     z-index: 10;
 }
 .profile.cover{
-    z-index: 100000000;
+    z-index: 78;
     height: 63px;
     background-color: #666;
     position: fixed;
@@ -8817,8 +8817,8 @@ md-content{
 .navbar-brand{
   position: absolute;
   display: inline-block;
-  width: 100%;
-  z-index: 1000;
+  width: auto;
+  z-index: 40;
   top: 50px;
   padding: 10px;
   -webkit-transition: all .25s ease;
@@ -8923,8 +8923,31 @@ md-content{
     position: absolute;
     right: 10px;
     top: 0px;
-    z-index: 100;
-    width: 300px;
+    z-index: 67;
+    width: 330px;
+}
+.search-form.full{
+  position: relative;
+  display: inline-block;
+  width:auto;
+}
+
+.search-form.full form{
+  width: auto;
+}
+.search-form.full form md-input-container{
+  width: 0;
+  padding-right: 48px;
+  display: inline-block;
+  -webkit-transition: all .25s ease;
+     -moz-transition: all .25s ease;
+      -ms-transition: all .25s ease;
+       -o-transition: all .25s ease;
+          transition: all .25s ease;
+}
+
+.search-form.full.search-expand form md-input-container{
+  width: 360px;
 }
 .search-form form,.search-form a{
   display: inline-block;
@@ -8934,15 +8957,44 @@ md-content{
 .search-form form{
   width: 230px;
 }
-.search-form a{
+.search-form >a{
   color: #fff;
   font-size: 17px;
   line-height: 60px;
   vertical-align: middle;
-  max-width: 70px;
+  max-width: 100px;
   white-space: nowrap;
   text-overflow: ellipsis;  
   overflow: hidden;
+}
+.search-form .dropdown.right-top{
+  list-style: none;
+  display: inline-block;
+  width: 100px;
+  position: relative;
+}
+.search-form .dropdown.right-top >a{
+  white-space: nowrap;
+  width: 100%;
+  position: relative;
+  text-align: center;
+  display: inline-block;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  line-height: 40px;
+  margin-top: 15px;
+  background-color: #fff;
+  color:#424242;
+  border-radius: 20px;
+  padding: 0 7px;
+
+}
+.search-form .dropdown.right-top >ul li a{
+  padding: 5px 7px;
+  float: none;
+  display: inline-block;
+  width:auto;
+  min-width: 100%;
 }
 .search-form md-input-container{
     margin:10px;
@@ -8951,9 +9003,16 @@ md-content{
     border-radius: 3px; 
 }
 md-input-container.md-icon-right>md-icon:last-of-type{
-    margin-right: 10px;
+    
     pointer-events: all;
     cursor: pointer;
+    outline: none;
+    width: 40px;
+    margin-right: 0;
+    line-height: 40px;
+    top: 0;
+    height: 40px;
+    padding: 10px;
 }
 .search-form md-input-container .md-errors-spacer{
     display: none;
@@ -9126,7 +9185,7 @@ md-input-container.md-icon-right>md-icon:last-of-type{
   position: absolute;
   right: 10px;
   top: -60px;
-  z-index: 200;
+  z-index: 40;
 }
 @media(min-width:768px){
     #nav-icon{
@@ -9217,12 +9276,13 @@ md-input-container.md-icon-right>md-icon:last-of-type{
     margin:0;
 }
 .content{
-
+    min-height: calc(100vh - 400px);
     background-color: #e9eaed;
 }
 
 @media(min-width: 768px){
   .content{
+    min-height: calc(100vh - 420px);
   }
 }
 
@@ -9274,7 +9334,7 @@ md-input-container.md-icon-right>md-icon:last-of-type{
   line-height: 36px;
   font-size: 24px;
   color: #fff;
-  z-index: 10000;
+  z-index: 77;
   cursor: pointer;
   outline: none;
   animation:upDown 2s infinite;
@@ -9676,7 +9736,7 @@ body.no_scroll{
   height: auto;
   min-height: 0;
   opacity: 0;
-  padding: 30px 10px 80px 10px;
+  padding: 0px 10px 80px 10px;
   pointer-events: none;
   font-size: 0.85em;
 
@@ -9971,7 +10031,7 @@ body.no_scroll{
   }
 
   .content__item {
-    padding: 80px 20px 40px;
+    padding: 0px 20px 40px 80px;
   }
 
   .content .close-button {
@@ -9998,5 +10058,122 @@ body.no_scroll{
 }
 
 /*# sourceMappingURL=style1.css.map */
+.page-title{
+  display: inline-block;
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-align:left;
+  line-height:  40px;
+}
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+.list-card {
+  margin: 6px;
+}
+
+.list-card.full {
+  width: 100%;
+  margin: 4px 0;
+}
+
+.search-form input {
+  border: none;
+  border-bottom: none;
+  box-shadow: none;
+}
+
+.search-form input:focus {
+  border-bottom: none;
+  box-shadow: none;
+}
+
+.main-home {
+  min-height: 420px;
+  display: inline-block;
+  width: 100%;
+}
+
+.page-action {
+  position: relative;
+  padding: 0 10px 0 20px;
+}
+
+.page-action-container {
+  position: relative;
+  width: 100%;
+  display: inline-block;
+}
+
+.page-action-buttons {
+  display: inline-block;
+  width: auto;
+  line-height: 60px;
+  vertical-align: top;
+}
+
+.page-nav {
+  padding: 8px 0 0;
+}
+
+.top-loader {
+  position: relative;
+  width: 100%;
+}
+
+.top-loader md-icon {
+  position: absolute;
+  left: 50%;
+  margin-left: -10px;
+  top: -40px;
+}
+
+.list-card {
+  background-color: #fcfbfc;
+  outline: none;
+}
+
+.details {
+  display: inline-block;
+  width: 100%;
+  height: auto;
+  position: relative;
+  color: #636b6f;
+  padding: 10px;
+  font-size: 18px;
+  overflow: hidden;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.details span {
+  font-size: 16px;
+}
+
+.details.expandable {
+  max-height: 0;
+  padding: 0;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.details.expandable.expand {
+  max-height: 100%;
+  opacity: 1;
+  visibility: visible;
+}
+
+.md-dialog-backdrop {
+  z-index: 400;
+}
+
+md-dialog.pre-render {
+  width: 60%;
+  z-index: 450;
+  position: absolute;
+  min-width: 320px;
+  left: 20%;
+  top: 100px;
+}
+
+/*# sourceMappingURL=app.css.map */
 
 /*# sourceMappingURL=supervision.css.map */

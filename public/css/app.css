@@ -1,0 +1,110 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+.list-card {
+  margin: 6px;
+}
+
+.list-card.full {
+  width: 100%;
+  margin: 4px 0;
+}
+
+.search-form input {
+  border: none;
+  border-bottom: none;
+  box-shadow: none;
+}
+
+.search-form input:focus {
+  border-bottom: none;
+  box-shadow: none;
+}
+
+.main-home {
+  min-height: 420px;
+  display: inline-block;
+  width: 100%;
+}
+
+.page-action {
+  position: relative;
+  padding: 0 10px 0 20px;
+}
+
+.page-action-container {
+  position: relative;
+  width: 100%;
+  display: inline-block;
+}
+
+.page-action-buttons {
+  display: inline-block;
+  width: auto;
+  line-height: 60px;
+  vertical-align: top;
+}
+
+.page-nav {
+  padding: 8px 0 0;
+}
+
+.top-loader {
+  position: relative;
+  width: 100%;
+}
+
+.top-loader md-icon {
+  position: absolute;
+  left: 50%;
+  margin-left: -10px;
+  top: -40px;
+}
+
+.list-card {
+  background-color: #fcfbfc;
+  outline: none;
+}
+
+.details {
+  display: inline-block;
+  width: 100%;
+  height: auto;
+  position: relative;
+  color: #636b6f;
+  padding: 10px;
+  font-size: 18px;
+  overflow: hidden;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.details span {
+  font-size: 16px;
+}
+
+.details.expandable {
+  max-height: 0;
+  padding: 0;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.details.expandable.expand {
+  max-height: 100%;
+  opacity: 1;
+  visibility: visible;
+}
+
+.md-dialog-backdrop {
+  z-index: 400;
+}
+
+md-dialog.pre-render {
+  width: 60%;
+  z-index: 450;
+  position: absolute;
+  min-width: 320px;
+  left: 20%;
+  top: 100px;
+}
+
+/*# sourceMappingURL=app.css.map */

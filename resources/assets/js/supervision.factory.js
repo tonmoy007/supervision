@@ -63,8 +63,9 @@ angular.module('super-factory',['ngMaterial','ngAnimate'])
       
     return toast;
 })
-.service('superServices',  function($http,$rootScope,$q){
+.service('superServices',  function($http,$rootScope,$q,SiteEssentials){
   var methods=[];
+  var token=$rootScope.globals.currentUser.token;
   this.loadBranches=function($scope){
       var differ=$q.defer();
       if(!$scope.branches){
@@ -83,14 +84,35 @@ angular.module('super-factory',['ngMaterial','ngAnimate'])
         });
         return differ.promise;
       }
-    }
+    };
+this.getSchools=function(){
+  
+  $rootScope.loadingData=true;
+  
+  return $http.get('api/schools').then(function(response){
+          // console.log(response);
+          $rootScope.loadingData=false;
+            if(response.data.success){
+              return response.data.schools;
+            }else{
+              ShowSimpleToast.show(response.data.message);
+              return null;
+            }
+          },function(response){
+          
+          $rootScope.loadingData=false;
+          SiteEssentials.responsCheck(response);
+        });
 
+    };
 
 })
 
 
 .factory('SiteEssentials',function(ShowSimpleToast){
+
   var methods={};
+
   methods.responsCheck=function(response){
     if(response.status==-1){
         ShowSimpleToast.showAlert(this,'Timeout!!','Net Error Connection Timout');
@@ -104,40 +126,7 @@ angular.module('super-factory',['ngMaterial','ngAnimate'])
     }
     $('body,html').animate({scrollTop:index},"slow");
   }
-  methods.show_single=function(items,index,r_item,scope){
-    if(index==null)return;
-    if(scope){
-      scope.single=true;
-      scope.single_product=items[index];
-    }
-    r_item=items[index];
-
-
-  }
-  methods.getDiscount=function(product){
-    var price=parseFloat(product.price)*parseFloat(product.amount);
-    var discount=(product.discount)?(price*parseInt(product.discount.percentage))/100:0;
-    return discount;
-  }
-  methods.checkBonus=function(products){
-    var has_bonus=false;
-    angular.forEach(products,function(value,key){
-      if(value.bonus){
-        // console.log(value.bonus)
-        has_bonus=true
-      }
-    });
-    return has_bonus;
-  }
-  methods.checkDiscount=function(products){
-    var has_discount=false;
-    angular.forEach(products,function(value,key){
-      if(value.discount){
-        has_discount=true;
-      }
-    })
-    return has_discount;
-  }
+  
   methods.cloneJSON=function(old){
     var newJSON={};
     angular.forEach(old,function(value,key){
@@ -164,15 +153,15 @@ angular.module('super-factory',['ngMaterial','ngAnimate'])
       return new Date
     }
   }
- methods.setDeliveryStatus=function(order){
-  var delivered=1;
-  angular.forEach(order.products,function(value){
-    value.is_delivered=parseInt(value.is_delivered);
-    if(value.is_delivered==0){
-      delivered=0;
-    }
-  })
-    order.is_delivered=delivered;
+ 
+ methods.expand=function(data,index,name){
+      angular.forEach(data, function(value, key){
+            if(key==index){
+                value[name]=!value[name];
+            }else{
+                value[name]=false;
+            }
+        });
  }
   return methods;
 

@@ -48,12 +48,14 @@ var components=angular.module('components',['ticker','simpleAngularTicker'])
             }
             scope.menuLoading=false;
             $('body').click(function(event){
-                if(event.target.className!='dropdown-toggle'){
+                var className=event.target.className.split(' ');
+                // console.log(className);
+                if(className[0]!='dropdown-toggle'){
                       angular.forEach(scope.drop,function(value,key){
 
                             scope.drop[key]=false;
                        
-                    })  
+                    });  
                 }
                 
             })
@@ -185,7 +187,67 @@ var components=angular.module('components',['ticker','simpleAngularTicker'])
             
         }
     }
+}).directive('searchModule',function(){
+    return{
+        link:function(scope,elem,attr){
+            scope.toggleSearch=function(){
+                scope.search_expand=!scope.search_expand;
+                if(scope.search_expand){
+                    elem.focus();
+                }else{
+                    scope.$parent.actions.search_query='';
+                }
+            }
+        }
+    }
+}).directive('addNewContent',function($state,$mdDialog){
+    return{
+        templateUrl:'getView/'+$state.current.name+'.add',
+        scope:{
+            url:'=?',
+            title:'=?',
+            submitFunction:'=?',
+            listContent:'=?'
+        },
+        link:function(scope,elem,attr){
+            scope.hide=function(){
+                $mdDialog.hide();
+            }
+
+        }
+    }
 })
+.directive('updateContent',function($state,$mdDialog){
+    return{
+        link:function(scope,elem,attr){
+
+        }
+    }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 components.factory('scrollMe',function(){
     func={};

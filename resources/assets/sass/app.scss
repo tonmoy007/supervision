@@ -5,5 +5,118 @@
 // Variables
 @import "variables";
 
-// Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+
+.list-card{
+    margin:6px;
+    &.full{
+        width:100%;
+        margin:4px 0;
+    }
+}
+
+@mixin box_shadow($shadow) {
+    box-shadow:$shadow;
+    -webkit-box-shadow: $shadow;
+    -moz-box-shadow:$shadow;
+    -ms-box-shadow:$shadow;
+    -o-box-shadow:$shadow;
+    
+}
+@mixin transitions($value) {
+    -webkit-transition: $value;
+     -moz-transition: $value;
+      -ms-transition: $value;
+       -o-transition: $value;
+          transition: $value;
+    
+}
+.search-form input{
+    border:none;
+    border-bottom:none;
+    box-shadow:none;
+    &:focus{       
+            border-bottom: none;
+            box-shadow: none;
+    }
+}
+.main-home{
+    min-height:420px;
+    display:inline-block;
+    width:100%;
+}
+
+.page-action{
+    position:relative;
+    padding:0 10px 0 20px;
+    &-container{
+        position:relative;
+        width:100%;
+        display:inline-block;
+    }
+    &-buttons{
+        display:inline-block;
+        width:auto;
+        line-height:60px;
+        vertical-align:top;
+    }
+}
+
+.page-nav{
+    padding:8px 0 0;
+}
+
+.top-loader{
+    position:relative;
+    width:100%;
+    md-icon{
+        position:absolute;
+        left:50%;
+        margin-left:-10px;
+        top:-40px;
+    }
+}
+.list-card{
+    background-color:$body-bg;
+    outline:none;
+    
+}
+.details{
+        display:inline-block;
+        width:100%;
+        height:auto;
+        position:relative;
+        color:$text-color;
+        padding:10px;
+        font-size:18px;
+        overflow: hidden;
+        @include  transitions(all .3s ease);
+        span{
+            font-size:16px;
+        }
+        &.expandable{
+            max-height: 0;
+            padding:0;
+            visibility:hidden;
+            opacity: 0;
+            &.expand{
+                max-height:100%;
+                opacity:1;
+                visibility:visible;
+            }
+
+        }
+    }
+.md-dialog-backdrop{
+    z-index:400;
+}
+md-dialog{
+    &.pre-render{
+        width: 60%;
+        z-index: 450;
+        position: absolute;
+        min-width: 320px;
+        left: 20%;
+        top: 100px;
+    }
+}
