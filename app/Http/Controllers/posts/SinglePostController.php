@@ -8,10 +8,18 @@ use Illuminate\Http\Request;
 use App\Models\SinglePost;
 use Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\File;
+use JWTAuth;
 
 class SinglePostController extends Controller
 {
+    protected $user;
+    protected $isAdmin;
+    public function __construct()
+    {
+        $this->middleware('ability:token');
+        $this->user = JWTAuth::parseToken()->toUser();
+
+    }
     public function index(Request $request) {
         if($request->isMethod('get')) {
             $posts = SinglePost::all()->groupBy(function($post){ return $post->type; });
@@ -20,6 +28,7 @@ class SinglePostController extends Controller
     }
     public function store(Request $request) {
         if($request->isMethod('post')) {
+            $path="";
             if($request->file("featured_image")) {
                 $dir = "posts";
                 $path = $request->file('featured_image')->store($dir);
@@ -30,6 +39,7 @@ class SinglePostController extends Controller
             $singlePost->subtitle = $request->get('sub_title');
             $singlePost->content = $request->get('content');
             $singlePost->featured_image = Storage::disk('local')->url($path);
+            $singlePost->user_id = $this->user->id;
             $singlePost->save();
             return response()->json(['id' => $singlePost->id,'success'=>1,'message'=>'Post successfully added', 'path'=>$singlePost->featured_image]);
         }

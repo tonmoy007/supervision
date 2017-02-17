@@ -30,4 +30,5 @@ class SinglePost extends Model
     public static function getById($id) {
         return Product::where('id', $id)->first();
     }
+
 }

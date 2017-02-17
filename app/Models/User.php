@@ -42,7 +42,12 @@ class User extends Model implements AuthenticatableContract,
 
     public function schools()
     {
-        return $this->hasOne('App\School');
+        return $this->hasOne('App\Models\School');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany('App\Models\SinglePost');
     }
 
     public function isit($roleName)
