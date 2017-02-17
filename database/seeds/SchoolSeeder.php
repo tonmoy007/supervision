@@ -16,10 +16,9 @@ class SchoolSeeder extends Seeder
         $faker=Faker::create();
         foreach(range(1,20) as $index){
             static $password;
+
+            $user= \App\Models\User::find($index);
             School::create([
-                'name' => $faker->name,
-                'email' => $faker->unique()->safeEmail,
-                'password' => $password ?: $password = bcrypt('password'),
                 'category' => $faker->creditCardType,
                 'teacher' => $faker->randomNumber(3),
                 'female_teacher' => $faker->randomNumber(3),
@@ -30,6 +29,7 @@ class SchoolSeeder extends Seeder
                 'mpo_code' => $faker->creditCardNumber,
                 'mpo_date' =>$faker->date(),
                 'eiin_number' => $faker->bankAccountNumber,
+                'user_id' => $user->id,
 
                 ]);
         }

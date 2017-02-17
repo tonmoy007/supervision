@@ -40,5 +40,10 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\Models\Token');
     }
 
+    public function schools()
+    {
+        return $this->hasOne('App\School');
+    }
+
 }
 
