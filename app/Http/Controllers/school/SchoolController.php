@@ -30,8 +30,7 @@ class SchoolController extends Controller
     public function index(Request $request) {
         if($request->isMethod('get')) {
             $schools = School::all();
-            die(var_dump($schools));
-            return response()->json(['success' =>1, 'message'=>'all school list', 'schools'=>$schools]);
+            return response()->json(['success' =>1, 'message'=>'all school list', 'schools'=> $schools]);
         }
     }
     public function store(SchoolRequest $request) {

@@ -22,6 +22,14 @@ class School extends Model
         'mpo_date',
         'eiin_number'
     ];
+
+    public function getMaleTeacherAttribute()
+    {
+        return  $this->teacher - $this->female_teacher;
+    }
+
+    protected $appends = ['male_teacher'];
+
     public static function boot()
     {
         parent::boot();
