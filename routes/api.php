@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
+
 Route::post('/login','UserController@authenticate');
 Route::get('/logout','UserController@logout')->middleware('ability:token');
 Route::get('/users','UserController@index')->middleware('ability:token');
@@ -22,5 +23,6 @@ Route::resource('post', 'posts\\SinglePostController');
 Route::resource('employee', 'employee\\EmployeeController');
 Route::resource('link', 'link\\LinkController');
 Route::resource('school', 'school\\SchoolController');
+Route::put('school/edit', 'school\\SchoolController@update');
 Route::resource('slider', 'home\\SliderController');
 Route::resource('gallary', 'home\\GallaryController');

@@ -45,5 +45,18 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasOne('App\School');
     }
 
+    public function isit($roleName)
+    {
+        foreach ($this->roles()->get() as $role)
+        {
+            if ($role->name == $roleName)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
 

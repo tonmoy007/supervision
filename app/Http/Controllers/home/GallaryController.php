@@ -12,11 +12,16 @@ class GallaryController extends Controller
     public function index(Request $request)
     {
         if ($request->isMethod('get')) {
-            $sliders = Gallary::all();
-            return response()->json(['success' => 1, 'message' => 'all employee list', 'sliders' => $sliders]);
+            $gallaries = Gallary::all();
+            return response()->json(['success' => 1, 'message' => 'all employee list', 'gallaries' => $gallaries]);
         }
     }
 
+    public function show($type) {
+        $gallaries = Gallary::where('type', 'like', $type."%")->get();
+        return response()->json(['success' => 1, 'message' => 'all employee list', 'gallaries' => $gallaries]);
+
+    }
     public function store(Request $request) {
         if($request->isMethod('post')) {
             $images = $request->file("images");
