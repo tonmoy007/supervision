@@ -87,13 +87,14 @@ class UserController extends Controller
         
         // $user=JWTAuth::parseToken()->toUser();
         // $user->tokens()->where('token',$request->token)->delete();
+        $success = JWTAuth::invalidate(JWTAuth::getToken());
         
-            JWTAuth::invalidate($request->token);
+         //   JWTAuth::invalidate($request->token);
             Auth::logout();
 
         
         
-        return response()->json(['success'=>JWTAuth::invalidate($request->token)?1:0,'message'=>'Successfully logged out']);
+        return response()->json(['success'=>$success,'message'=>'Successfully logged out']);
 
     }
     public function user(Request $request){
