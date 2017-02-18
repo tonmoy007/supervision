@@ -13,7 +13,7 @@ class HomeController extends Controller
     public function index(Request $request) {
         $sliders = Slider::all();
         $links  = Link::all();
-        $posts = SinglePost::all();
+        $posts = SinglePost::all()->groupBy(function($post){ return $post->type; });
 
         return response()->json(['success'=>1,'message'=>'found all', 'sliders' => $sliders, 'links' => $links, 'posts' => $posts]);
 
