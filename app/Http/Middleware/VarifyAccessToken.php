@@ -20,7 +20,6 @@ class VarifyAccessToken extends BaseMiddleware
      */
     public function handle($request, Closure $next, $role)
     {
-
         if (!$token = $this->auth->setRequest($request)->getToken()) {
             $response['message'] = 'No token provided';
             $response['success'] = 0;
@@ -53,6 +52,7 @@ class VarifyAccessToken extends BaseMiddleware
         // if(!$exist){
         //     return response()->json(['message'=>'token not found','success'=>0,'type'=>'not_found']);
         // }
+
         if ($expired) {
             try {
                 $newToken = $this->auth->setRequest($request)
