@@ -2,30 +2,45 @@
 
 namespace App\Http\Controllers\school;
 
+use App\Http\Requests\SchoolRequest;
 use App\Models\Role;
 use App\Models\School;
 use App\Models\User;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use JWTAuth;
 
 class SchoolController extends Controller
 {
+    protected $user;
+    protected $isAdmin;
+    public function __construct()
+    {
+        $this->middleware('ability:token');
+        $this->user = JWTAuth::parseToken()->toUser();
+        $this->isAdmin = true;
+        if($this->user->roles->first()['name'] != 'admin') {
+            $this->isAdmin = false;
+            $this->middleware('admin', ['only' => ['store']]);
+        }
+    }
+
     public function index(Request $request) {
         if($request->isMethod('get')) {
             $schools = School::all();
-            return response()->json(['success' =>1, 'message'=>'all school list', 'schools'=>$schools]);
+            return response()->json(['success' =>1, 'message'=>'all school list', 'schools'=> $schools]);
         }
     }
-    public function store(Request $request) {
+    public function store(SchoolRequest $request) {
         if($request->isMethod('post')) {
-            $user = new User();
-            $user->name = $request->get('name');
-            $user->email = $request->get('email');
-            $user->password = bcrypt($request->get('password'));
-            $user->save();
 
-            $user=User::find($user->id);
+            $input = $request->only(['name', 'email', 'password']);
+            $input['password'] = bcrypt($request->get('password'));
+            $id= User::create($input)->id;
 
+            $user=User::find($id);
             $role = Role::where('name', '=', 'school')->first();
             if($role == null) {
                 $role = new Role();
@@ -35,7 +50,18 @@ class SchoolController extends Controller
                 $role->save();
             }
             $user->roles()->attach($role->id);
-            return response()->json(['id' => $user->id,'success'=>1,'message'=>'school successfully added']);
+
+            $input = $request->except(['name', 'email', 'password']);
+            $input['user_id'] = $user->id;
+            $input['teacher'] = isset($input['teacher']) ? (int)$input['teacher']: 0;
+            $input['female_teacher'] = isset($input['female_teacher']) ? (int)$input['female_teacher']: 0;
+
+            $id = School::create($input)->id;
+            $school = School::find($id);
+            $school->user_id=$user->id;
+            $school->update();
+
+            return response()->json(['id' => $user->id, 'school_id' => $id, 'success'=>1,'message'=>'school successfully added']);
         }
 
         return response()->json(['type' => 'method is not allowed','success'=>0,'message'=>'Not a post method']);
@@ -43,28 +69,36 @@ class SchoolController extends Controller
 
     }
 
-    public function update($id, Request $request)
+    public function update($id = null, SchoolRequest $request)
     {
         if ($request->method('put')) {
             try {
-                $school = School::where('id', $id)->first();
-               /* $school->name = $request->get('name');
-                $school->email = $request->get('email');
-                if($request->get('password')) {
-                    $school->password = bcrypt($request->get('password'));
-                }*/
-                $school->email = $request->get('category');
-                $school->email = $request->get('teacher');
-                $school->email = $request->get('female_teacher');
-                $school->email = $request->get('upozilla');
-                $school->email = $request->get('zilla');
-                $school->email = $request->get('management');
-                $school->email = $request->get('type');
-                $school->email = $request->get('mpo_code');
-                $school->email = $request->get('mpo_date');
-                $school->email = $request->get('eiin_number');
-                $school->update();
-                return response()->json(['id' => $school->id,'success'=>1,'message'=>'school successfully updated']);
+                if($id == 'edit') {
+                    $school = School::where('user_id', '=', $this->user->id)->first();
+                    $id = $school->id;
+                }
+                if($this->isAdmin) {
+                    $school = School::find($id);
+                    $userID = $school->user_id;
+                } else {
+                    $userID = $this->user->id;
+                }
+                $user = User::find($userID);
+                $input = $request->only(['name', 'email', 'password']);
+                if(isset($input['password'])) {
+                    $user->password= bcrypt($request->get('password'));
+                }
+                $user->name = $input['name'];
+                $user->email = $input['email'];
+                $user->update();
+
+
+                $input = $request->only(['category', 'teacher', 'female_teacher', 'upozilla', 'zilla', 'management', 'type', 'mpo_code', 'mpo_date', 'eiin_number']);
+                $input['teacher'] = $input['teacher'] == null || $input['teacher'] == '' ? 0: (int)$input['teacher'];
+                $input['female_teacher'] = $input['female_teacher'] == null || $input['female_teacher'] == '' ? 0: (int)$input['female_teacher'];
+                School::where('id', $id)->update($input);
+
+                return response()->json(['id' => $id,'success'=>1,'message'=>'school successfully updated']);
             } catch (Exception $e) {
                 return response()->json(['success'=>0,'message'=>'update error']);
 

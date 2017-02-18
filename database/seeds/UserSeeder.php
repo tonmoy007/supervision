@@ -34,6 +34,7 @@ class UserSeeder extends Seeder{
             }else{
                 $email=$faker->unique()->safeEmail;
             }
+
             User::create([
                 'name' => $faker->name,
                 'email' => $email,
@@ -43,6 +44,8 @@ class UserSeeder extends Seeder{
             $user=User::find($index);
             $role = Role::where('name', '=', 'admin')->first();
             $user->roles()->attach(''.$index%2+1);
+
+
         }
         
     }

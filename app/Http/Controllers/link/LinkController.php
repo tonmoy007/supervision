@@ -5,10 +5,12 @@ namespace App\Http\Controllers\link;
 use App\Models\Link;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use JWTAuth;
 class LinkController extends Controller
 {
     public function index(Request $request) {
+       // $user = JWTAuth::parseToken()->toUser();
+     //   die(var_dump($user));
         if($request->isMethod('get')) {
             $links = Link::all()->groupBy(function($link){ return $link->type; });
             return response()->json(['success' =>1, 'message'=>'all employee list', 'links'=>$links]);

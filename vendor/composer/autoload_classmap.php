@@ -6,9 +6,13 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'CreateEmployeeCategoriesTable' => $baseDir . '/database/migrations/2017_02_17_233215_create_employee_categories_table.php',
     'CreateEmployeesTable' => $baseDir . '/database/migrations/2017_02_12_194810_create_employees_table.php',
+    'CreateGallariesTable' => $baseDir . '/database/migrations/2017_02_17_164329_create_gallaries_table.php',
+    'CreateLinkCategoriesTable' => $baseDir . '/database/migrations/2017_02_17_230513_create_link_categories_table.php',
     'CreateLinksTable' => $baseDir . '/database/migrations/2017_02_14_182944_create_links_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
+    'CreatePostCategoriesTable' => $baseDir . '/database/migrations/2017_02_17_224921_create_post_categories_table.php',
     'CreateSchoolsTable' => $baseDir . '/database/migrations/2017_02_15_180308_create_schools_table.php',
     'CreateSinglePostsTable' => $baseDir . '/database/migrations/2017_02_13_151240_create_single_posts_table.php',
     'CreateSlidersTable' => $baseDir . '/database/migrations/2017_02_16_143348_create_sliders_table.php',
@@ -19,6 +23,7 @@ return array(
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/src/Facade.php',
     'File_Iterator_Factory' => $vendorDir . '/phpunit/php-file-iterator/src/Factory.php',
+    'GallarySeeder' => $baseDir . '/database/seeds/GallarySeeder.php',
     'Hamcrest\\Arrays\\IsArray' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArray.php',
     'Hamcrest\\Arrays\\IsArrayContaining' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArrayContaining.php',
     'Hamcrest\\Arrays\\IsArrayContainingInAnyOrder' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArrayContainingInAnyOrder.php',

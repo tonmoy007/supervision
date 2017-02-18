@@ -21,12 +21,17 @@ class SliderController extends Controller
             $images = $request->file("images");
             if(!empty($images)) {
                 $dir = "sliders";
-                foreach ($images as $key => $value) {
-                    $slider = new Slider();
-                    $slider->description = $request->get('description');
-                    $path = $request->images[$key]->store($dir);
-                    $slider->image = Storage::disk('local')->url($path);
-                    $slider->save();
+                if(is_array($images)||is_object($images)){
+                    if(is_object($images)) {
+                        $images = array($images);
+                    }
+                    foreach ($images as $key => $value) {
+                        $slider = new Slider();
+                        $slider->description = $request->get('description');
+                        $path = $request->images[$key]->store($dir);
+                        $slider->image = Storage::disk('local')->url($path);
+                        $slider->save();
+                    }
                 }
             }
             return response()->json(['success'=>1,'message'=>'Employee successfully added']);

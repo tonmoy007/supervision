@@ -4,32 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class School extends Model
+class Gallary extends Model
 {
-    protected $table = 'schools';
+    protected $table = 'gallaries';
     protected $fillable = [
-        /*'name',
-        'email',
-        'password',*/
-        'category',
-        'teacher',
-        'female_teacher',
-        'upozilla',
-        'zilla',
-        'management',
+        'file',
         'type',
-        'mpo_code',
-        'mpo_date',
-        'eiin_number'
     ];
-
-    public function getMaleTeacherAttribute()
-    {
-        return  $this->teacher - $this->female_teacher;
-    }
-
-    protected $appends = ['male_teacher'];
-
     public static function boot()
     {
         parent::boot();
@@ -44,6 +25,6 @@ class School extends Model
     }
 
     public static function getById($id) {
-        return School::where('id', $id)->first();
+        return Gallary::where('id', $id)->first();
     }
 }
