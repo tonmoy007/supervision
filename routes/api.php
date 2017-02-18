@@ -27,4 +27,4 @@ Route::resource('link', 'link\\LinkController');
 Route::resource('school', 'school\\SchoolController');
 Route::put('school/edit', 'school\\SchoolController@update');
 Route::resource('slider', 'home\\SliderController');
-Route::resource('gallary', 'home\\GallaryController');
+Route::resource('gallery', 'home\\GallaryController');

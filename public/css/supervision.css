@@ -10205,9 +10205,20 @@ md-dialog.pre-render {
   }
 }
 
-.form-container .dissmiss-button svg {
-  width: 16px;
-  margin: 0 4px;
+.form-container .posts {
+  width: 80vw;
+}
+
+@media (max-width: 600px) {
+  .form-container .posts {
+    width: 100vw;
+  }
+}
+
+.content .dissmiss-button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
 .ImageUpload {

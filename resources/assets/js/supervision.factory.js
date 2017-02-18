@@ -1,4 +1,5 @@
 angular.module('super-factory',['ngMaterial','ngAnimate'])
+
 .factory('ShowSimpleToast',function($mdToast,$mdDialog){
     var toast=[];
     toast.show=function(text){
@@ -63,9 +64,10 @@ angular.module('super-factory',['ngMaterial','ngAnimate'])
       
     return toast;
 })
-.service('superServices',  function($http,$rootScope,$q,SiteEssentials,AuthenticationService,$location,$state){
+.service('superServices',  function($http,$rootScope,$q,SiteEssentials,
+  AuthenticationService,$location,$state,Upload,$mdDialog){
   var methods=[];
-  var token=$rootScope.globals.currentUser.token;
+  
   this.logout=function(){
     $rootScope.logging_out=true;
     $http.get('api/logout').then(function(response){
@@ -81,25 +83,36 @@ angular.module('super-factory',['ngMaterial','ngAnimate'])
       SiteEssentials.responsCheck(response);
     })
   }
-  this.loadBranches=function($scope){
-      var differ=$q.defer();
-      if(!$scope.branches){
-        $scope.branchLoading=true
-        $http.get(siteurl+'branch/list.php?token='+$rootScope.globals.currentUser.token).success(function(response){
-            
-            if(response.success){
-                $scope.branches=response.branches;
-                $scope.branchLoading=false;
-                differ.resolve();
 
-            }else{
-                differ.reject();
-            }
+this.loadCategory=function($scope,link){
 
-        });
-        return differ.promise;
-      }
-    };
+    var differ=$q.defer();
+
+    if(!$scope.categories){
+      $scope.categoryLoading=true
+      $http.get('api/'+link).then(function(response){
+          // console.log(response);
+          if(response.data.success){
+              $scope.categories=response.data.categories;
+              $scope.categoryLoading=false;
+              differ.resolve();
+
+          }else{
+              differ.reject();
+          }
+
+      },function(response){
+        differ.reject();
+        SiteEssentials.responsCheck(response);
+      });
+      return differ.promise;    
+    }else{
+      return false;
+    }
+  
+
+};
+
 this.getSchools=function(){
   
   $rootScope.loadingData=true;
@@ -125,7 +138,7 @@ this.getContent=function(link,title){
   $rootScope.loadingData=true;
   
   return $http.get('api/'+link).then(function(response){
-          // console.log(response);
+          console.log(response);
           $rootScope.loadingData=false;
             if(response.data.success){
               return response.data[title];
@@ -140,6 +153,41 @@ this.getContent=function(link,title){
         });
 
     };
+this.addNewContent=function(data,url,name,key,$scope){
+    console.log(data);
+   
+    $scope.form=[];
+    $scope.form.addingContent=true;
+    
+    var upload=Upload.upload({
+        url:'api/'+url,
+        method:'POST',
+        '_method':'PUT',
+        data:data
+      });
+
+    upload.then(function(response){
+
+      console.log(response);
+      $scope.form.addingContent=false;
+      data.message=response.data.message;
+      data.id=response.data.id;
+      data.featured_image=response.data.featured_image;
+
+      $mdDialog.hide(data,name,key);
+
+    },function(response){
+      $scope.form.addingContent=false;
+      SiteEssentials.responsCheck(response);
+      if (response.status > 0)
+                $scope.form.error = response.status + ': ' + response.data;
+    },function(evt){
+      $scope.form.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+    });
+   
+}
+
+
 })
 
 

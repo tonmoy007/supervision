@@ -113,6 +113,11 @@ md-dialog{
         left: 20%;
         top: 100px;
     }
+    .dissmiss-button{
+        position:absolute;
+        right:10px;
+        top:10px;   
+    }
 }
 .md-select-menu-container{
     z-index:550;
@@ -128,9 +133,12 @@ md-dialog{
             min-width:420px;
     }
     padding:20px;
-    .dissmiss-button svg{
-        width:16px;
-        margin:0 4px;
+    
+    .posts{
+        width:80vw;
+        @media (max-width:600px){
+            width:100vw;
+        }
     }
 }
 

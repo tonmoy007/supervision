@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App\Http\Controllers;
@@ -17,6 +16,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Log;
 use Session;
 use Validator;
+
 class UserController extends Controller
 {
     //
@@ -99,6 +99,7 @@ class UserController extends Controller
         return response()->json(['success'=>$success,'message'=>'Successfully logged out']);
 
     }
+
     public function user(Request $request){
         $validator=Validator::make($request->all(),['user_id'=>'required']);
         $response=[];

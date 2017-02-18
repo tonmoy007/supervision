@@ -91,13 +91,15 @@ angular.module('super-controllers',[])
           targetEvent: ev,
           controller:'addNewCtrl',
           clickOutsideToClose: true
+        }).then(function(data,key,value){
+
         });
     }
   
     
     
 })
-.controller('addNewCtrl',function($scope,$mdDialog,$rootScope){
+.controller('addNewCtrl',function($scope,$mdDialog,$rootScope,superServices){
      
      
     $scope.setFiles=function($files, $file, $newFiles, $duplicateFiles, $invalidFiles, $event){
@@ -105,6 +107,13 @@ angular.module('super-controllers',[])
     }
     $scope.hide=function(){
         $mdDialog.hide();
+    }
+    $scope.loadCategory=function(link){
+         return superServices.loadCategory($scope,link);
+    }
+    $scope.submitForm=function(form,data,url,name,key){
+
+        superServices.addNewContent(data,url,name,key,$scope);
     }
 })
 
