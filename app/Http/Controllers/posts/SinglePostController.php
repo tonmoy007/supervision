@@ -14,10 +14,20 @@ class SinglePostController extends Controller
 {
     protected $user;
     protected $isAdmin;
-    public function __construct()
+    public function __construct(Request $request)
     {
-        $this->middleware('ability:token');
-        $this->user = JWTAuth::parseToken()->toUser();
+        $method = $request->method();
+        if($method== "GET") {
+            return;
+        }
+        try {
+            $this->middleware('ability:token',['except' => ['index', 'show']]);
+            $this->user = JWTAuth::parseToken()->toUser();
+        }catch (TokenExpiredException $e) {
+            $token = JWTAuth::getToken();
+            $newToken = JWTAuth::refresh($token);
+            $this->user = JWTAuth::setToken($newToken)->toUser();
+        }
 
     }
     public function index(Request $request) {
@@ -26,6 +36,12 @@ class SinglePostController extends Controller
             return response()->json(['success' =>1, 'message'=>'all posts list', 'posts'=>$posts]);
         }
     }
+
+    public function show($id) {
+        $post = SinglePost::find($id);
+        return response()->json(['success' =>1, 'message'=>'all posts list', 'posts'=>$post]);
+    }
+
     public function store(Request $request) {
         if($request->isMethod('post')) {
             $path="";

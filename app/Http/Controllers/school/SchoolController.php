@@ -9,17 +9,30 @@ use App\Models\User;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use JWTAuth;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 
 class SchoolController extends Controller
 {
     protected $user;
     protected $isAdmin;
-    public function __construct()
+    public function __construct(Request $request)
     {
-        $this->middleware('ability:token');
-        $this->user = JWTAuth::parseToken()->toUser();
+        $method = $request->method();
+        if($method== "GET") {
+            return;
+        }
+        try {
+            $this->middleware('ability:token',['except' => ['index']]);
+            $this->user = JWTAuth::parseToken()->toUser();
+        }catch (TokenExpiredException $e) {
+            $token = JWTAuth::getToken();
+            $newToken = JWTAuth::refresh($token);
+            $this->user = JWTAuth::setToken($newToken)->toUser();
+        }
+
         $this->isAdmin = true;
         if($this->user->roles->first()['name'] != 'admin') {
             $this->isAdmin = false;
