@@ -84,26 +84,7 @@ class UserController extends Controller
             "admin" => $user->hasRole('admin'),
         ]);
     }
-    public function logout(Request $request){
-        
-        // $user=JWTAuth::parseToken()->toUser();
-        // $user->tokens()->where('token',$request->token)->delete();
-        $token = JWTAuth::setRequest($request)->parseToken();
-            try{
-                JWTAuth::invalidate();
-                Auth::logout();
-            }catch(TokenBlacklistedException $e){
-                $response['message']='You are not logged in';
-                $response['success']=0;
-                $response['type']='token_blacklisted';
-                return response()->json($response);
-            }
-
-        
-        
-        return response()->json(['success'=>JWTAuth::invalidate($request->token)?1:0,'message'=>'Successfully logged out']);
-
-    }
+ 
     public function user(Request $request){
         $validator=Validator::make($request->all(),['user_id'=>'required']);
         $response=[];
