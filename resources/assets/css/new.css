@@ -170,6 +170,7 @@ md-content{
   width: auto;
 }
 .search-form.full form md-input-container{
+   background-color: transparent;
   width: 0;
   padding-right: 48px;
   display: inline-block;

@@ -27,9 +27,10 @@ elixir(mix => {
         './public/css/app.css'
     ],'public/css/supervision.css');
 
-    mix.webpack(['classie.js','ticker.min.js',
+    mix.webpack(['classie.js','ticker.min.js','./node_modules/ng-file-upload/dist/ng-file-upload.js',
+        './node_modules/ng-file-upload/dist/ng-file-upload-shim.js','./node_modules/angular-trix/dist/angular-trix.min.js',
         'angular.ticker.js','home.components.js','supervision.factory.js','angular.authentication.js',
-        './node_modules/angular-ui-router/release/angular-ui-router.js',
+        './node_modules/angular-ui-router/release/angular-ui-router.js','./node_modules/angular-sanitize/angular-sanitize.js',
         './node_modules/angular-cookies/angular-cookies.js','supervision.controllers.js'
         ,'home.js'],'public/js/supervision.js')
     .version(['css/supervision.css', 'js/supervision.js']);

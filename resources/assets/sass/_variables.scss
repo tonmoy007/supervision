@@ -36,4 +36,29 @@ $forground:#424242;
 // Panels
 $panel-default-heading-bg: #fff;
 
+
 $input-theme-focus:lighten($forground, 25%);
+
+@mixin box_shadow($shadow) {
+    box-shadow:$shadow;
+    -webkit-box-shadow: $shadow;
+    -moz-box-shadow:$shadow;
+    -ms-box-shadow:$shadow;
+    -o-box-shadow:$shadow;
+    
+}
+@mixin transitions($value) {
+    -webkit-transition: $value;
+     -moz-transition: $value;
+      -ms-transition: $value;
+       -o-transition: $value;
+          transition: $value;
+    
+}
+@mixin transforms($value) {
+    -webkit-transform: $value;
+     -moz-transform: $value;
+      -ms-transform: $value;
+       -o-transform: $value;
+          transform: $value;
+}

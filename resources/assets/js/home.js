@@ -1,4 +1,4 @@
-var app=angular.module('mainHome',['components','ui.router',
+var app=angular.module('mainHome',['components','ui.router','ngSanitize','ngFileUpload','angularTrix',
     'ngCookies','ngMessages','super-controllers','Authentication','super-factory']);
 
 
@@ -6,6 +6,7 @@ var app=angular.module('mainHome',['components','ui.router',
 app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider){
     var home_state=[{
         name:'home',
+        title:'Home',
         templateUrl:'getView/home.homepage',
         controller:'homeCtrl',
         url:'/'
@@ -14,12 +15,14 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider){
         controller:function($scope){
             console.log($scope);
         },
+        title:'Contact',
         name:'contact',
         templateUrl:'getView/home.contact',
         url:'/contact'
     },
     {
         name:'login',
+        title:'Login',
         controller:'LoginController',
         url:'/login',
         templateUrl:'getView/home.login'
@@ -28,6 +31,7 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider){
         name:'profile',
         controller:'profileCtrl',
         url:'/profile',
+        title:'profile',
         templateUrl:'getView/profile.dashboard',
         resolve:{
             Menu:function(){
@@ -35,9 +39,11 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider){
                 {'name':'home','title':'Home','icon':'img/avatar.png','action_template':''},
                 {'name':'profile.reports','title':'Reports','icon':'img/avatar.png','action_template':''},
                 {'name':'profile.notice','title':'Notice','icon':'img/avatar.png','action_template':''},
-                {'name':'profile.schools','title':'Schools','icon':'img/avatar.png','action_template':'getView/template.actions.school'},
+                {'name':'profile.schools','title':'Schools','icon':'img/avatar.png',
+                'action_template':'getView/template.actions.school'},
                 {'name':'profile.settings','title':'Settings','icon':'img/avatar.png','action_template':''},
-                {'name':'profile.home_contents','title':'Home Contents','icon':'img/avatar.png','action_template':''}
+                {'name':'profile.home_contents','title':'Home Contents','icon':'img/avatar.png',
+                'action_template':'getView/template.actions.home_contents'}
                 ]
                 return menu;
             }
@@ -45,18 +51,21 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider){
     },
     {
         name:'profile.reports',
+        title:'Reports',
         controller:'innerContentCtrl',
         url:'/reports',
         templateUrl:'getView/profile.reports'
     },
     {
         name:'profile.notice',
+        title:'Notice',
         controller:'innerContentCtrl',
         url:'/notice',
         templateUrl:'getView/profile.notice'
     },
     {
         name:'profile.schools',
+        title:'Schools',
         controller:'schoolCtrl',
         url:'/schools',
         templateUrl:'getView/profile.schools',
@@ -68,15 +77,94 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider){
     },
     {
         name:'profile.settings',
+        title:'Settings',
         controller:'innerContentCtrl',
         url:'/settings',
         templateUrl:'getView/profile.settings'
     },
     {
         name:'profile.home_contents',
-        controller:'innerContentCtrl',
+        controller:'webContentsCtrl',
+        title:'Home Contents',
         url:'/home_contents',
-        templateUrl:'getView/profile.home_contents'
+        templateUrl:'getView/profile.home_contents',
+        resolve:{
+            HomeContents:function(){
+                var contents=[
+                {name:'profile.home_contents.posts',
+                'action_template':'getView/template.actions.home_contents',title:'Posts',icon:'/img/avatar.png'},
+                {name:'profile.home_contents.links',
+                'action_template':'getView/template.actions.home_contents',title:'Links',icon:'/img/avatar.png'},
+                {name:'profile.home_contents.slider',
+                'action_template':'getView/template.actions.home_contents',title:'Slider',icon:'/img/avatar.png'},
+                {name:'profile.home_contents.gallery',
+                'action_template':'getView/template.actions.home_contents',title:'Gallery',icon:'/img/avatar.png'},
+                {name:'profile.home_contents.employees',
+                'action_template':'getView/template.actions.home_contents',title:'Employees',icon:'/img/avatar.png'}
+                ];
+                return contents;
+            }
+        }
+    },
+    {
+        name:'profile.home_contents.posts',
+        controller:'contentCtrl',
+        url:'/posts',
+        title:'Posts',
+        templateUrl:'getView/profile.home_contents.posts',
+        resolve:{
+            Contents:function(superServices){
+                return superServices.getContent('post','posts');
+            }
+        }
+    },
+    {
+        name:'profile.home_contents.links',
+        controller:'contentCtrl',
+        url:'/links',
+        title:'Important Links',
+        templateUrl:'getView/profile.home_contents.links',
+        resolve:{
+            Contents:function(superServices){
+                return superServices.getContent('link','links');
+            }
+        }
+    },
+    {
+        name:'profile.home_contents.slider',
+        controller:'contentCtrl',
+        title:'Slider',
+        url:'/slider',
+        templateUrl:'getView/profile.home_contents.slider',
+        resolve:{
+            Contents:function(superServices){
+                return superServices.getContent('slider','sliders');
+            }
+        }
+    },,
+    {
+        name:'profile.home_contents.gallery',
+        controller:'contentCtrl',
+        title:'Gallery',
+        url:'/gallery',
+        templateUrl:'getView/profile.home_contents.gallery',
+        resolve:{
+            Contents:function(superServices){
+                return superServices.getContent('gallery','gallery');
+            }
+        }
+    },
+    {
+        name:'profile.home_contents.employees',
+        controller:'contentCtrl',
+        title:'Employees',
+        url:'/employees',
+        templateUrl:'getView/profile.home_contents.employees',
+        resolve:{
+            Contents:function(superServices){
+                return superServices.getContent('employee','employees');
+            }
+        }
     }
     ]
 
@@ -116,6 +204,7 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssent
                 $rootScope.nav.current_state=state[0];
                 $rootScope.nav.current_state_secendary=typeof state[1]!=undefined?state[1]:null;
                 $rootScope.nav.item=[];
+                $rootScope.nav.title=toState.title;
                 SiteEssentials.goTop();
 
                 if(state.length>1&&state[0]=='profile'){
@@ -123,13 +212,17 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssent
                 }else{
                     angular.element(document.getElementById('body')).removeClass('no_scroll');
                 }
-                
+                $rootScope.nav.state=state;
+                $rootScope.nav.current_state=state[0];
+                $rootScope.nav.current_state_secendary=typeof state[1]!=undefined?state[1]:null;
+                $rootScope.nav.item=[];
                 
                 // console.log($rootScope.nav)
             
         });
         
         $rootScope.$on('$locationChangeStart', function (event, next, current){
+
             var page=$location.path().split('/');
             
             

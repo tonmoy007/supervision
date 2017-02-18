@@ -63,9 +63,24 @@ angular.module('super-factory',['ngMaterial','ngAnimate'])
       
     return toast;
 })
-.service('superServices',  function($http,$rootScope,$q,SiteEssentials){
+.service('superServices',  function($http,$rootScope,$q,SiteEssentials,AuthenticationService,$location,$state){
   var methods=[];
   var token=$rootScope.globals.currentUser.token;
+  this.logout=function(){
+    $rootScope.logging_out=true;
+    $http.get('api/logout').then(function(response){
+      if(response.data.success){
+        AuthenticationService.ClearCredentials();
+        $location.path('/');
+        $state.reload('home');
+        ShowSimpleToast.show(response.data.message);
+      }else{
+        ShowSimpleToast.show(response.data.message);
+      }
+    },function(response){
+      SiteEssentials.responsCheck(response);
+    })
+  }
   this.loadBranches=function($scope){
       var differ=$q.defer();
       if(!$scope.branches){
@@ -89,7 +104,7 @@ this.getSchools=function(){
   
   $rootScope.loadingData=true;
   
-  return $http.get('api/schools').then(function(response){
+  return $http.get('api/school').then(function(response){
           // console.log(response);
           $rootScope.loadingData=false;
             if(response.data.success){
@@ -105,7 +120,26 @@ this.getSchools=function(){
         });
 
     };
+this.getContent=function(link,title){
+  
+  $rootScope.loadingData=true;
+  
+  return $http.get('api/'+link).then(function(response){
+          // console.log(response);
+          $rootScope.loadingData=false;
+            if(response.data.success){
+              return response.data[title];
+            }else{
+              ShowSimpleToast.show(response.data.message);
+              return null;
+            }
+          },function(response){
+          
+          $rootScope.loadingData=false;
+          SiteEssentials.responsCheck(response);
+        });
 
+    };
 })
 
 
@@ -154,13 +188,26 @@ this.getSchools=function(){
     }
   }
  
- methods.expand=function(data,index,name){
+ methods.expand=function(data,index,name,double,keys){
+      
       angular.forEach(data, function(value, key){
-            if(key==index){
+
+        if(typeof double!=undefined &&double==1 && typeof keys != undefined){
+          angular.forEach(value, function(val, k){
+            if(k==index&&key==keys){
+              val[name]=!val[name];
+            }else{
+              value[name]=false;
+            }
+          });
+        }else{
+           if(key==index){
                 value[name]=!value[name];
             }else{
                 value[name]=false;
             }
+        }
+           
         });
  }
   return methods;

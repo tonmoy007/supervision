@@ -2,6 +2,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
@@ -86,9 +87,9 @@ class UserController extends Controller
     }
     public function logout(Request $request){
         
-        // $user=JWTAuth::parseToken()->toUser();
-        // $user->tokens()->where('token',$request->token)->delete();
+
         $success = JWTAuth::invalidate(JWTAuth::getToken());
+
         
          //   JWTAuth::invalidate($request->token);
             Auth::logout();

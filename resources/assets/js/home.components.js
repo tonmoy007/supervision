@@ -202,7 +202,6 @@ var components=angular.module('components',['ticker','simpleAngularTicker'])
     }
 }).directive('addNewContent',function($state,$mdDialog){
     return{
-        templateUrl:'getView/'+$state.current.name+'.add',
         scope:{
             url:'=?',
             title:'=?',
@@ -224,7 +223,19 @@ var components=angular.module('components',['ticker','simpleAngularTicker'])
         }
     }
 })
+.directive('actions',function(){
+    return{
+        templateUrl:'getView/template.actions.action_all',
+        scope:{
+            title:'=?',
+            type:'='
+        },
+        controller:'actionsCtrl',
+        link:function(scope,elem,attr){
 
+        }
+    }
+})
 
 
 

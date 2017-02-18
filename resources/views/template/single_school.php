@@ -1,11 +1,11 @@
 
-<md-card  class="cool-shadow cool-border list-card full" flex layout="column" ng-click="expand($index)">
+
+<md-card  class="cool-shadow cool-border list-card full" flex layout="column">
     <div class="list-card-contents" flex layout="column" layout-gt-sm="row">
       
-        <div flex class="list-card-details" layout-padding flex>
-            <span><%school.name%></span>
+        <div flex class="list-card-details" layout-padding flex ng-click="expand($index)">
+            <span class="title"><%school.name%></span>
             <span><%school.management%></span>
-            <span class="badge"><%school.category%></span>
         </div>
         
         <div class="md-secondary list-card-actions" layout-padding>
@@ -15,17 +15,20 @@
         </div>
           
     </div>
+    <md-divider></md-divider>
     <div class="details expandable"  ng-class="{'expand':school.expand}">
         <div class="data-container">
             <div class="row">
                 <span class="col-md-6 title"> <h3 class="rgba-black-strong white-text" layout-padding><%school.name%></h3></span>
-                <span class="col-md-6"><%school.email%></span>
-                <span class="col-md-6"><%school.eiin_number%></span>
-                <span class="col-md-6"><%school.zilla%></span>
-                <span class="col-md-6"><%school.phone%></span>
-                <span class="col-md-6"><%school.upozilla%></span>
-                <span class="col-md-6"><%school.category%></span>
-                <span class="col-md-6"><%school.management%></span> 
+                <div class="col-md-6">
+                <span class="col-md-12"><%school.email%></span>
+                <span class="col-md-12"><%school.eiin_number%></span>
+                <span class="col-md-12"><%school.zilla%></span>
+                <span class="col-md-12"><%school.phone%></span>
+                <span class="col-md-12"><%school.upozilla%></span>
+                <span class="col-md-12"><%school.category%></span>
+                <span class="col-md-12"><%school.management%></span> 
+                </div>
             </div>
         </div>
     </div>

@@ -1,12 +1,14 @@
-<div flex layout-gt-sm="row" layout="column">
+
+
+<div flex layout-gt-sm="row" layout="column" ng-show="nav.current_state=='profile'">
     <div flex="100"  class="p-x-1">
         
-    <div layout="row" layout-align="start center" ng-show="nav.current_state_secendary" class="page-nav">
+    <div layout="row" layout-align="start center" ng-show="nav.state.length>1" class="page-nav">
         <span flex="nogrow">
-            <md-button class="md-icon-button" aria-label="back button" ui-sref="<%nav.current_state%>"><md-icon md-svg-src="/img/accessories/back.svg" ></md-icon></md-button>
+            <md-button class="md-icon-button" aria-label="back button" ng-click="goback()"><md-icon md-svg-src="/img/accessories/back.svg" ></md-icon></md-button>
         </span>
-        <span class="page-title"  ><%nav.item.title%></span>
-
+        <span class="page-title" ng-if="nav.title" ><%nav.title%></span>
+        
         <div lauout="row" flex ng-include data-src="nav.item.action_template"  layout-align="end center" onload="createactions()">
             
         </div>
