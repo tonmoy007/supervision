@@ -19,7 +19,7 @@
                 <h3 class="rgba-black-strong white-text" layout-padding><%category%></h3>
             </div>
                 <md-list-item class="animate-repeat" ng-repeat="post in post_category track by $index" ng-include data-src="'/getView/template.single_post'"></md-list-item>
-                <md-divider ng-if="!$last"></md-divider>
+               
 
             </div>
             <md-list-item ng-if="posts.length==0" class="animate-if" data-ng-include data-src="'/getView/template.not_found'" ng-init="not_found='results'"></md-list-item>

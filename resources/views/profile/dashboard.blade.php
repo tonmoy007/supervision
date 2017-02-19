@@ -14,17 +14,18 @@
         </div>
         
     </div>
-    <div flex layout="row" layout-align="end center" class="top-loader" ng-show="loadingData" >
+    <div flex layout="row" layout-align="center center" class="top-loader" ng-show="loadingData" >
         <md-icon md-svg-src="/img/accessories/loader.svg"></md-icon>
     </div>
     <md-content class="md-block dashbord_content" >
         <section flex class="grid" id="grid" ng-class="{'animate-out':nav.current_state_secendary,'animate-in':!nav.current_state_secendary}">
-            <div class="grid-container" flex-gt-sm="25" ng-repeat="item in menu track by $index">
-               <md-card class="grid__item" ng-class="{'grid__item--animate':item.loading}" id="grid<%$index%>"  ng-click="open(item,$index)">
-                    <h2 class="title title--preview"><%item.title%></h2>
-                    <div class="loader"></div>
+            <div class="grid-container" flex-gt-sm="25" layout-align="center center" ng-repeat="item in menu track by $index">
+               <md-card class="grid__item" ng-class="{'grid__item--animate':item.loading}" id="grid<%$index%>" layout="column" layout-align="center center" flex  ng-click="open(item,$index)">
+                    
+                    <h2 flex class="title title--preview"><%item.title%></h2>
+                    
                    
-                </md-card> 
+            </md-card> 
             </div>
             
         </section>

@@ -61,8 +61,29 @@ angular.module('super-factory',['ngMaterial','ngAnimate'])
             
           });
       }
+    toast.showConfirm=function(ev,title,text_content,ok_text,cancel_text,success,failed){
+           title=typeof title !=undefined?title:'Are your confirm about this operation ??';
+           text_content=typeof text_content!=undefined?text_content:'';
+           var ariaLabel='Confirmation';
+           ok_text=typeof ok_text!=undefined?ok_text:'Ok';
+           cancel_text=typeof cancel_text!=undefined?cancel_text:'Cancel';
+
+       var confirm = $mdDialog.confirm()
+          .title(title)
+          .textContent(text_content)
+          .ariaLabel(ariaLabel)
+          .targetEvent(ev)
+          .ok(ok_text)
+          .cancel(cancel_text);
+        
+        $mdDialog.show(confirm).then(
+          success,failed)
+
+
+    }
       
     return toast;
+    
 })
 .service('superServices',  function($http,$rootScope,$q,SiteEssentials,
   AuthenticationService,$location,$state,Upload,$mdDialog,ShowSimpleToast){
@@ -133,6 +154,7 @@ this.getSchools=function(){
         });
 
     };
+
 this.getContent=function(link,title){
   
   $rootScope.loadingData=true;
@@ -155,7 +177,7 @@ this.getContent=function(link,title){
     };
 this.addNewContent=function(data,url,name,key,$scope){
     console.log(data);
-   
+   var cancel=false;
     $scope.form=[];
     $scope.form.addingContent=true;
     
@@ -165,7 +187,10 @@ this.addNewContent=function(data,url,name,key,$scope){
         '_method':'PUT',
         data:data
       });
-
+    $scope.cancelsubmit=function(){
+      cancel=true;
+      upload.abort();
+    }
     upload.then(function(response){
 
       console.log(response);
@@ -174,22 +199,42 @@ this.addNewContent=function(data,url,name,key,$scope){
       data.message=response.data.message;
       data.id=response.data.id;
       data.featured_image=(name=='posts'||name=='employees')?response.data.featured_image:'';
-      
-      
-      setTimeout(function(){
+    
         $state.reload($state.current.name);
         $mdDialog.hide(data,name,key);
-      },1500);
+      
 
     },function(response){
       $scope.form.addingContent=false;
-      SiteEssentials.responsCheck(response);
+      if(!cancel)
+        SiteEssentials.responsCheck(response);
       if (response.status > 0)
                 $scope.form.error = response.status + ': ' + response.data;
     },function(evt){
       $scope.form.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
     });
    
+}
+
+this.deleteContent=function(ev,item_name,url,id){
+
+  var message='Are you sure you want to delete this '+item_name+' ?';
+  var text_content='';
+ 
+  
+   var success=function(){
+     $http.delete('api/'+url+'/'+id).then(function(response){
+          console.log(response);
+          ShowSimpleToast.show(response.data.message);
+          $state.reload($state.current.name);
+      },function(response){
+          SiteEssentials.responsCheck(response);
+      })
+  }
+   var failed=function(){
+    return false;
+   }
+   ShowSimpleToast.showConfirm(ev,message,'','Yes','No',success,failed);
 }
 
 
