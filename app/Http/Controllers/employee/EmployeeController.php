@@ -49,7 +49,7 @@ class EmployeeController extends Controller
                 if($request->file("featured_image")) {
                     $dir = "public/employee/".$employee->id;
                     $path = $request->file('featured_image')->store($dir);
-                    $employee->image = Storage::disk('local')->url($path);
+                    $employee->image = Storage::url($path);
                 }
                 $employee->update();
                 return response()->json(['id' => $employee->id,'success'=>1,'message'=>'Employee successfully updated']);

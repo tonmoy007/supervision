@@ -20,7 +20,7 @@ class SliderController extends Controller
         if($request->isMethod('post')) {
             $images = $request->file("images");
             if(!empty($images)) {
-                $dir = "sliders";
+                $dir = "public/sliders";
                 if(is_array($images)||is_object($images)){
                     if(is_object($images)) {
                         $images = array($images);
@@ -29,7 +29,7 @@ class SliderController extends Controller
                         $slider = new Slider();
                         $slider->description = $request->get('description');
                         $path = $request->images[$key]->store($dir);
-                        $slider->image = Storage::disk('local')->url($path);
+                        $slider->image = Storage::url($path);
                         $slider->save();
                     }
                 }

@@ -13,7 +13,10 @@ class GallaryController extends Controller
     {
         if ($request->isMethod('get')) {
             $gallaries = Gallary::all();
-            return response()->json(['success' => 1, 'message' => 'all employee list', 'gallaries' => $gallaries]);
+            $images = Gallary::where('type', 'like', "image%")->get();
+            $videos = Gallary::where('type', 'like', "video%")->get();
+            return response()->json(['success' => 1, 'message' => 'all employee list',
+                'gallaries' => $gallaries, 'images' => $images, 'videos' => $videos]);
         }
     }
 
@@ -26,18 +29,26 @@ class GallaryController extends Controller
         if($request->isMethod('post')) {
             $images = $request->file("images");
             if(!empty($images)) {
-                $dir = "gallary";
+                $dir = "public/gallary";
+
                 if(is_array($images)||is_object($images)){
                     if(is_object($images)) {
                         $images = array($images);
                     }
-                    ;
+
                     foreach ($images as $key => $value)  {
                         $gallary = new Gallary();
                         $file = $images[$key];
+                        $type = explode("/", $file->getClientMimeType());
+                        if($type != 'image' && $type!='video')
+                        {
+                            return response()->json(['success'=>0,'message'=> $type.' is not allowed']);
+                        }
                         $path = $request->images[$key]->store($dir);
-                        $gallary->file = Storage::disk('local')->url($path);
-                        $gallary->type = $file->getClientMimeType();
+                        $gallary->file = Storage::url($path);
+
+
+                        $gallary->type = $type[0];
                         $gallary->save();
                         return response()->json(['success'=>1,'message'=>'Gallary successfully added']);
                     }
