@@ -18,6 +18,7 @@ Route::post('/login','UserController@authenticate');
 Route::get('/logout','UserController@logout')->middleware('ability:token');
 Route::get('/users','UserController@index')->middleware('ability:token');
 
+Route::get('/homepage', "home\\HomeController@index");
 Route::resource('post/category', 'posts\\PostCategoryController');
 Route::resource('post', 'posts\\SinglePostController');
 Route::resource('employee/category', 'employee\\EmployeeController');

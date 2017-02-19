@@ -25,7 +25,7 @@ class EmployeeController extends Controller
             $employee->image = "lol";
             $employee->save();
             if($request->file("featured_image")) {
-                $dir = "employee/".$employee->id;
+                $dir = "public/employee/".$employee->id;
                 $path = $request->file('featured_image')->store($dir);
                 $employee->image = Storage::disk('local')->url($path);
                 $employee->update();
@@ -47,7 +47,7 @@ class EmployeeController extends Controller
                 $employee->designation = $request->get('designation');
                 $employee->rank = $request->get('rank');
                 if($request->file("featured_image")) {
-                    $dir = "employee/".$employee->id;
+                    $dir = "public/employee/".$employee->id;
                     $path = $request->file('featured_image')->store($dir);
                     $employee->image = Storage::disk('local')->url($path);
                 }
