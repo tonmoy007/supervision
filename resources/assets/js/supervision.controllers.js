@@ -77,6 +77,9 @@ angular.module('super-controllers',[])
     $scope.editSchool=function(){
         
     }
+    $scope.delete=function(ev,item_name,url,id){
+        superServices.deleteContent(ev,item_name,url,id);
+    }
     
 }).controller('actionsCtrl',function($scope,$rootScope,$mdDialog,$state,ShowSimpleToast){
   
@@ -94,7 +97,9 @@ angular.module('super-controllers',[])
           fullscreen:true
         }).then(function(data,key,value){
             
-            ShowSimpleToast.show(data.message);
+            if(data){
+                ShowSimpleToast.show(data.message);
+            }
         });
     }
   
@@ -105,7 +110,10 @@ angular.module('super-controllers',[])
      
      
     $scope.setFiles=function($files, $file, $newFiles, $duplicateFiles, $invalidFiles, $event){
-        console.log($file);
+        console.log($files)
+       console.log($scope.newGallery.images);
+       console.log($scope.newGallery.featured_image);
+
     }
     $scope.hide=function(){
         $mdDialog.hide();
@@ -121,6 +129,7 @@ angular.module('super-controllers',[])
         images.splice(index,1);
         console.log(images);
     }
+   
 })
 
 .controller('webContentsCtrl',function($state,$scope,$rootScope,HomeContents,Menu,SiteEssentials,superServices){
@@ -135,22 +144,35 @@ angular.module('super-controllers',[])
         $scope.$parent.actions.search_query=query;
         console.log(query);
     }
+     $scope.search=function(query){
+        $scope.$parent.actions.search_query=query;
+        console.log(query);
+    }
 })
 .controller('contentCtrl',function($state,$scope,$rootScope,HomeContents,Contents,SiteEssentials,superServices,ShowSimpleToast){
     
     $scope.home_contents=HomeContents;
     var states=$rootScope.nav.state;
-    $rootScope.profile_index=states.length-1;
-    $scope[states[$rootScope.profile_index]]=Contents;
+    var index=states.length-1;
+    $scope[states[index]]=Contents;
+    var i=-1;
     
     $rootScope.nav.item=HomeContents.find(function(content){
+        i++;
         return content.name==$state.current.name;
     })
-    
+    $rootScope.nav.profile_index=i;
+     $scope.search=function(query){
+        $scope.$parent.actions.search_query=query;
+        console.log(query);
+    }
     $scope.expand=function(index,content,data,double,key){
         console.log(key);
         SiteEssentials.expand($scope[content],index,'expand',double,key);
         // console.log($scope[content]);
+    }
+    $scope.delete=function(ev,item_name,url,id){
+        superServices.deleteContent(ev,item_name,url,id);
     }
 })
 

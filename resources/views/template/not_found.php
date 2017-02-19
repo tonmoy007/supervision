@@ -1,1 +1,1 @@
-<span class="cool-shadow" layout-padding flex> No <%not_found%> found </span>
+<span class="cool-shadow alert alert-info" layout-padding flex> No content found in <%not_found%></span>

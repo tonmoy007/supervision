@@ -57,7 +57,7 @@
               <trix-editor angular-trix ng-model="newPost.content" class="rich-text" name="content" required></trix-editor>
               <div ng-messages="addNewForm.content.$error" role="alert">
                         <div ng-message="required">
-                          You need must add contents of your post
+                          You need must add contents to your post
                         </div>
                       </div>
              </md-input-container>

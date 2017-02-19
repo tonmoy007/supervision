@@ -21,7 +21,7 @@ Route::get('/users','UserController@index')->middleware('ability:token');
 Route::get('/homepage', "home\\HomeController@index");
 Route::resource('post/category', 'posts\\PostCategoryController');
 Route::resource('post', 'posts\\SinglePostController');
-Route::resource('employee/category', 'employee\\EmployeeController');
+Route::resource('employee/category', 'employee\\EmployeeCategoryController');
 Route::resource('employee', 'employee\\EmployeeController');
 Route::resource('link/category', 'link\\LinkCategoryController');
 Route::resource('link', 'link\\LinkController');

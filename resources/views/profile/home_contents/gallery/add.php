@@ -6,32 +6,36 @@
 
       <div class="form-container gallery" ng-init="newGallery=[]" >
       <div flex layout="row">
-         <h4 flex>Add New Link</h4>
+         <h4 flex>Add Gallery Contents</h4>
 
       
       </div>
           <form class="super-form" name="addNewForm" ng-submit="submitForm(addNewForm,newGallery,'gallery','gallery',newGallery.type)">
-               <md-input-container class="file-container">
+               <md-input-container class="file-container text-center md-block" >
                   <div class="ImageUpload" >
-                              <span class="md-button md-raised file-upload-btn" type="button"><strong ng-if="!newGallery.images.length" >Upload images to gallery</strong> <strong ng-if="newGallery.images.length" >Change Images</strong><br>
+                              <span class="md-button md-raised file-upload-btn" type="button"><strong ng-if="!newGallery.images.length" >Upload images|videos to gallery</strong> <strong ng-if="newGallery.images.length" >Change Files</strong><br>
                                 <i class="fa fa-image text-green2"></i>
                               </span>
                               <input type="file" aria-label="add New Images" ngf-drag ngf-change="setFiles($files, $file, $newFiles, $duplicateFiles, $invalidFiles, $event)" ngf-select ng-model="newGallery.images" name="images"    
-                                  ngf-pattern="'.png,.jpg,video/*,!.jog'" ngf-max-size="10MB" 
+                                  ngf-pattern="'.png,.jpg,video/*,!.jog'" ngf-max-size="512MB" 
                                  ngf-model-invalid="errorFile" ngf-multiple="true">
                     </div>
 
                           <i ng-show="addNewForm.images.$error.maxSize"></i>
-                          <div class="file-img-container"  ng-show="addNewForm.images.$valid" ng-repeat="(key,img) in newGallery.images track by $index">
+                          <div class="file-img-container cool-border"  ng-show="addNewForm.images.$valid" ng-repeat="(key,img) in newGallery.images track by $index">
                          
-                              <img ng-show="addNewForm.images.$valid" class=" cool-shadow cool-border md-avater  file-image" ngf-no-object-url="true" ngf-src="img" > <md-icon  ng-click="cancelImg(newGallery.images,key)" ng-show="newGallery.images[key]" class=" md-raised file-remove-icon right cool-shadow" md-svg-src="../img/accessories/dissmiss.svg" aria-label="Close dialog"></md-icon>
+                              <img ng-show="addNewForm.images.$valid" class="  md-avater  file-image" ngf-no-object-url="true" ngf-src="img" > 
+                              <video autobuffer autoloop loop controls class="" ngf-src="img">
+                              </video>
+                              <md-icon  ng-click="cancelImg(newGallery.images,key)" ng-show="newGallery.images[key]" class=" md-raised file-remove-icon right cool-shadow" md-svg-src="../img/accessories/dissmiss.svg" aria-label="Close dialog"></md-icon>
                           </div>
                     <div ng-messages="addNewForm.images.$error" role="alert">
                       <div ng-message="maxSize">
                         File too large 
-                              <%errorFile.size / 1000000|number:1%>MB: max 10M
+                              <%errorFile.size / 1000000|number:1%>MB: max 512M
                       </div>
                     </div>
+                   
               </md-input-container>
             
 

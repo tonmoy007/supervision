@@ -184,6 +184,17 @@ var components=angular.module('components',['ticker','simpleAngularTicker'])
 
                     elem.find('.progress-loader').hide();
                 });
+
+                $(img).on('error',function(){
+                    if(type=='background'){
+                        elem[0].style.backgroundImage='url(https://dummyimage.com/600x400/ddd/1d1d1f&text=no+image+found)';
+                        attr.src='https://dummyimage.com/600x400/ddd/1d1d1f&text=no+image+found';
+                    }else{
+                        elem.find('img').attr({src:'https://dummyimage.com/600x400/ddd/1d1d1f&text=no+image+found'});
+                    }
+                    elem.find('.progress-loader').hide();
+                })
+                
                })
         }
     }

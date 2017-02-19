@@ -8,6 +8,9 @@
                   
               </div>
           </md-card>
+          <div ng-include ng-show="!slider.length" data-src="'/getView/template.not_found'" ng-init="not_found='slider'" class="col-md-12 gallery-card text-center">
+              
+          </div>
         </gallery>
     </div>
 </div>
