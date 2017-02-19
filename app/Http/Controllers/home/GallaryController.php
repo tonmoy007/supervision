@@ -35,7 +35,7 @@ class GallaryController extends Controller
                     foreach ($images as $key => $value)  {
                         $gallary = new Gallary();
                         $file = $images[$key];
-                        $path = $images[$key]->store($dir);
+                        $path = $request->images[$key]->store($dir);
                         $gallary->file = Storage::disk('local')->url($path);
                         $gallary->type = $file->getClientMimeType();
                         $gallary->save();
