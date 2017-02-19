@@ -25,7 +25,7 @@
         </div>
 
         <div class="cover-container" ng-show="nav.current_state!='profile'">
-            <div  preload src-image="{{img.src}}" ng-repeat="(key, img) in cover" class="img-div" ng-show="img.active" ng-class="{'animate-in':img.active,'animate-out':!img.active}" alt="">
+            <div  preload src-image="<%img.src%>" data-type="background" ng-repeat="(key, img) in cover" class="img-div" ng-show="img.active" ng-class="{'animate-in':img.active,'animate-out':!img.active}" alt="">
               <loader class="progress-loader" ></loader>
             </div>
         </div>

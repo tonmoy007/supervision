@@ -65,7 +65,7 @@ angular.module('super-factory',['ngMaterial','ngAnimate'])
     return toast;
 })
 .service('superServices',  function($http,$rootScope,$q,SiteEssentials,
-  AuthenticationService,$location,$state,Upload,$mdDialog){
+  AuthenticationService,$location,$state,Upload,$mdDialog,ShowSimpleToast){
   var methods=[];
   
   this.logout=function(){
@@ -91,7 +91,7 @@ this.loadCategory=function($scope,link){
     if(!$scope.categories){
       $scope.categoryLoading=true
       $http.get('api/'+link).then(function(response){
-          // console.log(response);
+          console.log(response);
           if(response.data.success){
               $scope.categories=response.data.categories;
               $scope.categoryLoading=false;
@@ -169,12 +169,17 @@ this.addNewContent=function(data,url,name,key,$scope){
     upload.then(function(response){
 
       console.log(response);
+      
       $scope.form.addingContent=false;
       data.message=response.data.message;
       data.id=response.data.id;
-      data.featured_image=response.data.featured_image;
-
-      $mdDialog.hide(data,name,key);
+      data.featured_image=(name=='posts'||name=='employees')?response.data.featured_image:'';
+      
+      
+      setTimeout(function(){
+        $state.reload($state.current.name);
+        $mdDialog.hide(data,name,key);
+      },1500);
 
     },function(response){
       $scope.form.addingContent=false;

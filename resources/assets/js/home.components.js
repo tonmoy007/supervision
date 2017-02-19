@@ -160,17 +160,28 @@ var components=angular.module('components',['ticker','simpleAngularTicker'])
     return{
         link:function(scope,elem,attr){
             elem.ready(function(){
-                src=attr.srcImage;
-                // console.log(attr);
-                img=new Image();
+                var src=attr.srcImage;
+                
+                var img=new Image();
                 img.src=src;
+                var type=attr.type;
+
                 $(img).on('load',function(){
                     
-                    t_src='url("'+this.src+'")';
-                    m_src=decodeURI(t_src);
+                  var  t_src='url("'+this.src+'")';
+                  var  m_src=decodeURI(t_src);
 
-                    elem[0].style.backgroundImage=t_src;
-                    attr.src=this.src;
+               if(type=='background'){
+                 
+                 elem[0].style.backgroundImage=t_src;
+                 attr.src=this.src;
+                    
+               }else{
+                elem.find('img').attr({
+                    src: this.src,
+                });
+               }
+
                     elem.find('.progress-loader').hide();
                 });
                })

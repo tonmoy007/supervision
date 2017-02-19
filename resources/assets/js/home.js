@@ -150,7 +150,7 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider){
         templateUrl:'getView/profile.home_contents.gallery',
         resolve:{
             Contents:function(superServices){
-                return superServices.getContent('gallery','gallery');
+                return superServices.getContent('gallery','gallaries');
             }
         }
     },

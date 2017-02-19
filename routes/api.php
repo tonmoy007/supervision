@@ -22,7 +22,7 @@ Route::resource('post/category', 'posts\\PostCategoryController');
 Route::resource('post', 'posts\\SinglePostController');
 Route::resource('employee/category', 'employee\\EmployeeController');
 Route::resource('employee', 'employee\\EmployeeController');
-Route::resource('link/category', 'link\\LinkController');
+Route::resource('link/category', 'link\\LinkCategoryController');
 Route::resource('link', 'link\\LinkController');
 Route::resource('school', 'school\\SchoolController');
 Route::put('school/edit', 'school\\SchoolController@update');

@@ -78,11 +78,11 @@ angular.module('super-controllers',[])
         
     }
     
-}).controller('actionsCtrl',function($scope,$rootScope,$mdDialog,$state){
+}).controller('actionsCtrl',function($scope,$rootScope,$mdDialog,$state,ShowSimpleToast){
   
     $scope.search=function(query){
         $scope.$parent.actions.search_query=query;
-        console.log($scope);
+        console.log(query);
     }
     $scope.addNew=function(ev,type){
          $mdDialog.show({
@@ -90,9 +90,11 @@ angular.module('super-controllers',[])
           parent: angular.element(document.body),
           targetEvent: ev,
           controller:'addNewCtrl',
-          clickOutsideToClose: true
+          clickOutsideToClose: false,
+          fullscreen:true
         }).then(function(data,key,value){
-
+            
+            ShowSimpleToast.show(data.message);
         });
     }
   
@@ -115,6 +117,10 @@ angular.module('super-controllers',[])
 
         superServices.addNewContent(data,url,name,key,$scope);
     }
+    $scope.cancelImg=function(images,index){
+        images.splice(index,1);
+        console.log(images);
+    }
 })
 
 .controller('webContentsCtrl',function($state,$scope,$rootScope,HomeContents,Menu,SiteEssentials,superServices){
@@ -125,7 +131,10 @@ angular.module('super-controllers',[])
         return item.name==$state.current.name
      });
     $rootScope.nav.profile_index=i;
-
+     $scope.search=function(query){
+        $scope.$parent.actions.search_query=query;
+        console.log(query);
+    }
 })
 .controller('contentCtrl',function($state,$scope,$rootScope,HomeContents,Contents,SiteEssentials,superServices,ShowSimpleToast){
     

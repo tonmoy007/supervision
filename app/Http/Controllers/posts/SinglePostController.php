@@ -9,6 +9,7 @@ use App\Models\SinglePost;
 use Auth;
 use Illuminate\Support\Facades\Storage;
 use JWTAuth;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 
 class SinglePostController extends Controller
 {
@@ -46,7 +47,7 @@ class SinglePostController extends Controller
         if($request->isMethod('post')) {
             $path="";
             if($request->file("featured_image")) {
-                $dir = "posts";
+                $dir = "public/posts";
                 $path = $request->file('featured_image')->store($dir);
             }
             $singlePost = new SinglePost();
@@ -54,7 +55,7 @@ class SinglePostController extends Controller
             $singlePost->type = $request->get('type');
             $singlePost->subtitle = $request->get('sub_title');
             $singlePost->content = $request->get('content');
-            $singlePost->featured_image = Storage::disk('local')->url($path);
+            $singlePost->featured_image = Storage::url($path);
             $singlePost->user_id = $this->user->id;
             $singlePost->save();
             return response()->json(['id' => $singlePost->id,'success'=>1,'message'=>'Post successfully added', 'path'=>$singlePost->featured_image]);

@@ -15,9 +15,11 @@
         </div>
           
     </div>
-    <md-divider></md-divider>
+    
     <div class="details expandable"  ng-class="{'expand':link.expand}">
+
         <div class="data-container">
+        <md-divider></md-divider>
             <div class="row">
                <div class="col-md-12">
                    Link edit

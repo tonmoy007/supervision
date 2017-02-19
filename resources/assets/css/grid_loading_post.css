@@ -28,6 +28,7 @@ body.no_scroll{
   justify-content: center;
   outline: none;
 }
+
 .grid__item:active,.grid__item:focus{
   outline: none;
 }
