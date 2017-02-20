@@ -231,5 +231,6 @@ angular.module('super-controllers',[])
     $scope.getDate=function(date){
         return SiteEssentials.getDate(date);
     }
+    
 })
 

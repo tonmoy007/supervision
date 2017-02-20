@@ -21,7 +21,7 @@
         <section flex class="grid" id="grid" ng-class="{'animate-out':nav.current_state_secendary,'animate-in':!nav.current_state_secendary}">
             <div class="grid-container" flex-gt-sm="25" layout-align="center center" ng-repeat="item in menu track by $index">
                <md-card class="grid__item" ng-class="{'grid__item--animate':item.loading}" id="grid<%$index%>" layout="column" layout-align="center center" flex  ng-click="open(item,$index)">
-                    
+                    <!-- <md-icon md-svg-src="<%item.icon%>"></md-icon> -->
                     <h2 flex class="title title--preview"><%item.title%></h2>
                     
                    

@@ -3,7 +3,8 @@ var app=angular.module('mainHome',['components','ui.router','ngSanitize','ngFile
 
 
 
-app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider){
+app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIconProvider){
+    
     var home_state=[{
         name:'home',
         title:'Home',

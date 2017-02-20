@@ -82,7 +82,7 @@
                     <label>Mpo Code</label><input type="text" ng-model="data.editContent.mpo_code" name="upozilla" >
                     
                 </md-input-container>
-                <md-input-container class="md-block">
+                <md-input-container class="md-block" ng-init="data.editContent.mpo_date=getDate(data.editContent.mpo_date)">
                     <label>Upo Date</label><md-datepicker ng-model="data.editContent.mpo_date"></md-datepicker>
                     
                 </md-input-container>
