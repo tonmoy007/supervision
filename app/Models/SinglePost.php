@@ -15,13 +15,6 @@ class SinglePost extends Model
         'content'
     ];
 
-    public function getUserNameAttribute()
-    {
-        return  User::find($this->user_id)->name;
-    }
-
-    protected $appends = ['user_name'];
-
     public function users(){
         return $this->belongsTo('App\Models\User');
     }

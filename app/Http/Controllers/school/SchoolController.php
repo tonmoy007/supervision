@@ -46,6 +46,12 @@ class SchoolController extends Controller
             return response()->json(['success' =>1, 'message'=>'all school list', 'schools'=> $schools]);
         }
     }
+
+    public function category($category) {
+        $school = School::with('user')->where('category', 'LIKE', $category.'%')->get();
+        return response()->json(['success' =>1, 'message'=> $category. ' schools list', 'schools'=>$school]);
+    }
+
     public function store(SchoolRequest $request) {
         if($request->isMethod('post')) {
 
