@@ -20,7 +20,8 @@ class School extends Model
         'type',
         'mpo_code',
         'mpo_date',
-        'eiin_number'
+        'eiin_number',
+        'user_id'
     ];
 
     public function getMaleTeacherAttribute()
@@ -28,8 +29,12 @@ class School extends Model
         return  $this->teacher - $this->female_teacher;
     }
 
-    protected $appends = ['male_teacher'];
+    protected $appends = array('male_teacher');
 
+
+    public function user() {
+        return $this->belongsTo('App\Models\User');
+    }
     public static function boot()
     {
         parent::boot();

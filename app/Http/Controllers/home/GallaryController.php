@@ -40,18 +40,17 @@ class GallaryController extends Controller
                         $gallary = new Gallary();
                         $file = $images[$key];
                         $type = explode("/", $file->getClientMimeType());
-                        if($type != 'image' && $type!='video')
+                        if($type[0] != "image" && $type[0] != "video")
                         {
-                            return response()->json(['success'=>0,'message'=> $type.' is not allowed']);
+                            return response()->json(['success'=>0,'message'=> $type[0].' is not allowed']);
                         }
                         $path = $request->images[$key]->store($dir);
                         $gallary->file = Storage::url($path);
 
-
                         $gallary->type = $type[0];
                         $gallary->save();
-                        return response()->json(['success'=>1,'message'=>'Gallary successfully added']);
                     }
+                    return response()->json(['success'=>1,'message'=>'Gallary successfully added']);
                 }
 
             }

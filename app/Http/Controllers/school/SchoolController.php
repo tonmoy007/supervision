@@ -42,7 +42,7 @@ class SchoolController extends Controller
 
     public function index(Request $request) {
         if($request->isMethod('get')) {
-            $schools = School::all();
+            $schools = School::with('user')->get();
             return response()->json(['success' =>1, 'message'=>'all school list', 'schools'=> $schools]);
         }
     }

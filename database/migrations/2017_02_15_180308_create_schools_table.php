@@ -28,7 +28,7 @@ class CreateSchoolsTable extends Migration
             $table->string('mpo_code')->nullable();
             $table->date('mpo_date')->nullable();
             $table->string('eiin_number')->nullable();
-            $table->unsignedInteger('user_id')->default(1)->foreign()->references('id')->on('user')->onDelete('cascade');
+            $table->unsignedInteger('user_id')->default(1)->foreign()->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

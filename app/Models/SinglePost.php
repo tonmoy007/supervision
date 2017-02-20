@@ -22,6 +22,10 @@ class SinglePost extends Model
 
     protected $appends = ['user_name'];
 
+    public function users(){
+        return $this->belongsTo('App\Models\User');
+    }
+
     public static function boot()
     {
         parent::boot();
