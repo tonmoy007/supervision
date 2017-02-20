@@ -38,6 +38,11 @@ class SinglePostController extends Controller
         }
     }
 
+    public function category($category) {
+        $post = SinglePost::where('type', 'LIKE', $category.'%')->get();
+        return response()->json(['success' =>1, 'message'=> $category. ' posts list', 'posts'=>$post]);
+    }
+
     public function show($id) {
         $post = SinglePost::find($id);
         return response()->json(['success' =>1, 'message'=>'all posts list', 'posts'=>$post]);

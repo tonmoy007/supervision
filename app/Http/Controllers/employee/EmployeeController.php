@@ -16,6 +16,12 @@ class EmployeeController extends Controller
             return response()->json(['success' =>1, 'message'=>'all employee list', 'employees'=>$employees]);
         }
     }
+
+    public function category($category) {
+        $employee = Employee::where('designation', 'LIKE', $category.'%')->get();
+        return response()->json(['success' =>1, 'message'=> $category. ' employees list', 'employees'=>$employee]);
+    }
+
     public function store(Request $request) {
         if($request->isMethod('post')) {
             $employee = new Employee();
