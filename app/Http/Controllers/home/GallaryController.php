@@ -47,11 +47,10 @@ class GallaryController extends Controller
                         $path = $request->images[$key]->store($dir);
                         $gallary->file = Storage::url($path);
 
-
                         $gallary->type = $type[0];
                         $gallary->save();
-                        return response()->json(['success'=>1,'message'=>'Gallary successfully added']);
                     }
+                    return response()->json(['success'=>1,'message'=>'Gallary successfully added']);
                 }
 
             }
