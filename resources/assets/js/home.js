@@ -10,7 +10,10 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         title:'Home',
         templateUrl:'getView/home.homepage',
         controller:'homeCtrl',
-        url:'/'
+        url:'/',
+        resolve:{
+            
+        }
     },
     {
         controller:function($scope){
@@ -20,6 +23,19 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         name:'contact',
         templateUrl:'getView/home.contact',
         url:'/contact'
+    },
+    {
+        name:'posts',
+        title:'Posts',
+        controller:'HomePostCtrl',
+        url:'/posts/:id',
+        templateUrl:'getView/home.template.single_post',
+        resolve:{
+            Post:function($stateParams,superServices){
+                
+                return superServices.getContent('post','posts',$stateParams.id);
+            }
+        }
     },
     {
         name:'login',
@@ -37,13 +53,13 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         resolve:{
             Menu:function(){
                 var menu=[
-                {'name':'home','title':'Home','icon':'img/avatar.png','action_template':''},
-                {'name':'profile.reports','title':'Reports','icon':'img/avatar.png','action_template':''},
-                {'name':'profile.notice','title':'Notice','icon':'img/avatar.png','action_template':''},
-                {'name':'profile.schools','title':'Schools','icon':'img/avatar.png',
+                {'name':'home','title':'Home','icon':'/img/accessories/home.svg','action_template':''},
+                {'name':'profile.reports','title':'Reports','icon':'/img/accessories/reports.svg','action_template':''},
+                {'name':'profile.notice','title':'Notice','icon':'/img/accessories/notice.svg','action_template':''},
+                {'name':'profile.schools','title':'Schools','icon':'/img/accessories/schools.svg',
                 'action_template':'getView/template.actions.school'},
-                {'name':'profile.settings','title':'Settings','icon':'img/avatar.png','action_template':''},
-                {'name':'profile.home_contents','title':'Home Contents','icon':'img/avatar.png',
+                {'name':'profile.settings','title':'Settings','icon':'img/accessories/settings.svg','action_template':''},
+                {'name':'profile.home_contents','title':'Home Contents','icon':'/img/accessories/home_contents.svg',
                 'action_template':'getView/template.actions.home_contents'}
                 ]
                 return menu;
@@ -93,15 +109,16 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
             HomeContents:function(){
                 var contents=[
                 {name:'profile.home_contents.posts',
-                'action_template':'getView/template.actions.home_contents',title:'Posts',icon:'/img/avatar.png'},
+                'action_template':'getView/template.actions.home_contents',title:'Posts',icon:'/img/accessories/posts.svg'},
                 {name:'profile.home_contents.links',
-                'action_template':'getView/template.actions.home_contents',title:'Links',icon:'/img/avatar.png'},
+                'action_template':'getView/template.actions.home_contents',title:'Links',icon:'/img/accessories/links.svg'},
                 {name:'profile.home_contents.slider',
-                'action_template':'getView/template.actions.home_contents',title:'Slider',icon:'/img/avatar.png'},
+                'action_template':'getView/template.actions.home_contents',title:'Slider',icon:'/img/accessories/slider.svg'},
                 {name:'profile.home_contents.gallery',
-                'action_template':'getView/template.actions.home_contents',title:'Gallery',icon:'/img/avatar.png'},
+                'action_template':'getView/template.actions.home_contents',title:'Gallery',icon:'/img/accessories/gallery.svg'},
                 {name:'profile.home_contents.employees',
-                'action_template':'getView/template.actions.home_contents',title:'Employees',icon:'/img/avatar.png'}
+                'action_template':'getView/template.actions.home_contents',title:'Employees',
+                icon:'/img/accessories/employee.svg'}
                 ];
                 return contents;
             }
@@ -199,25 +216,34 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssent
         
         $rootScope.$on('$stateChangeStart', function (event, toState) {
             
+               SiteEssentials.goTop();
                 // console.log(toState);
                 var state=toState.name.split('.');
                 $rootScope.data=[];
+                $rootScope.site=[];
                 $rootScope.nav.state=state;
                 $rootScope.nav.current_state=state[0];
                 $rootScope.nav.current_state_secendary=typeof state[1]!=undefined?state[1]:null;
                 $rootScope.nav.item=[];
-                $rootScope.globals.curren_state=$state;
+                $rootScope.globals.current_state=$state;
                 $rootScope.nav.title=toState.title;
                 $rootScope.globals.title_bar=toState.title;
-                SiteEssentials.goTop();
-
+                
+                
                 if(state.length>1&&state[0]=='profile'){
                     angular.element(document.getElementById('body')).addClass('no_scroll');
                 }else{
                     angular.element(document.getElementById('body')).removeClass('no_scroll');
                 }
 
-                
+               switch (toState.name) {
+                    case 'home':
+                        $rootScope.site.title='একাডেমিক সুপারভিশন';break;
+                    case 'contact':
+                        $rootScope.site.title='যোগাযোগ';break;
+                    default:
+                        $rootScope.site.title= 'একাডেমিক সুপারভিশন';
+               }
                 
                 // console.log($rootScope.nav)
             
@@ -226,7 +252,7 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssent
         $rootScope.$on('$locationChangeStart', function (event, next, current){
 
             var page=$location.path().split('/');
-            
+            console.log(next);
             
             if(!$rootScope.globals.currentUser){
                 $rootScope.login_page=true;

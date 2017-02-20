@@ -21,7 +21,7 @@
         </div>
         <div class="navbar-brand" ng-class="{profile:nav.current_state=='profile'}">
             <img src="/img/logo.png" alt="">
-            <a ui-sref="home" class="site-title">একাডেমিক সুপারভিশন</a>
+            <a ui-sref="home" class="site-title"><%site.title%></a>
         </div>
 
         <div class="cover-container" ng-show="nav.current_state!='profile'">

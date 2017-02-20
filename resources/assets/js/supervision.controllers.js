@@ -10,6 +10,18 @@ angular.module('super-controllers',[])
         superServices.logout();
     }
 })
+.controller('sidebarCtrl',function($scope,SiteEssentials,superServices,Posts){
+    $scope.sidebarLoading=true;
+
+
+})
+.controller('HomePostCtrl',function($scope,Post,SiteEssentials,$rootScope){
+    $scope.post=Post;
+    $rootScope.site.title=$scope.post.type
+    $scope.getDate=function(date){
+        return SiteEssentials.getDate(date);
+    }
+})
 
 .controller('profileCtrl',function($scope,$rootScope,$http,SiteEssentials,superServices,Menu,$state){
     // console.log($rootScope.nav)
@@ -57,7 +69,8 @@ angular.module('super-controllers',[])
      $rootScope.nav.profile_index=i;
 })
 
-.controller('schoolCtrl',function($scope,SiteEssentials,superServices,$rootScope,ShowSimpleToast,Schools,Menu,$state){
+.controller('schoolCtrl',function($scope,SiteEssentials,superServices,
+    $rootScope,ShowSimpleToast,Schools,Menu,$state){
     $scope.schools=[];
     var i=-1;
     $rootScope.nav.item=Menu.find(function(item){
@@ -206,7 +219,7 @@ angular.module('super-controllers',[])
 })
 
 
-.controller('editModelCtrl',function($scope,$rootScope,$mdDialog,superServices){
+.controller('editModelCtrl',function($scope,$rootScope,$mdDialog,superServices,SiteEssentials){
     $scope.data=[];
 
     $scope.data.editContent=$rootScope.data.editContent;

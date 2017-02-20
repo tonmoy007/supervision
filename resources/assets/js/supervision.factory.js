@@ -98,6 +98,7 @@ angular.module('super-factory',['ngMaterial','ngAnimate'])
         $state.reload('home');
         ShowSimpleToast.show(response.data.message);
       }else{
+        AuthenticationService.ClearCredentials();
         ShowSimpleToast.show(response.data.message);
       }
     },function(response){
@@ -155,11 +156,15 @@ this.getSchools=function(){
 
     };
 
-this.getContent=function(link,title){
+this.getContent=function(link,title,id){
   
   $rootScope.loadingData=true;
-  
-  return $http.get('api/'+link).then(function(response){
+  var url='api/'+link;
+  if(typeof id!=undefined&&id!=null){
+    url+='/'+id;
+  }
+  console.log(url);
+  return $http.get(url).then(function(response){
           console.log(response);
           $rootScope.loadingData=false;
             if(response.data.success){
@@ -319,6 +324,7 @@ this.deleteContent=function(ev,item_name,url,id){
     upload.then(success,error,progress);
     
   }
+
 
 
 })

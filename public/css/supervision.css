@@ -9540,8 +9540,9 @@ body.no_scroll{
 }
 
 .meta {
-  font-size: 0.765em;
-  text-align: left;
+    font-size: .8rem;
+    text-align: left;
+    padding: 0px 8px;
 }
 
 .meta .fa {
@@ -10068,6 +10069,11 @@ body.no_scroll{
   line-height:  40px;
 }
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+.post__container {
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
 .list-card {
   background-color: #fcfbfc;
   margin: 6px;

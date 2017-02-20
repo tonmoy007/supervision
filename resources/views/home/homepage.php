@@ -3,7 +3,7 @@
         
     <box-ticker></box-ticker>
 
-    <md-content class="md-block " >
+    <md-content class="md-block " ng-if="globals.current_state.current.name=='home'">
         <div class="padded white cool-border"  flex layout="column">
             <h3 class="rgba-black-strong white-text" layout-padding>সাধারণ তথ্য</h3>
             <span class="space1"></span>
@@ -22,9 +22,10 @@
         </div>
         
     </md-content>
+    <ui-view></ui-view>
     </div>
     <div flex="100" flex-gt-sm="30">
-        <sidebar ></sidebar>
+        <sidebar ng-if="globals.current_state.current.name=='home'"></sidebar>
     </div>
 
 </div>
