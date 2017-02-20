@@ -44,10 +44,10 @@ class SliderController extends Controller
 
     public function destroy($id)
     {
-        $link = Link::where("id", $id)->first();
+        $slider = Slider::where("id", $id)->first();
         //FileUtils::deleteDir(public_path() . '/image/products/' . $id);
         //ProductImage::where("product_id", $id)->delete();
-        $link->delete();
+        $slider->delete();
         return response()->json(['success'=>1,'message'=>'Employee successfully deleted']);
 
     }

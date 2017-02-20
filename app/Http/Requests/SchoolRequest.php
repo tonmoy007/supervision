@@ -44,7 +44,6 @@ class SchoolRequest extends FormRequest
                 return [
                     'name' => 'required|max:255',
                     'email'      => 'required|email|unique:users,email,'.$this->user()->id,
-                    'password' => 'required|min:8'
                 ];
             }
             default:break;
