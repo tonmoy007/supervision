@@ -69,6 +69,7 @@ angular.module('super-controllers',[])
     if(Schools){
 
         $scope.schools=Schools
+        console.log(Schools);
     }
     $scope.expand=function(index){
 
@@ -79,6 +80,14 @@ angular.module('super-controllers',[])
     }
     $scope.delete=function(ev,item_name,url,id){
         superServices.deleteContent(ev,item_name,url,id);
+    }
+    $scope.submitForm=function(form,data,url,name,key){
+
+        superServices.addNewContent(data,url,name,key,$scope);
+    }
+    $scope.showEdit=function(ev,name,data,data_index,key,category_path){
+        console.log(data)
+        superServices.showModelEdit(ev,$scope,name,data_index,key);
     }
     
 }).controller('actionsCtrl',function($scope,$rootScope,$mdDialog,$state,ShowSimpleToast){
@@ -201,11 +210,13 @@ angular.module('super-controllers',[])
     $scope.data=[];
 
     $scope.data.editContent=$rootScope.data.editContent;
-    console.log($scope.data);
+    console.log($scope);
+
     var category_path='post';
 
-     if(!$scope.categories)
+     if(!$scope.categories&&$rootScope.nav.state[1]!='schools')
             superServices.loadCategory($scope,category_path+'/category');
+
     $scope.hide=function(){
         $mdDialog.hide();
     }
@@ -216,6 +227,9 @@ angular.module('super-controllers',[])
     }
     $scope.loadCategory=function(link){
         return superServices.loadCategory($scope,link);
+    }
+    $scope.getDate=function(date){
+        return SiteEssentials.getDate(date);
     }
 })
 

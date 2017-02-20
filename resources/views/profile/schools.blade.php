@@ -1,14 +1,7 @@
 <div class="inner-page">
     
     
-    <div style="display: none">
-        <div id="addNewSchool" >
-    <md-dialog layout-padding class="pre-render" >
-        
-        <add-new-content class="add-new " url="'api/schools/add'" title="'Add New School'" list-content="schools" ng-class="{'show':add_new}"></add-new-content>
-    </md-dialog>
-    </div>
-    </div>
+  
     
     <div class="inner-page-content" ng-show="!add_new">
     

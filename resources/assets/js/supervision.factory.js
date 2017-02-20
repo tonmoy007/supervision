@@ -261,7 +261,7 @@ this.deleteContent=function(ev,item_name,url,id){
     
     $rootScope.data=[];
 
-    $rootScope.data.editContent=$scope[name][key][index];
+    $rootScope.data.editContent=key!=null?$scope[name][key][index]:$scope[name][index];
     
     $mdDialog.show({
           templateUrl: 'getView/'+$state.current.name+'.edit',
