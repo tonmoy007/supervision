@@ -13,6 +13,14 @@ class Employee extends Model
         'rank',
         'image'
     ];
+
+    public function getIsEmployeeAttribute()
+    {
+        return  1;
+    }
+
+    protected $appends = array('is_employee');
+
     public static function boot()
     {
         parent::boot();

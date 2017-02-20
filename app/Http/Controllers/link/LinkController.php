@@ -16,6 +16,12 @@ class LinkController extends Controller
             return response()->json(['success' =>1, 'message'=>'all employee list', 'links'=>$links]);
         }
     }
+
+    public function category($category) {
+        $link = Link::where('type', 'LIKE', $category.'%')->get();
+        return response()->json(['success' =>1, 'message'=> $category. ' links list', 'links'=>$link]);
+    }
+
     public function store(Request $request) {
         if($request->isMethod('post')) {
             $link = new Link();

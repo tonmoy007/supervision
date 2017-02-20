@@ -16,6 +16,12 @@ class EmployeeController extends Controller
             return response()->json(['success' =>1, 'message'=>'all employee list', 'employees'=>$employees]);
         }
     }
+
+    public function category($category) {
+        $employee = Employee::where('designation', 'LIKE', $category.'%')->get();
+        return response()->json(['success' =>1, 'message'=> $category. ' employees list', 'employees'=>$employee]);
+    }
+
     public function store(Request $request) {
         if($request->isMethod('post')) {
             $employee = new Employee();
@@ -27,7 +33,7 @@ class EmployeeController extends Controller
             if($request->file("featured_image")) {
                 $dir = "public/employee/".$employee->id;
                 $path = $request->file('featured_image')->store($dir);
-                $employee->image = Storage::disk('local')->url($path);
+                $employee->image = Storage::url($path);
                 $employee->update();
             }
             return response()->json(['id' => $employee->id,'success'=>1,'message'=>'Employee successfully added']);

@@ -18,7 +18,7 @@ class SchoolSeeder extends Seeder
             static $password;
 
             $user= \App\Models\User::find($index);
-            School::create([
+            $school = new School([
                 'category' => $faker->creditCardType,
                 'teacher' => $faker->randomNumber(3),
                 'female_teacher' => $faker->randomNumber(3),
@@ -29,9 +29,10 @@ class SchoolSeeder extends Seeder
                 'mpo_code' => $faker->creditCardNumber,
                 'mpo_date' =>$faker->date(),
                 'eiin_number' => $faker->bankAccountNumber,
-                'user_id' => $user->id,
+
 
                 ]);
+            $user->schools()->save($school);
         }
     }
 }
