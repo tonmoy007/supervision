@@ -206,6 +206,7 @@ this.getContent=function(link,title,id){
         });
 
     };
+
 this.addNewContent=function(data,url,name,key,$scope){
     console.log(data);
    var cancel=false;

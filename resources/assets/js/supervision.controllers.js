@@ -15,12 +15,23 @@ angular.module('super-controllers',[])
 
 
 })
+.controller('employeeCtrl',function($scope,SiteEssentials,superServices,Employees){
+    $scope.employees=Employees;
+    console.log(Employees);
+
+})
+.controller('singleEmployeeCtrl',function(Employees,Employee,$scope,$rootScope,superServices){
+
+
+})
 .controller('HomePostCtrl',function($scope,Post,SiteEssentials,$rootScope){
     $scope.post=Post;
-    $rootScope.site.title=$scope.post.type
+    $rootScope.site.title=$scope.post!=null?$scope.post.type:$rootScope.site.title;
+    
     $scope.getDate=function(date){
         return SiteEssentials.getDate(date);
     }
+
 })
 
 .controller('profileCtrl',function($scope,$rootScope,$http,SiteEssentials,superServices,Menu,$state){

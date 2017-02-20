@@ -40,11 +40,12 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
     {
         name:'employees',
         title:'Employees',
+        controller:'employeeCtrl',
         url:'/employees/:type',
         templateUrl:'getView/home.template.employees',
         resolve:{
             Employees:function($stateParams,superServices){
-                return [];
+                return superServices.getContent('employee/category','employees',$stateParams.type);
             }
         }
     },
@@ -121,7 +122,7 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         url:'/home_contents',
         templateUrl:'getView/profile.home_contents',
         resolve:{
-            HomeContents:function(){
+            HomeContents:function(superServices){
                
                 return superServices.getMenu('home_contents');
             }
@@ -199,10 +200,13 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
     $interpolateProvider.endSymbol('%>');
 });
 
-app.controller('homeCtrl',  function($scope,$http,$location,$state){
+app.controller('homeCtrl',  function($scope,$http,$location,$state,superServices){
     // console.log($scope);
     $scope.home=true;
+    console.log(superServices.getMenu('profile'));
+    console.log(superServices.getMenu('home_contents'));
     
+
 });
 
 app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssentials,$state){
