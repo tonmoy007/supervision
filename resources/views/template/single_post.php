@@ -11,7 +11,7 @@
         
         <div class="md-secondary list-card-actions" layout-padding>
             
-            <md-button class="md-icon-button" ng-click="showEdit(post,$index,this)" aria-label="edit"><md-icon md-svg-src="/img/accessories/edit.svg"></md-icon></md-button>
+            <md-button class="md-icon-button" ng-click="showEdit(this,'posts',post,$index,category,'post')" aria-label="edit"><md-icon md-svg-src="/img/accessories/edit.svg"></md-icon></md-button>
             <md-button class="md-icon-button" ng-click="delete(this,'this post','post',post.id)" aria-label="delete"><md-icon md-svg-src="/img/accessories/waste-bin.svg"></md-icon></md-button>
         </div>
           

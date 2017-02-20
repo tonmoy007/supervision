@@ -218,7 +218,7 @@ this.addNewContent=function(data,url,name,key,$scope){
 
 this.deleteContent=function(ev,item_name,url,id){
 
-  var message='Are you sure you want to delete this '+item_name+' ?';
+  var message='Are you sure you want to delete '+item_name+' ?';
   var text_content='';
  
   
@@ -236,6 +236,89 @@ this.deleteContent=function(ev,item_name,url,id){
    }
    ShowSimpleToast.showConfirm(ev,message,'','Yes','No',success,failed);
 }
+
+  this.showLinkEdit=function($scope,name,$index,data_key){
+    $rootScope.data=[];
+
+    $rootScope.data.editContent=$scope[name][data_key][$index];
+
+    angular.forEach($scope[name], function(value, key){
+
+      angular.forEach(value,function(val,k){
+        if(key==data_key&&k==$index){
+          val.edit_expand=!val.edit_expand;
+          val.edit_template='/getView/'+$state.current.name+'.edit';
+        }else{
+          val.edit_expand=false;
+          val.edit_template='';
+        }
+      })
+
+      
+    });
+  }
+  this.showModelEdit=function(ev,$scope,name,index,key){
+    
+    $rootScope.data=[];
+
+    $rootScope.data.editContent=key!=null?$scope[name][key][index]:$scope[name][index];
+    
+    $mdDialog.show({
+          templateUrl: 'getView/'+$state.current.name+'.edit',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          controller:'editModelCtrl',
+          clickOutsideToClose: false,
+          fullscreen:true
+        }).then(function(data){
+            $rootScope.data=[];
+            if(data){
+                ShowSimpleToast.show(data.message);
+            }
+        });
+  }
+ 
+  this.submitEditForm=function($scope,data,link,dialog){
+    
+    $scope.form=[];
+    
+    $scope.form.updatingContent=true;
+    console.log(data);
+    var cancel=false;
+   
+    var upload=$http.put('api/'+link+'/'+data.id, data,{'_method':'PUT'})
+    
+    $scope.cancelsubmit=function(){
+      cancel=true;
+      upload.abort();
+    }
+
+
+      
+    var success=function(response){
+        console.log(response);
+        $scope.form.updatingContent=false;
+        if(response.data.success){
+            if(typeof dialog!=undefined||dialog!=null){
+              $mdDialog.hide(data);
+            }
+            $state.reload($state.current.name);
+        }
+        ShowSimpleToast.show(response.data.message);
+    }
+   
+    var error =function(response){
+         $scope.form.updatingContent=false;
+         if(!cancel)SiteEssentials.responsCheck(response);
+    }
+    
+    var progress=function(evt){
+      $scope.form.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+    }
+    
+    upload.then(success,error,progress);
+    
+  }
 
 
 })
@@ -308,6 +391,7 @@ this.deleteContent=function(ev,item_name,url,id){
            
         });
  }
+
   return methods;
 
 })

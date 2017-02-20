@@ -200,11 +200,14 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssent
             
                 // console.log(toState);
                 var state=toState.name.split('.');
+                $rootScope.data=[];
                 $rootScope.nav.state=state;
                 $rootScope.nav.current_state=state[0];
                 $rootScope.nav.current_state_secendary=typeof state[1]!=undefined?state[1]:null;
                 $rootScope.nav.item=[];
+                $rootScope.globals.curren_state=$state;
                 $rootScope.nav.title=toState.title;
+                $rootScope.globals.title_bar=toState.title;
                 SiteEssentials.goTop();
 
                 if(state.length>1&&state[0]=='profile'){
@@ -212,10 +215,8 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssent
                 }else{
                     angular.element(document.getElementById('body')).removeClass('no_scroll');
                 }
-                $rootScope.nav.state=state;
-                $rootScope.nav.current_state=state[0];
-                $rootScope.nav.current_state_secendary=typeof state[1]!=undefined?state[1]:null;
-                $rootScope.nav.item=[];
+
+                
                 
                 // console.log($rootScope.nav)
             
@@ -238,7 +239,7 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssent
             }else{
                 if(page[1]=='login')
                    {
-                    logout= confirm('Are you sure ?? will be logged out..');
+                    logout= confirm('Are you sure ? you will be logged out from this session...');
                      if(!logout)$location.path('/')
                    }
 
