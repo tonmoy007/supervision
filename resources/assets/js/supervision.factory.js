@@ -105,7 +105,33 @@ angular.module('super-factory',['ngMaterial','ngAnimate'])
       SiteEssentials.responsCheck(response);
     })
   }
-
+this.getMenu=function(type){
+  var menu=[];
+  menu['profile']=[
+            {'name':'home','title':'Home','icon':'/img/accessories/home.svg','action_template':''},
+            {'name':'profile.reports','title':'Reports','icon':'/img/accessories/reports.svg','action_template':''},
+            {'name':'profile.notice','title':'Notice','icon':'/img/accessories/notice.svg','action_template':''},
+            {'name':'profile.schools','title':'Schools','icon':'/img/accessories/schools.svg',
+            'action_template':'getView/template.actions.school'},
+            {'name':'profile.settings','title':'Settings','icon':'img/accessories/settings.svg','action_template':''},
+            {'name':'profile.home_contents','title':'Home Contents','icon':'/img/accessories/home_contents.svg',
+            'action_template':'getView/template.actions.home_contents'}
+            ];
+  menu['home_contents']=[
+            {name:'profile.home_contents.posts',
+            'action_template':'getView/template.actions.home_contents',title:'Posts',icon:'/img/accessories/posts.svg'},
+            {name:'profile.home_contents.links',
+            'action_template':'getView/template.actions.home_contents',title:'Links',icon:'/img/accessories/links.svg'},
+            {name:'profile.home_contents.slider',
+            'action_template':'getView/template.actions.home_contents',title:'Slider',icon:'/img/accessories/slider.svg'},
+            {name:'profile.home_contents.gallery',
+            'action_template':'getView/template.actions.home_contents',title:'Gallery',icon:'/img/accessories/gallery.svg'},
+            {name:'profile.home_contents.employees',
+            'action_template':'getView/template.actions.home_contents',title:'Employees',
+            icon:'/img/accessories/employee.svg'}
+            ];
+    return menu[type];
+}
 this.loadCategory=function($scope,link){
 
     var differ=$q.defer();

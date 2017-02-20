@@ -38,6 +38,30 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         }
     },
     {
+        name:'employees',
+        title:'Employees',
+        url:'/employees/:type',
+        templateUrl:'getView/home.template.employees',
+        resolve:{
+            Employees:function($stateParams,superServices){
+                return [];
+            }
+        }
+    },
+    {
+        name:'employees.single',
+        title:'Single Employee',
+        url:'/:id',
+        templateUrl:'getView/home.template.single_employee',
+        resolve:{
+            Employee:function(Employees,$routeParams){
+                return Employees.find(function(employee){
+                    return employee.id==$routeParams.id;
+                })
+            }
+        }
+    },
+    {
         name:'login',
         title:'Login',
         controller:'LoginController',
@@ -51,18 +75,9 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         title:'profile',
         templateUrl:'getView/profile.dashboard',
         resolve:{
-            Menu:function(){
-                var menu=[
-                {'name':'home','title':'Home','icon':'/img/accessories/home.svg','action_template':''},
-                {'name':'profile.reports','title':'Reports','icon':'/img/accessories/reports.svg','action_template':''},
-                {'name':'profile.notice','title':'Notice','icon':'/img/accessories/notice.svg','action_template':''},
-                {'name':'profile.schools','title':'Schools','icon':'/img/accessories/schools.svg',
-                'action_template':'getView/template.actions.school'},
-                {'name':'profile.settings','title':'Settings','icon':'img/accessories/settings.svg','action_template':''},
-                {'name':'profile.home_contents','title':'Home Contents','icon':'/img/accessories/home_contents.svg',
-                'action_template':'getView/template.actions.home_contents'}
-                ]
-                return menu;
+            Menu:function(superServices){
+                
+                return superServices.getMenu('profile');
             }
         }
     },
@@ -107,20 +122,8 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         templateUrl:'getView/profile.home_contents',
         resolve:{
             HomeContents:function(){
-                var contents=[
-                {name:'profile.home_contents.posts',
-                'action_template':'getView/template.actions.home_contents',title:'Posts',icon:'/img/accessories/posts.svg'},
-                {name:'profile.home_contents.links',
-                'action_template':'getView/template.actions.home_contents',title:'Links',icon:'/img/accessories/links.svg'},
-                {name:'profile.home_contents.slider',
-                'action_template':'getView/template.actions.home_contents',title:'Slider',icon:'/img/accessories/slider.svg'},
-                {name:'profile.home_contents.gallery',
-                'action_template':'getView/template.actions.home_contents',title:'Gallery',icon:'/img/accessories/gallery.svg'},
-                {name:'profile.home_contents.employees',
-                'action_template':'getView/template.actions.home_contents',title:'Employees',
-                icon:'/img/accessories/employee.svg'}
-                ];
-                return contents;
+               
+                return superServices.getMenu('home_contents');
             }
         }
     },

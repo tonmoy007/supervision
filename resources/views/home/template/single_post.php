@@ -3,7 +3,7 @@
         <md-content class="md-block "  >
          
             <div class="padded white cool-border"  flex layout="column">
-                <h3 class="rgba-black-strong white-text" layout-padding><%post.title%> <small class="md-caption white-text"><%post.subtitle%></small></h3>
+                <h1 class="rgba-black-strong white-text" layout-padding><%post.title%> <small class="md-caption white-text"><%post.subtitle%></small></h1>
                <div class="meta meta--preview">
                     <span class="meta__date"><i class="fa fa-calendar-o"></i> <%getDate(post.created_at)|date%></span>
                     <span class="meta__reading-time"><i class="fa fa-user"></i> <%post.user_name%></span>
