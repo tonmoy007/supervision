@@ -13,7 +13,7 @@
           <form class="super-form" name="addNewForm" ng-submit="submitForm(addNewForm,newGallery,'gallery','gallery',newGallery.type)">
                <md-input-container class="file-container text-center md-block" >
                   <div class="ImageUpload" >
-                              <span class="md-button md-raised file-upload-btn" type="button"><strong ng-if="!newGallery.images.length" >Upload images|videos to gallery</strong> <strong ng-if="newGallery.images.length" >Change Files</strong><br>
+                              <span class="md-button md-raised file-upload-btn" type="button"><strong ng-if="!newGallery.images.length" >Upload images / videos to gallery</strong> <strong ng-if="newGallery.images.length" >Change Files</strong><br>
                                 <i class="fa fa-image text-green2"></i>
                               </span>
                               <input type="file" aria-label="add New Images" ngf-drag ngf-change="setFiles($files, $file, $newFiles, $duplicateFiles, $invalidFiles, $event)" ngf-select ng-model="newGallery.images" name="images"    

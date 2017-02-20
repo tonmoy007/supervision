@@ -35,13 +35,14 @@
               <md-input-container class="md-block">
                 <label>Designation </label>
                 <input type="text" ng-model="newEmployee.rank" name="rank" required>
-              </md-input-container>
-              <div ng-messages="addNewForm.rank.$error" role="alert">
+                <div ng-messages="addNewForm.rank.$error" role="alert">
                       <div ng-message="required">
                         Designation is required
                       </div>
                       
                 </div>
+              </md-input-container>
+              
              <md-input-container class="file-container md-block">
                     <div class="ImageUpload " >
                                 <span class="md-button md-raised file-upload-btn" type="button"><strong ng-if="!newEmployee.featured_image" >Add a feature image</strong> <strong ng-if="newEmployee.featured_image" >Change Image</strong><br>
@@ -65,7 +66,7 @@
                   <md-button type="submit" ng-disabled="addNewForm.$invalid" class="md-raised">Submit</md-button>
               </md-input-container>
           </form>
-          <div class="alert alert-error" ng-if="form.error">
+          <div class="alert alert-danger" ng-if="form.error">
             <%form.error%>
           </div>
           

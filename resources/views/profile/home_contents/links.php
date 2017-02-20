@@ -1,14 +1,7 @@
 <div class="inner-page">
     
     
-    <div style="display: none">
-        <div id="addNewLink" >
-        <md-dialog layout-padding class="pre-render" >
-            
-            <add-new-content class="add-new " url="'api/link'" title="'Add New Link'" list-content="links" ng-class="{'show':add_new}"></add-new-content>
-        </md-dialog>
-        </div>
-    </div>
+   
     
     <div class="inner-page-content" >
     
