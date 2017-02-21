@@ -1,6 +1,6 @@
 <header>
-<loader  ng-if="!coverLoaded" class="fix_loader" ></loader>
-    <div class="cover cool-shadow" ng-class="{profile:nav.current_state=='profile'}" ng-show="coverLoaded&&home_menu&&!menuLoading&&nav.current_state!=profile">
+<loader  ng-show="!coverLoaded" class="fix_loader" ></loader>
+    <div class="cover cool-shadow" ng-class="{profile:nav.current_state=='profile'}" ng-show="coverLoaded&&nav.current_state!=profile">
    
         <div class="search-form" >
             <form  class="md-no-momentum" method="get" accept-charset="utf-8">
@@ -11,8 +11,8 @@
             </md-input-container>
             </form>
             <a ui-sref="login" class="login" ng-show="!globals.currentUser" layout="row"><i  class="fa fa-sign-in"></i> <span>login</span></a>
-            <li class="dropdown right-top" ng-class="{open:drop[18]}" ng-show="globals.currentUser">
-            <a href="" class="dropdown-toggle cool-shadow" ng-click="setVisible(18)"><%globals.currentUser.name%></a>
+            <li class="dropdown right-top" ng-class="{open:drop[9]}" ng-show="globals.currentUser">
+            <a href="" class="dropdown-toggle cool-shadow" ng-click="setVisible(9)"><%globals.currentUser.name%></a>
                     <ul class="dropdown-menu">
                         <li><a ui-sref="profile"><i class="fa fa-home"></i> dashboard</a></li>
                         <li><a href="" ng-click="logout()"><i class="fa fa-sign-out"></i> logout</a></li>
@@ -38,12 +38,12 @@
         <div ng-cloak class="main-nav trans3" ng-class="{open:showMenu}" >
     
             <ul class="nav-bar navbar nav " >
-                <li ng-class="{dropdown:tab.length,'open':tab.length&&drop[$index]}"  ng-repeat="(index, tab) in home_menu track by $index"><a ng-if="!tab.length"  ui-sref="<%tab.url%>"><%index%></a>
-                <a href="" class="dropdown-toggle" ng-if="tab.length" ng-click="setVisible($index)"><%index%></a>
+                <li ng-class="{dropdown:tab.length,'open':drop[$index]}"  ng-repeat="(index, tab) in home_menu track by $index"><a ng-show="!tab.length"  href="<%tab.url%>"><%tab.parent%></a>
+                <a href="" class="dropdown-toggle" ng-show="tab.length" ng-click="setVisible($index)"><%tab[0].parent%></a>
                 <ul class="dropdown-menu" ng-if="tab.length">
-                        <li ng-repeat="item in tab"><a ui-sref="<%item.url%>"><%item.name%></a></li>
+                    <li ng-repeat="(key,item) in tab" ><a href="<%item.url%>"><%item.name%></a></li>
                         
-                    </ul>
+                </ul>
                   
                 </li>
             </ul>

@@ -28,7 +28,7 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         name:'gallery',
         title:'Galelry',
         url:'/gallery/:type',
-        templateUrl:'getView/home.template.gallery.php',
+        templateUrl:'getView/home.template.gallery',
         controller:'galleryCtrl',
         resolve:{
             Gallery:function($stateParams,superServices){
@@ -215,10 +215,14 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
 
 app.controller('homeCtrl',  function($scope,$http,$location,$state,superServices){
     // console.log($scope);
-    $scope.information=null
+    $scope.information=null;
+    $scope.homePage=null
     superServices.loadHomepageContent($scope,'information');
     $scope.$watch('information',function(value){
-        console.log(value);
+        if(value){
+            $scope.homeLoaded=true;
+            $scope.homePage=value;
+        }
     })
 });
 
@@ -261,6 +265,8 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssent
                         $rootScope.site.title='একাডেমিক সুপারভিশন';break;
                     case 'contact':
                         $rootScope.site.title='যোগাযোগ';break;
+                    case 'gallery':
+                        $rootScope.site.title='গ্যালারী';
                     default:
                         $rootScope.site.title= 'একাডেমিক সুপারভিশন';
                }

@@ -161,6 +161,12 @@ this.loadHomepageContent=function($scope,content){
   })
 
 }
+this.loadHomeMenu=function(scope,success,failed){
+    $http.get('api/menu').then(success,failed);
+}
+this.loadSideBar=function(scope,success,failed){
+  $http.get('api/sidebar').then(success,failed);
+}
 this.loadCategory=function($scope,link){
 
     var differ=$q.defer();
@@ -457,38 +463,56 @@ this.deleteContent=function(ev,item_name,url,id){
  methods.generateMenu=function(menu_content){
   var gallery={"গ্যালারী":[{
     name:'ভিডিও গ্যালারী',
-    url:'gallery({type:"video"})'
+    url:'#/gallery/video',
+    parent:'গ্যালারী'
   },
   {
     name:'ফটো গ্যালারী',
-    url:'gallery({type:"photo"})'
+    url:'#/gallery/image'
   }],'মাধ্যমিক প্রতিষ্ঠান সমূহের তালিকা':[
-  {name:'স্কুল',url:'institution({type:"স্কুল"})'},
-  {name:'কলেজ',url:'institution({type:"কলেজ"})'},
-  {name:'মাদ্রাসা',url:'institution({type:"মাদ্রাসা"})'}
-  ],'হোম':{name:'হোম',url:'home'}
+  {name:'স্কুল',url:'#/institution/স্কুল',parent:'মাধ্যমিক প্রতিষ্ঠান সমূহের তালিকা'},
+  {name:'কলেজ',url:'#/institution/কলেজ',parent:'মাধ্যমিক প্রতিষ্ঠান সমূহের তালিকা'},
+  {name:'মাদ্রাসা',url:'#/institution/মাদ্রাসা',parent:'মাধ্যমিক প্রতিষ্ঠান সমূহের তালিকা'}
+  ]
   }
 
   var menu=[];
+  var tab=[]
+  tab[0]={name:'হোম',url:'#/',parent:'হোম',type:'home'}
+  var i=1;
+  var contact;
     if(menu_content){
       angular.forEach(menu_content, function(value, key){
-        menu[key]=[];
+        
+        tab[i]=[];
+        if(!value.length){
+          tab[i]={parent:key}
+        }
         angular.forEach(value,function(val,k){
+         
           if(!val.is_employee&&key!='যোগাযোগ'){
-              menu[key][k]={name:val.title,url:'post({id:'+val.id+'})'};
+              tab[i][k]={name:val.title,url:'#/posts/'+val.id,parent:key};
           }else if(key=='যোগাযোগ'){
-            menu[key]={name:val.title,url:'post({id:'+val.id+'})'}
+            contact={name:val.title,url:'#/posts/'+val.id,parent:key}
+            i--;
           }else{
-            menu[key][k]={name:val.designation,url:'employee({type:'+val.designation+'})'};
+            tab[i][k]={name:val.designation,url:'#/employees/'+val.designation,parent:key};
           }
+
         })
+        
+        i++
+
       });
     }
     angular.forEach(gallery, function(value, key){
-      menu[key]=value;
+      tab[i]=value;
+     
+      i++;
     });
+    tab[i]=contact;
 
-    return menu;
+    return tab;
  }
 
   return methods;

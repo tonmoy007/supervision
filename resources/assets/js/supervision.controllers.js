@@ -3,16 +3,35 @@
 angular.module('super-controllers',[])
 
 
-.controller('menuCtrl',function($scope,$http,$location,$state,SiteEssentials,superServices){
+.controller('menuCtrl',function($scope,$http,$location,$state,SiteEssentials,superServices,$rootScope){
     $scope.menu=false;
     
     $scope.logout=function(){
         superServices.logout();
     }
+    $scope.$watch('coverLoaded',function(value){
+        if(value){
+            $rootScope.globals.siteLoaded=true;
+            console.log($rootScope);
+        }
+    })
 })
-.controller('sidebarCtrl',function($scope,SiteEssentials,superServices,Posts){
+.controller('sidebarCtrl',function($scope,SiteEssentials,superServices){
     $scope.sidebarLoading=true;
-    superServices.loadHomepageContent($scope,'sidebar')
+    var success=function(response){
+        $scope.sidebarLoading=false;
+        if(response.data.success){
+            $scope.sidebarLoading=false;
+            $scope.sidebar=response.data.sidebar;
+            $scope.bani=response.data.sidebar['বানী'];
+            console.log($scope)
+        }
+    }
+    var failed=function(response){
+        $scope.sidebarLoading=false;
+        SiteEssentials.responsCheck(response);
+    }
+    superServices.loadSideBar($scope,success,failed);
 
 })
 .controller('employeeCtrl',function($scope,SiteEssentials,superServices,Employees,$stateParams){
@@ -23,7 +42,8 @@ angular.module('super-controllers',[])
 })
 .controller('galleryCtrl', function($scope,Gallery,$stateParams,superServices){
     $scope.gallery=Gallery;
-console.log(Gallery);
+    $scope.type=$stateParams.type;
+
 })
 
 .controller('HomePostCtrl',function($scope,Post,SiteEssentials,$rootScope){

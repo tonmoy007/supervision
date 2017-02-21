@@ -10,7 +10,7 @@
                     <div ng-repeat="school in schools" ng-include data-src="'getView/home.template.single_school'">
                         
                     </div>
-                    
+                    <md-list-item ng-include data-src="'getView/template.not_found'" ng-init="not_found='School'"></md-list-item>
                 </md-list> 
            
             </div>

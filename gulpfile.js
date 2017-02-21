@@ -19,7 +19,7 @@ elixir(mix => {
         'normalize.css',
         'bootstrap.min.css',
         './node_modules/mdbootstrap/css/mdb.css',
-        'font-awesome.min.css',
+        'font-awesome.min.css','ngGallery.css',
         'ticker.min.css',
         'angular.ticker.css',
         'new.css',

@@ -27,7 +27,7 @@
                 
       </div>  
 
-<news-ticker></news-ticker>
+<news-ticker news="news"></news-ticker>
 
  <div  class="space1">
                 
