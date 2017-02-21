@@ -20,7 +20,6 @@ class GallarySeeder extends Seeder
                 'file' => $faker->imageUrl(),
             ]);
             \App\Models\Slider::create([
-                'name' => $faker->name,
                 'image' => $faker->imageUrl(),
                 'description' => "LOL",
             ]);

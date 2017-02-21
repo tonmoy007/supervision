@@ -19,6 +19,13 @@ class SinglePost extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+    public function getUserNameAttribute()
+    {
+        return User::find($this->user_id)->name;
+    }
+
+    protected $appends = ['user_name'];
+
     public static function boot()
     {
         parent::boot();
