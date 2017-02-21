@@ -7,7 +7,7 @@
                <h3 flex class="p-x-2"><%type%></h3>
                 <md-list >
                 <md-divider></md-divider>
-                    <div ng-repeat="employee in employees" ng-include data-src="'getView/home.template.single_employee'">
+                    <div ng-repeat="school in schools" ng-include data-src="'getView/home.template.single_school'">
                         
                     </div>
                     

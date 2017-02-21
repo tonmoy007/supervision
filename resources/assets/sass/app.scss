@@ -4,7 +4,54 @@
 
 // Variables
 @import "variables";
+@for $i from 0 through 3 {
+    .#{$pad-right}-#{$i}{
+        padding-right:10px*$i;
+    }
+    .#{$pad-left}-#{$i}{
+        padding-left:10px*$i;
+    }
+    .#{$pad-both}-#{$i}{
+        padding-right:10px*$i;
+        padding-left:10px*$i;
+    }
+    .#{$pad-all}-#{$i}{
+        padding:10px*$i;
+        
+    }
+    .#{$mar-right}-#{$i}{
+        margin-right:10px*$i;
+    }
+    .#{$mar-left}-#{$i}{
+        margin-left:10px*$i;
+    }
+    .#{$mar-both}-#{$i}{
+        margin-right:10px*$i;
+        margin-left:10px*$i;
+    }
+    .#{$mar-all}-#{$i}{
+        margin:10px*$i;
+        
+    }
+    
 
+}
+.fix_loader{
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    z-index:100;
+    &.full_screen{
+        width:100vw;
+        height:100vh;
+        line-height:100vh;
+        z-index:100000000000;
+        position:fixed;
+        background-color:transparentize($body-bg, .3);
+        overflow:hidden;
+    }
+}
 .post__container{
     padding-top:10px;
     padding-left:10px;

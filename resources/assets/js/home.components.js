@@ -1,64 +1,75 @@
 var components=angular.module('components',['ticker','simpleAngularTicker'])
-.directive('menu',function($interval){
+.directive('menu',function($interval,superServices){
     return{
         templateUrl:'getView/home.menu',
         controller:'menuCtrl',
         link:function(scope,elem,attr){
+
+
+            
+    
             scope.drop=[];
-            scope.menuLoading=true;
-            scope.interval=2000;
-            scope.cover=[
-            {src:'/img/background/1.jpg',active:true},
-            {src:'/img/background/2.jpg',active:false},
-            {src:'/img/background/3.jpg',active:false},
-            {src:'/img/background/4.jpg',active:false},
-            {src:'/img/background/5.jpg',active:false},
-            {src:'/img/background/6.jpg',active:false},
-            {src:'/img/background/7.jpg',active:false},
-            ]
-            for(i=0;i<6;i++){
+            scope.interval=5000;
+           
+            for(i=0;i<20;i++){
                 scope.drop[i]=false;
             }
-            scope.index=0;
-            total=scope.cover.length;
-            $interval(function(){
-                index=scope.index;
-                if(index==total-1){
-                    scope.index=0;
-                }else{
-                    scope.index++;
-                }
 
-                scope.cover[index].active=true;
-                if(index==0){
-                    scope.cover[total-1].active=false;
-                }else{
-                    scope.cover[index-1].active=false;
-                }
-            },scope.interval);
+            superServices.loadHomepageContent(scope,'menu');
+
+            scope.setCover=function(){
+                scope.index=0;
+                total=scope.cover.length;
+                $interval(function(){
+                    scope.coverLoaded=true;
+                    index=scope.index;
+                    if(index==total-1){
+                        scope.index=0;
+                    }else{
+                        scope.index++;
+                    }
+
+                    scope.cover[index].active=true;
+
+                    if(index==0){
+                        scope.cover[total-1].active=false;
+                    }else{
+                        scope.cover[index-1].active=false;
+                    }
+                },scope.interval);
+            }
 
             scope.setVisible=function(index){
                 scope.drop[index]=!scope.drop[index];
+                
                 angular.forEach(scope.drop,function(value,key){
 
                     if(key!=index){
                         scope.drop[key]=false;
                     }
-                })
-            }
-            scope.menuLoading=false;
+                });
+            };
+            scope.$watch('sliders',function(value){
+                if(value!=null&&typeof value=='object'&&value.length){
+                    
+                    console.log(value);
+                    scope.cover=value.sliders;
+                    scope.home_menu=value.navigation;
+                    scope.setCover();
+                }
+            })
+            
             $('body').click(function(event){
-                var className=event.target.className.split(' ');
-                // console.log(className);
-                if(className[0]!='dropdown-toggle'){
+                if(event.target.className!='dropdown-toggle'){
                       angular.forEach(scope.drop,function(value,key){
 
+                      
                             scope.drop[key]=false;
                        
                     });  
                 }
                 
-            })
+            });
         }
     }
 }).directive('sidebar',function(){

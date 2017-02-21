@@ -25,6 +25,18 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         url:'/contact'
     },
     {
+        name:'gallery',
+        title:'Galelry',
+        url:'/gallery/:type',
+        templateUrl:'getView/home.template.gallery.php',
+        controller:'galleryCtrl',
+        resolve:{
+            Gallery:function($stateParams,superServices){
+                return superServices.getContent('gallery','gallaries',$stateParams.type);
+            }
+        }
+    },
+    {
         name:'posts',
         title:'Posts',
         controller:'HomePostCtrl',
@@ -48,17 +60,18 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
                 return superServices.getContent('employee/category','employees',$stateParams.type);
             }
         }
-    },
-    {
-        name:'employees.single',
-        title:'Single Employee',
-        url:'/:id',
-        templateUrl:'getView/home.template.single_employee',
+    },{
+        name:'institution',
+        title:'Institution',
+        controller:function($scope,Schools,$state,$stateParams){
+            $scope.type=$stateParams.type;
+            $scope.schools=Schools;
+        },
+        url:'/institution/:type',
+        templateUrl:'getView/home.template.schools',
         resolve:{
-            Employee:function(Employees,$routeParams){
-                return Employees.find(function(employee){
-                    return employee.id==$routeParams.id;
-                })
+            Schools:function($stateParams,superServices){
+                return superServices.getContent('school/category','schools',$stateParams.type);
             }
         }
     },
@@ -202,11 +215,11 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
 
 app.controller('homeCtrl',  function($scope,$http,$location,$state,superServices){
     // console.log($scope);
-    $scope.home=true;
-    console.log(superServices.getMenu('profile'));
-    console.log(superServices.getMenu('home_contents'));
-    
-
+    $scope.information=null
+    superServices.loadHomepageContent($scope,'information');
+    $scope.$watch('information',function(value){
+        console.log(value);
+    })
 });
 
 app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssentials,$state){

@@ -4,26 +4,28 @@ angular.module('super-controllers',[])
 
 
 .controller('menuCtrl',function($scope,$http,$location,$state,SiteEssentials,superServices){
-
+    $scope.menu=false;
+    
     $scope.logout=function(){
-        
         superServices.logout();
     }
 })
 .controller('sidebarCtrl',function($scope,SiteEssentials,superServices,Posts){
     $scope.sidebarLoading=true;
-
+    superServices.loadHomepageContent($scope,'sidebar')
 
 })
-.controller('employeeCtrl',function($scope,SiteEssentials,superServices,Employees){
+.controller('employeeCtrl',function($scope,SiteEssentials,superServices,Employees,$stateParams){
     $scope.employees=Employees;
-    console.log(Employees);
-
-})
-.controller('singleEmployeeCtrl',function(Employees,Employee,$scope,$rootScope,superServices){
+    $scope.type=$stateParams.type;
 
 
 })
+.controller('galleryCtrl', function($scope,Gallery,$stateParams,superServices){
+    $scope.gallery=Gallery;
+console.log(Gallery);
+})
+
 .controller('HomePostCtrl',function($scope,Post,SiteEssentials,$rootScope){
     $scope.post=Post;
     $rootScope.site.title=$scope.post!=null?$scope.post.type:$rootScope.site.title;

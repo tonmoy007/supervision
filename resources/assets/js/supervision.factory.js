@@ -130,7 +130,36 @@ this.getMenu=function(type){
             'action_template':'getView/template.actions.home_contents',title:'Employees',
             icon:'/img/accessories/employee.svg'}
             ];
-    return menu[type];
+    
+      return menu[type]
+    
+    
+}
+this.loadHomepageContent=function($scope,content){
+
+  $rootScope.site[content+'Loading']=true;
+  $scope.sliders=[];
+  $http.get('api/homepage').then(function(response){
+    $rootScope.site[content+'Loading']=false;
+      if(response.data.success){
+        if(content!='all'){
+          
+          if(content=='menu'){
+            $scope.sliders['navigation']=SiteEssentials.generateMenu(response.data.menue);
+            $scope.sliders['sliders']=response.data.sliders;
+            
+          }else{
+            $scope[content]=response.data[content];
+          }
+        }else{
+          $scope.homepageContents=response.data;
+        }
+      }
+  },function(response){
+    $rootScope.site[content+'Loading']=false;
+    SiteEssentials.responsCheck(response);
+  })
+
 }
 this.loadCategory=function($scope,link){
 
@@ -189,7 +218,7 @@ this.getContent=function(link,title,id){
   if(typeof id!=undefined&&id!=null){
     url+='/'+id;
   }
-  console.log(url);
+  // console.log(url);
   return $http.get(url).then(function(response){
           console.log(response);
           $rootScope.loadingData=false;
@@ -423,6 +452,43 @@ this.deleteContent=function(ev,item_name,url,id){
         }
            
         });
+ }
+
+ methods.generateMenu=function(menu_content){
+  var gallery={"গ্যালারী":[{
+    name:'ভিডিও গ্যালারী',
+    url:'gallery({type:"video"})'
+  },
+  {
+    name:'ফটো গ্যালারী',
+    url:'gallery({type:"photo"})'
+  }],'মাধ্যমিক প্রতিষ্ঠান সমূহের তালিকা':[
+  {name:'স্কুল',url:'institution({type:"স্কুল"})'},
+  {name:'কলেজ',url:'institution({type:"কলেজ"})'},
+  {name:'মাদ্রাসা',url:'institution({type:"মাদ্রাসা"})'}
+  ],'হোম':{name:'হোম',url:'home'}
+  }
+
+  var menu=[];
+    if(menu_content){
+      angular.forEach(menu_content, function(value, key){
+        menu[key]=[];
+        angular.forEach(value,function(val,k){
+          if(!val.is_employee&&key!='যোগাযোগ'){
+              menu[key][k]={name:val.title,url:'post({id:'+val.id+'})'};
+          }else if(key=='যোগাযোগ'){
+            menu[key]={name:val.title,url:'post({id:'+val.id+'})'}
+          }else{
+            menu[key][k]={name:val.designation,url:'employee({type:'+val.designation+'})'};
+          }
+        })
+      });
+    }
+    angular.forEach(gallery, function(value, key){
+      menu[key]=value;
+    });
+
+    return menu;
  }
 
   return methods;
