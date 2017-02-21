@@ -16,10 +16,10 @@ class SinglePostSeeder extends Seeder
     {
         $faker = Faker::create();
         $category = ['আমাদের সম্পর্কে' ,'শিক্ষা অফিসের কার্যক্রম','ডিজিটাল সেবা সমূহ','যোগাযোগ','খবর','বানী','সাধারন তথ্য'];
-        foreach (range(1,10) as $index){
+        foreach (range(1,24) as $index){
             SinglePost::create([
                 'title' =>$faker->title,
-                'type' => $category[rand(0, 6)],
+                'type' => $category[$index%7],
                 'sub_title' => $faker->title,
                 'content' => $faker->text,
                 'featured_image'=>$faker->imageUrl(),

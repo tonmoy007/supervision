@@ -16,7 +16,7 @@ class GallarySeeder extends Seeder
 
         foreach (range(1,10) as $index){
             \App\Models\Gallary::create([
-                'type' =>$faker->mimeType,
+                'type' => "image",
                 'file' => $faker->imageUrl(),
             ]);
             \App\Models\Slider::create([

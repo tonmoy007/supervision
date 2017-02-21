@@ -54,7 +54,7 @@ class HomeController extends Controller
 
     public function sidebar() {
         $bani = SinglePost::where('type', 'LIKE', "বানী")->get();
-        $khobor = SinglePost::where('type', 'LIKE', "খবর")->get();
+        $khobor = SinglePost::where('type', 'LIKE', "খবর")->take(1)->get();
         $links  = Link::get(['name', 'id', 'type'])->groupBy(function($link){ return $link->type; });
         $sidebar = ["বানী" => $bani->toArray(), "খবর" => $khobor->toArray(), "links"=> $links];
 
