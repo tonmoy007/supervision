@@ -20,7 +20,7 @@ class SinglePostSeeder extends Seeder
             SinglePost::create([
                 'title' =>$faker->title,
                 'type' => $category[rand(0, 6)],
-                'subtitle' => $faker->title,
+                'sub_title' => $faker->title,
                 'content' => $faker->text,
                 'featured_image'=>$faker->imageUrl(),
                 'user_id' => rand(1,20),

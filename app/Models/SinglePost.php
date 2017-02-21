@@ -11,7 +11,7 @@ class SinglePost extends Model
     protected $fillable = [
         'title',
         'type',
-        'subtitle',
+        'sub_title',
         'content'
     ];
 

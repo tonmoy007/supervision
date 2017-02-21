@@ -24,7 +24,7 @@ class HomeController extends Controller
             'শিক্ষা অফিসের কার্যক্রম' =>$education->toArray(), 'ডিজিটাল সেবা সমূহ' =>$digital->toArray(),
             "যোগাযোগ" => $contact->toArray()];
 
-        $gk = SinglePost::where('type', 'LIKE', "সাধারন তথ্য")->select('title', 'id', 'type', 'content', 'subtitle')->get();
+        $gk = SinglePost::where('type', 'LIKE', "সাধারন তথ্য")->select('title', 'id', 'type', 'content', 'sub_title')->get();
 
 
         $bani = SinglePost::where('type', 'LIKE', "বানী")->select('title', 'id', 'type')->get();
@@ -62,7 +62,7 @@ class HomeController extends Controller
     }
 
     public function information() {
-        $gk = SinglePost::where('type', 'LIKE', "সাধারন তথ্য")->select('title', 'id', 'type', 'content', 'subtitle')->get();
+        $gk = SinglePost::where('type', 'LIKE', "সাধারন তথ্য")->select('title', 'id', 'type', 'content', 'sub_title')->get();
         return response()->json(['success'=>1,'message'=>'found information', 'information' => $gk]);
     }
 }

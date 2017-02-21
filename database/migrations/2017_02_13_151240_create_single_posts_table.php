@@ -17,7 +17,7 @@ class CreateSinglePostsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('type');
-            $table->string('subtitle');
+            $table->string('sub_title');
             $table->text('content');
             $table->string('featured_image');
             $table->unsignedInteger('user_id')->default(1)->foreign()->references('id')->on('users')->onDelete('cascade');
