@@ -107,44 +107,11 @@ var components=angular.module('components',['ticker','simpleAngularTicker'])
 }).directive('newsTicker',function(){
     return{
         templateUrl:'getView/home.news-ticker',
+        scope:{
+            news:'=?'
+        },
         link:function(scope){
-            scope.myTickerItems = [
-                   {
-                     title: 'খবর 1',
-                     copy: 'ড. মহীউদ্দীন খান আলমগীর স্যারের কচুয়া সফর সূচী (ডিসেম্বর ০৫, ২০১৫ | শনিবার)',
-                     class:'bq-primary'
-                   },
-                   {
-                     title: 'খবর 2',
-                     copy: 'ঈদ উৎসব-২০১৫ এর অনুষ্ঠান/প্রতিযোগিতা সূচি (২৬ সেপ্টেম্বর ২০১৫ খ্রিঃ)',
-                     class:'bq-warning'
-                   },
-                   {
-                     title: 'খবর 3',
-                     copy: 'উপজেলা উন্নয়ন মেলা ২০১৫ এর অনুষ্ঠান সূচি (২৭-২৯ সেপ্টেম্বর,২০১৫ খ্রিঃ)',
-                     class:'bq-success'
-                   },
-                   {
-                     title: 'খবর ৪',
-                     copy: 'ড. মহীউদ্দীন খান আলমগীর স্যারের কচুয়া সফর সূচী (সেপ্টেম্বর০৩,২০১৫|বৃহস্পতিবার)',
-                     class:'bq-danger'
-                   },
-                   {
-                     title: 'খবর ৫',
-                     copy: 'ড. মহীউদ্দীন খান আলমগীর স্যারের কচুয়া সফর সূচী (আগষ্ট ১৩, ২০১৫ বৃহস্পতিবার, আগষ্ট ১৪,...',
-                     class:'bq-primary'
-                   },
-                   {
-                     title: 'খবর ৬',
-                     copy: 'জাতীয় তথ্য বাতায়ন',
-                     class:'bq-warning'
-                   },
-                   {
-                     title: 'খবর ৭',
-                     copy: 'জাতীয় ই-তথ্যকোষ',
-                     class:'bq-success'
-                   }
-                ];
+            console.log(scope.news);
         }
     }
 

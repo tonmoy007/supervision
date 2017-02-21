@@ -47,16 +47,16 @@
         
     }
     .#{$mar-top}-#{$i}{
-        padding-top:10px*$i;
+        margin-top:10px*$i;
         
     }
     .#{$mar-bottom}-#{$i}{
-        padding-bottom:10px*$i;
+        margin-bottom:10px*$i;
         
     }
     .#{$mar-tb}-#{$i}{
-        padding-top:10px*$i;
-        padding-bottom:10px*$i;
+        margin-top:10px*$i;
+        margin-bottom:10px*$i;
         
     }
     

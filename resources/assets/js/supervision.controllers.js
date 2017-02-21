@@ -24,6 +24,7 @@ angular.module('super-controllers',[])
             $scope.sidebarLoading=false;
             $scope.sidebar=response.data.sidebar;
             $scope.bani=response.data.sidebar['বানী'];
+            $scope.khobor=response.data.sidebar['খবর'];
             console.log($scope)
         }
     }
