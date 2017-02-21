@@ -58,7 +58,7 @@ class SinglePostController extends Controller
             $singlePost = new SinglePost();
             $singlePost->title = $request->get('title');
             $singlePost->type = $request->get('type');
-            $singlePost->subtitle = $request->get('sub_title');
+            $singlePost->sub_title = $request->get('sub_title');
             $singlePost->content = $request->get('content');
             $singlePost->featured_image = Storage::url($path);
             $singlePost->user_id = $this->user->id;
@@ -78,7 +78,7 @@ class SinglePostController extends Controller
                 $post = SinglePost::where('id', $id)->first();
                 $post->title = $request->get('title');
                 $post->type = $request->get('type');
-                $post->subtitle = $request->get('sub_title');
+                $post->sub_title = $request->get('sub_title');
                 $post->content = $request->get('content');
                 if($request->file("featured_image")) {
                     $dir = "posts";

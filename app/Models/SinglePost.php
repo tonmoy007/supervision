@@ -11,13 +11,20 @@ class SinglePost extends Model
     protected $fillable = [
         'title',
         'type',
-        'subtitle',
+        'sub_title',
         'content'
     ];
 
     public function users(){
         return $this->belongsTo('App\Models\User');
     }
+
+    public function getUserNameAttribute()
+    {
+        return User::find($this->user_id)->name;
+    }
+
+    protected $appends = ['user_name'];
 
     public static function boot()
     {
