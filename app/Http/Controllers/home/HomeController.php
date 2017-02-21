@@ -29,7 +29,7 @@ class HomeController extends Controller
 
         $bani = SinglePost::where('type', 'LIKE', "বানী")->get();
         $khobor = SinglePost::where('type', 'LIKE', "খবর")->get();
-        $links  = Link::get(['name', 'id', 'type'])->groupBy(function($link){ return $link->type; });
+        $links  = Link::get()->groupBy(function($link){ return $link->type; });
         $sidebar = ["বানী" => $bani->toArray(), "খবর" => $khobor->toArray(), "links"=> $links];
 
         return response()->json(['success'=>1,'message'=>'found all','menue'=> $menue,
@@ -54,8 +54,8 @@ class HomeController extends Controller
 
     public function sidebar() {
         $bani = SinglePost::where('type', 'LIKE', "বানী")->get();
-        $khobor = SinglePost::where('type', 'LIKE', "খবর")->take(1)->get();
-        $links  = Link::get(['name', 'id', 'type'])->groupBy(function($link){ return $link->type; });
+        $khobor = SinglePost::where('type', 'LIKE', "খবর")->take(5)->get();
+        $links  = Link::get()->groupBy(function($link){ return $link->type; });
         $sidebar = ["বানী" => $bani->toArray(), "খবর" => $khobor->toArray(), "links"=> $links];
 
         return response()->json(['success'=>1,'message'=>'found sidebar','sidebar'=> $sidebar]);
