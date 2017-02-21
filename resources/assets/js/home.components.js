@@ -15,7 +15,7 @@ var components=angular.module('components',['ticker','simpleAngularTicker'])
                 scope.drop[i]=false;
             }
 
-            superServices.loadHomepageContent(scope,'menu');
+            
 
             scope.setCover=function(){
                 scope.index=0;
@@ -49,16 +49,7 @@ var components=angular.module('components',['ticker','simpleAngularTicker'])
                     }
                 });
             };
-            scope.$watch('sliders',function(value){
-                if(value!=null&&typeof value=='object'&&value.length){
-                    
-                    console.log(value);
-                    scope.cover=value.sliders;
-                    scope.home_menu=value.navigation;
-                    scope.setCover();
-                }
-            })
-            
+            superServices.loadMenu(scope,success,failed);
             $('body').click(function(event){
                 if(event.target.className!='dropdown-toggle'){
                       angular.forEach(scope.drop,function(value,key){
