@@ -37,7 +37,7 @@ class HomeController extends Controller
 
     }
 
-    public function menue() {
+    public function menu() {
         $sliders = Slider::all();
 
         $aboutUs = SinglePost::where('type', 'LIKE', "আমাদের সম্পর্কে")->select('title', 'id', 'type')->get();
@@ -49,7 +49,7 @@ class HomeController extends Controller
         $menue = ["আমাদের সম্পর্কে" => array_merge($aboutUs->toArray(), $employee->toArray()),
             'শিক্ষা অফিসের কার্যক্রম' =>$education->toArray(), 'ডিজিটাল সেবা সমূহ' =>$digital->toArray(),
             "যোগাযোগ" => $contact->toArray()];
-        return response()->json(['success'=>1,'message'=>'found menue and sliders','menue'=> $menue, 'sliders'=>$sliders]);
+        return response()->json(['success'=>1,'message'=>'found menu and sliders','menu'=> $menue, 'sliders'=>$sliders]);
     }
 
     public function sidebar() {
