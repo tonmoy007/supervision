@@ -243,13 +243,12 @@ this.getContent=function(link,title,id){
     };
 
 this.addNewContent=function(data,url,name,key,$scope){
-    console.log(data);
+    
    var cancel=false;
     $scope.form=[];
     $scope.form.addingContent=true;
-    if(data.mpo_date){
-      data.mpo_date=SiteEssentials.getDateFormate(data.mpo_date);
-    }
+  
+
     var upload=Upload.upload({
         url:'api/'+url,
         method:'POST',
@@ -266,8 +265,6 @@ this.addNewContent=function(data,url,name,key,$scope){
       
       $scope.form.addingContent=false;
       data.message=response.data.message;
-      data.id=response.data.id;
-      data.featured_image=(name=='posts'||name=='employees')?response.data.featured_image:'';
     
         $state.reload($state.current.name);
         $mdDialog.hide(data,name,key);
@@ -354,8 +351,9 @@ this.deleteContent=function(ev,item_name,url,id){
     $scope.form.updatingContent=true;
     console.log(data);
     var cancel=false;
-   
-    var upload=$http.put('api/'+link+'/'+data.id, data,{'_method':'PUT'})
+    var form_data=SiteEssentials.processFormInput(data);
+     console.log(form_data);
+    var upload=$http.put('api/'+link+'/'+data.id, form_data,{'_method':'PUT'})
     
     $scope.cancelsubmit=function(){
       cancel=true;
@@ -369,12 +367,15 @@ this.deleteContent=function(ev,item_name,url,id){
         $scope.form.updatingContent=false;
         if(response.data.success){
             if(typeof dialog!=undefined||dialog!=null){
+              data.message=response.data.message;
               $mdDialog.hide(data);
+            }else{
+              ShowSimpleToast.show(response.data.message);
+
             }
             $state.reload($state.current.name);
         }
-        ShowSimpleToast.show(response.data.message);
-    }
+      }
    
     var error =function(response){
          $scope.form.updatingContent=false;
@@ -518,6 +519,18 @@ this.deleteContent=function(ev,item_name,url,id){
     tab[i]=contact;
 
     return tab;
+ }
+ methods.processFormInput=function(data){
+  var form_data={};
+    angular.forEach(data, function(value, key){
+      
+      form_data[key]=value;
+      if(key=='mpo_date'){
+        form_data[key]=methods.getDateFormate(value);
+      }
+      
+    });
+    return form_data;
  }
 
   return methods;
