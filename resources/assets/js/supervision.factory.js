@@ -247,7 +247,9 @@ this.addNewContent=function(data,url,name,key,$scope){
    var cancel=false;
     $scope.form=[];
     $scope.form.addingContent=true;
-    
+    if(data.mpo_date){
+      data.mpo_date=SiteEssentials.getDateFormate(data.mpo_date);
+    }
     var upload=Upload.upload({
         url:'api/'+url,
         method:'POST',
