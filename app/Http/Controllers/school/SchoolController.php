@@ -107,8 +107,12 @@ class SchoolController extends Controller
                 if(isset($input['password'])) {
                     $user->password= bcrypt($request->get('password'));
                 }
-                $user->name = $input['name'];
-                $user->email = $input['email'];
+                if(isset($input['name'])) {
+                    $user->name = $input['name'];
+                }
+                if(isset($input['email'])) {
+                    $user->email = $input['email'];
+                }
                 $user->update();
 
 
