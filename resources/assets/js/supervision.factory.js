@@ -98,13 +98,75 @@ angular.module('super-factory',['ngMaterial','ngAnimate'])
         $state.reload('home');
         ShowSimpleToast.show(response.data.message);
       }else{
+        AuthenticationService.ClearCredentials();
         ShowSimpleToast.show(response.data.message);
       }
     },function(response){
       SiteEssentials.responsCheck(response);
     })
   }
+this.getMenu=function(type){
+  var menu=[];
+  menu['profile']=[
+            {'name':'home','title':'Home','icon':'/img/accessories/home.svg','action_template':''},
+            {'name':'profile.reports','title':'Reports','icon':'/img/accessories/reports.svg','action_template':''},
+            {'name':'profile.notice','title':'Notice','icon':'/img/accessories/notice.svg','action_template':''},
+            {'name':'profile.schools','title':'Schools','icon':'/img/accessories/schools.svg',
+            'action_template':'getView/template.actions.school'},
+            {'name':'profile.settings','title':'Settings','icon':'img/accessories/settings.svg','action_template':''},
+            {'name':'profile.home_contents','title':'Home Contents','icon':'/img/accessories/home_contents.svg',
+            'action_template':'getView/template.actions.home_contents'}
+            ];
+  menu['home_contents']=[
+            {name:'profile.home_contents.posts',
+            'action_template':'getView/template.actions.home_contents',title:'Posts',icon:'/img/accessories/posts.svg'},
+            {name:'profile.home_contents.links',
+            'action_template':'getView/template.actions.home_contents',title:'Links',icon:'/img/accessories/links.svg'},
+            {name:'profile.home_contents.slider',
+            'action_template':'getView/template.actions.home_contents',title:'Slider',icon:'/img/accessories/slider.svg'},
+            {name:'profile.home_contents.gallery',
+            'action_template':'getView/template.actions.home_contents',title:'Gallery',icon:'/img/accessories/gallery.svg'},
+            {name:'profile.home_contents.employees',
+            'action_template':'getView/template.actions.home_contents',title:'Employees',
+            icon:'/img/accessories/employees.svg'}
+            ];
+    
+      return menu[type]
+    
+    
+}
+this.loadHomepageContent=function($scope,content){
 
+  $rootScope.site[content+'Loading']=true;
+  $scope.sliders=[];
+  $http.get('api/homepage').then(function(response){
+    $rootScope.site[content+'Loading']=false;
+      if(response.data.success){
+        if(content!='all'){
+          
+          if(content=='menu'){
+            $scope.sliders['navigation']=SiteEssentials.generateMenu(response.data.menue);
+            $scope.sliders['sliders']=response.data.sliders;
+            
+          }else{
+            $scope[content]=response.data[content];
+          }
+        }else{
+          $scope.homepageContents=response.data;
+        }
+      }
+  },function(response){
+    $rootScope.site[content+'Loading']=false;
+    SiteEssentials.responsCheck(response);
+  })
+
+}
+this.loadHomeMenu=function(scope,success,failed){
+    $http.get('api/menu').then(success,failed);
+}
+this.loadSideBar=function(scope,success,failed){
+  $http.get('api/sidebar').then(success,failed);
+}
 this.loadCategory=function($scope,link){
 
     var differ=$q.defer();
@@ -155,11 +217,15 @@ this.getSchools=function(){
 
     };
 
-this.getContent=function(link,title){
+this.getContent=function(link,title,id){
   
   $rootScope.loadingData=true;
-  
-  return $http.get('api/'+link).then(function(response){
+  var url='api/'+link;
+  if(typeof id!=undefined&&id!=null){
+    url+='/'+id;
+  }
+  // console.log(url);
+  return $http.get(url).then(function(response){
           console.log(response);
           $rootScope.loadingData=false;
             if(response.data.success){
@@ -175,6 +241,7 @@ this.getContent=function(link,title){
         });
 
     };
+
 this.addNewContent=function(data,url,name,key,$scope){
     console.log(data);
    var cancel=false;
@@ -321,6 +388,7 @@ this.deleteContent=function(ev,item_name,url,id){
   }
 
 
+
 })
 
 
@@ -390,6 +458,64 @@ this.deleteContent=function(ev,item_name,url,id){
         }
            
         });
+ }
+
+ methods.generateMenu=function(menu_content){
+  var gallery={"গ্যালারী":[{
+    name:'ভিডিও গ্যালারী',
+    url:'#/gallery/video',
+    parent:'গ্যালারী'
+  },
+  {
+    name:'ফটো গ্যালারী',
+    url:'#/gallery/image'
+  }],'মাধ্যমিক প্রতিষ্ঠান সমূহের তালিকা':[
+  {name:'স্কুল',url:'#/institution/স্কুল',parent:'মাধ্যমিক প্রতিষ্ঠান সমূহের তালিকা'},
+  {name:'কলেজ',url:'#/institution/কলেজ',parent:'মাধ্যমিক প্রতিষ্ঠান সমূহের তালিকা'},
+  {name:'মাদ্রাসা',url:'#/institution/মাদ্রাসা',parent:'মাধ্যমিক প্রতিষ্ঠান সমূহের তালিকা'}
+  ]
+  }
+
+  var menu=[];
+  var tab=[]
+  tab[0]={name:'হোম',url:'#/',parent:'হোম',type:'home'}
+  var i=1;
+  var contact;
+    if(menu_content){
+      angular.forEach(menu_content, function(value, key){
+        
+        tab[i]=[];
+        if(!value.length){
+          tab[i]={parent:key}
+        }
+        if(key=='যোগাযোগ'&&!contact&&typeof value[0].title!=undefined&&typeof value[0].title!=null){
+          contact=contact={name:value[0].title,url:'#/posts/'+value[0].id,parent:key};
+            
+        }else{
+         angular.forEach(value,function(val,k){
+         
+            if(!val.is_employee){
+                tab[i][k]={name:val.title,url:'#/posts/'+val.id,parent:key};
+            }else{
+              tab[i][k]={name:val.designation,url:'#/employees/'+val.designation,parent:key};
+            }
+
+          })
+          
+          i++ 
+        }
+        
+
+      });
+    }
+    angular.forEach(gallery, function(value, key){
+      tab[i]=value;
+     
+      i++;
+    });
+    tab[i]=contact;
+
+    return tab;
  }
 
   return methods;

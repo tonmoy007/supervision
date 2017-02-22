@@ -19,6 +19,9 @@ Route::get('/logout','UserController@logout')->middleware('ability:token');
 Route::get('/users','UserController@index')->middleware('ability:token');
 
 Route::get('/homepage', "home\\HomeController@index");
+Route::get('/menu', "home\\HomeController@menu");
+Route::get('/sidebar', "home\\HomeController@sidebar");
+Route::get('/information', "home\\HomeController@information");
 Route::get('post/category', 'posts\\PostCategoryController@index');
 Route::get('post/category/{category}', 'posts\\SinglePostController@category');
 Route::resource('post', 'posts\\SinglePostController');

@@ -3,12 +3,76 @@
 angular.module('super-controllers',[])
 
 
-.controller('menuCtrl',function($scope,$http,$location,$state,SiteEssentials,superServices){
-
+.controller('menuCtrl',function($scope,$http,$location,$state,SiteEssentials,superServices,$rootScope){
+    $scope.menu=false;
+    
     $scope.logout=function(){
-        
         superServices.logout();
     }
+    $scope.$watch('coverLoaded',function(value){
+        if(value){
+            $rootScope.globals.siteLoaded=true;
+            console.log($rootScope);
+        }
+    })
+})
+.controller('sidebarCtrl',function($scope,SiteEssentials,superServices){
+    $scope.sidebarLoading=true;
+    var success=function(response){
+        $scope.sidebarLoading=false;
+        if(response.data.success){
+            $scope.sidebarLoading=false;
+            $scope.sidebar=response.data.sidebar;
+            $scope.bani=response.data.sidebar['বানী'];
+            $scope.khobor=response.data.sidebar['খবর'];
+            console.log($scope)
+        }
+    }
+    var failed=function(response){
+        $scope.sidebarLoading=false;
+        SiteEssentials.responsCheck(response);
+    }
+    superServices.loadSideBar($scope,success,failed);
+
+})
+.controller('employeeCtrl',function($scope,SiteEssentials,superServices,Employees,$stateParams){
+    $scope.employees=Employees;
+    $scope.type=$stateParams.type;
+
+
+})
+.controller('galleryCtrl', function($scope,Gallery,$stateParams,superServices){
+    $scope.gallery=Gallery;
+    $scope.type=$stateParams.type;
+    if($scope.type=='video'){
+        $scope.video_config=[];
+        angular.forEach($scope.gallery,function(value,key){
+            $scope.video_config[key]={
+                sources:[{src:value.file,type:value.type}],
+                tracks: [
+                    {
+                        src: "http://www.videogular.com/assets/subs/pale-blue-dot.vtt",
+                        kind: "subtitles",
+                        srclang: "en",
+                        label: "English",
+                        default: ""
+                    }
+                ]
+            }
+            
+        })
+    }
+
+})
+
+.controller('HomePostCtrl',function($scope,Post,SiteEssentials,$rootScope){
+    $scope.post=Post;
+    $rootScope.site.title=$scope.post!=null?$scope.post.type:$rootScope.site.title;
+    
+    $scope.getDate=function(date){
+        return SiteEssentials.getDate(date);
+    }
+
 })
 
 .controller('profileCtrl',function($scope,$rootScope,$http,SiteEssentials,superServices,Menu,$state){
@@ -57,7 +121,8 @@ angular.module('super-controllers',[])
      $rootScope.nav.profile_index=i;
 })
 
-.controller('schoolCtrl',function($scope,SiteEssentials,superServices,$rootScope,ShowSimpleToast,Schools,Menu,$state){
+.controller('schoolCtrl',function($scope,SiteEssentials,superServices,
+    $rootScope,ShowSimpleToast,Schools,Menu,$state){
     $scope.schools=[];
     var i=-1;
     $rootScope.nav.item=Menu.find(function(item){
@@ -206,7 +271,7 @@ angular.module('super-controllers',[])
 })
 
 
-.controller('editModelCtrl',function($scope,$rootScope,$mdDialog,superServices){
+.controller('editModelCtrl',function($scope,$rootScope,$mdDialog,superServices,SiteEssentials){
     $scope.data=[];
 
     $scope.data.editContent=$rootScope.data.editContent;

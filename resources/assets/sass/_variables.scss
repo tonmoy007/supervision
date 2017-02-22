@@ -8,7 +8,20 @@ $list-group-border: $laravel-border-color;
 $navbar-default-border: $laravel-border-color;
 $panel-default-border: $laravel-border-color;
 $panel-inner-border: $laravel-border-color;
-
+$pad-right:p-r !default;
+$pad-left:p-l !default;
+$pad-both:p-x !default;
+$pad-all:p-a !default;
+$pad-top:p-t !default;
+$pad-bottom:p-b !default;
+$pad-tb:p-u !default;
+$mar-right:m-r !default;
+$mar-left:m-l !default;
+$mar-both:m-x !default;
+$mar-all:m-a !default;
+$mar-top:m-t !default;
+$mar-bottom:m-b !default;
+$mar-tb:m-u !default;
 // Brands
 $brand-primary: #3097D1;
 $brand-info: #8eb4cb;

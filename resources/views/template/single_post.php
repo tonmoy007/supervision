@@ -5,7 +5,7 @@
         <div flex class="list-card-details" layout-padding flex ng-click="expand($index,'posts',post,1,category)">
         <img ng-src="<%post.featured_image%>" alt="<%post.title%>" ng-if="post.featured_image" class="md-avatar">
             <span class="md-title"><%post.title%></span>
-            <span class="md-sub-title"><%post.subtitle%></span>
+            <span class="md-sub-title"><%post.sub_title%></span>
             <span class="meta meta__date"><%post.author%></span>
         </div>
         

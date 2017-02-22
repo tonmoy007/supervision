@@ -162,8 +162,9 @@ body.no_scroll{
 }
 
 .meta {
-  font-size: 0.765em;
-  text-align: left;
+    font-size: .8rem;
+    text-align: left;
+    padding: 0px 8px;
 }
 
 .meta .fa {

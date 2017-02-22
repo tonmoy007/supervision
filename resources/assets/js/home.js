@@ -1,5 +1,7 @@
 var app=angular.module('mainHome',['components','ui.router','ngSanitize','ngFileUpload','angularTrix',
-    'ngCookies','ngMessages','super-controllers','Authentication','super-factory']);
+    'ngCookies','ngMessages','super-controllers','Authentication','super-factory',
+            "com.2fdevs.videogular",
+            "com.2fdevs.videogular.plugins.controls"]);
 
 
 
@@ -10,7 +12,10 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         title:'Home',
         templateUrl:'getView/home.homepage',
         controller:'homeCtrl',
-        url:'/'
+        url:'/',
+        resolve:{
+            
+        }
     },
     {
         controller:function($scope){
@@ -20,6 +25,57 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         name:'contact',
         templateUrl:'getView/home.contact',
         url:'/contact'
+    },
+    {
+        name:'gallery',
+        title:'Galelry',
+        url:'/gallery/:type',
+        templateUrl:'getView/home.template.gallery',
+        controller:'galleryCtrl',
+        resolve:{
+            Gallery:function($stateParams,superServices){
+                return superServices.getContent('gallery','gallaries',$stateParams.type);
+            }
+        }
+    },
+    {
+        name:'posts',
+        title:'Posts',
+        controller:'HomePostCtrl',
+        url:'/posts/:id',
+        templateUrl:'getView/home.template.single_post',
+        resolve:{
+            Post:function($stateParams,superServices){
+                
+                return superServices.getContent('post','posts',$stateParams.id);
+            }
+        }
+    },
+    {
+        name:'employees',
+        title:'Employees',
+        controller:'employeeCtrl',
+        url:'/employees/:type',
+        templateUrl:'getView/home.template.employees',
+        resolve:{
+            Employees:function($stateParams,superServices){
+                return superServices.getContent('employee/category','employees',$stateParams.type);
+            }
+        }
+    },{
+        name:'institution',
+        title:'Institution',
+        controller:function($scope,Schools,$state,$stateParams){
+            $scope.type=$stateParams.type;
+            $scope.schools=Schools;
+        },
+        url:'/institution/:type',
+        templateUrl:'getView/home.template.schools',
+        resolve:{
+            Schools:function($stateParams,superServices){
+                return superServices.getContent('school/category','schools',$stateParams.type);
+            }
+        }
     },
     {
         name:'login',
@@ -35,18 +91,9 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         title:'profile',
         templateUrl:'getView/profile.dashboard',
         resolve:{
-            Menu:function(){
-                var menu=[
-                {'name':'home','title':'Home','icon':'img/avatar.png','action_template':''},
-                {'name':'profile.reports','title':'Reports','icon':'img/avatar.png','action_template':''},
-                {'name':'profile.notice','title':'Notice','icon':'img/avatar.png','action_template':''},
-                {'name':'profile.schools','title':'Schools','icon':'img/avatar.png',
-                'action_template':'getView/template.actions.school'},
-                {'name':'profile.settings','title':'Settings','icon':'img/avatar.png','action_template':''},
-                {'name':'profile.home_contents','title':'Home Contents','icon':'img/avatar.png',
-                'action_template':'getView/template.actions.home_contents'}
-                ]
-                return menu;
+            Menu:function(superServices){
+                
+                return superServices.getMenu('profile');
             }
         }
     },
@@ -90,20 +137,9 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         url:'/home_contents',
         templateUrl:'getView/profile.home_contents',
         resolve:{
-            HomeContents:function(){
-                var contents=[
-                {name:'profile.home_contents.posts',
-                'action_template':'getView/template.actions.home_contents',title:'Posts',icon:'/img/avatar.png'},
-                {name:'profile.home_contents.links',
-                'action_template':'getView/template.actions.home_contents',title:'Links',icon:'/img/avatar.png'},
-                {name:'profile.home_contents.slider',
-                'action_template':'getView/template.actions.home_contents',title:'Slider',icon:'/img/avatar.png'},
-                {name:'profile.home_contents.gallery',
-                'action_template':'getView/template.actions.home_contents',title:'Gallery',icon:'/img/avatar.png'},
-                {name:'profile.home_contents.employees',
-                'action_template':'getView/template.actions.home_contents',title:'Employees',icon:'/img/avatar.png'}
-                ];
-                return contents;
+            HomeContents:function(superServices){
+               
+                return superServices.getMenu('home_contents');
             }
         }
     },
@@ -179,10 +215,17 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
     $interpolateProvider.endSymbol('%>');
 });
 
-app.controller('homeCtrl',  function($scope,$http,$location,$state){
+app.controller('homeCtrl',  function($scope,$http,$location,$state,superServices){
     // console.log($scope);
-    $scope.home=true;
-    
+    $scope.information=null;
+    $scope.homePage=null
+    superServices.loadHomepageContent($scope,'information');
+    $scope.$watch('information',function(value){
+        if(value){
+            $scope.homeLoaded=true;
+            $scope.homePage=value;
+        }
+    })
 });
 
 app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssentials,$state){
@@ -199,25 +242,36 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssent
         
         $rootScope.$on('$stateChangeStart', function (event, toState) {
             
+               SiteEssentials.goTop();
                 // console.log(toState);
                 var state=toState.name.split('.');
                 $rootScope.data=[];
+                $rootScope.site=[];
                 $rootScope.nav.state=state;
                 $rootScope.nav.current_state=state[0];
                 $rootScope.nav.current_state_secendary=typeof state[1]!=undefined?state[1]:null;
                 $rootScope.nav.item=[];
-                $rootScope.globals.curren_state=$state;
+                $rootScope.globals.current_state=$state;
                 $rootScope.nav.title=toState.title;
                 $rootScope.globals.title_bar=toState.title;
-                SiteEssentials.goTop();
-
+                
+                
                 if(state.length>1&&state[0]=='profile'){
                     angular.element(document.getElementById('body')).addClass('no_scroll');
                 }else{
                     angular.element(document.getElementById('body')).removeClass('no_scroll');
                 }
 
-                
+               switch (toState.name) {
+                    case 'home':
+                        $rootScope.site.title='একাডেমিক সুপারভিশন';break;
+                    case 'contact':
+                        $rootScope.site.title='যোগাযোগ';break;
+                    case 'gallery':
+                        $rootScope.site.title='গ্যালারী';
+                    default:
+                        $rootScope.site.title= 'একাডেমিক সুপারভিশন';
+               }
                 
                 // console.log($rootScope.nav)
             
@@ -226,7 +280,7 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssent
         $rootScope.$on('$locationChangeStart', function (event, next, current){
 
             var page=$location.path().split('/');
-            
+            console.log(next);
             
             if(!$rootScope.globals.currentUser){
                 $rootScope.login_page=true;
