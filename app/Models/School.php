@@ -35,6 +35,11 @@ class School extends Model
     public function user() {
         return $this->belongsTo('App\Models\User');
     }
+
+    public function classes() {
+        return $this->hasMany('App\Models\Classes');
+    }
+
     public static function boot()
     {
         parent::boot();

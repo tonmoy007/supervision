@@ -37,3 +37,5 @@ Route::get('school/category/{category}', 'school\\SchoolController@category');
 Route::resource('school', 'school\\SchoolController');
 Route::resource('slider', 'home\\SliderController');
 Route::resource('gallery', 'home\\GallaryController');
+
+Route::resource('class', 'school\\ClassController');
