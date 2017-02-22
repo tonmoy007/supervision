@@ -11071,19 +11071,23 @@ md-dialog .dissmiss-button {
   line-height: 1.2rem;
   min-height: 40px;
   margin: 5px;
+  padding: 4px;
   background-color: #fcfbfc;
   border-radius: 0;
-  font-size: .6rem;
-  border-radius: 0;
+  font-size: .8rem;
 }
 
 .grid.small .grid-container .grid__item.active {
-  background-color: #e6e6e6;
+  background-color: #ebebeb;
   font-weight: bold;
 }
 
 .grid.small .grid-container .grid__item.active:before {
   border: 3px solid #5c5c5c;
+}
+
+.grid.small .grid-container .grid__item md-icon {
+  padding: 2px;
 }
 
 .grid.small .grid-container .grid__item:before {
@@ -11099,6 +11103,7 @@ md-dialog .dissmiss-button {
   margin: 0;
   padding: 2px;
   height: 25vh;
+  max-height: 260px;
   overflow: hidden;
   position: relative;
 }
@@ -11117,6 +11122,18 @@ md-dialog .dissmiss-button {
   margin-left: 50%;
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
+}
+
+.image-gallery .gallery-card video {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  background-color: #e6dee6;
+}
+
+.image-gallery .gallery-card video.video-gallery {
+  position: absolute;
 }
 
 .image-gallery .gallery-card md-icon {

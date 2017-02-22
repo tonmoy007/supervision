@@ -41,14 +41,14 @@ angular.module('super-controllers',[])
 
 
 })
-.controller('galleryCtrl', function($scope,Gallery,$stateParams,superServices){
+.controller('galleryCtrl', function($scope,Gallery,$stateParams,superServices,$sce){
     $scope.gallery=Gallery;
     $scope.type=$stateParams.type;
     if($scope.type=='video'){
         $scope.video_config=[];
         angular.forEach($scope.gallery,function(value,key){
             $scope.video_config[key]={
-                sources:[{src:value.file,type:value.type}],
+                sources:[{src:$sce.trustAsResourceUrl(value.file),type:'video/mp4'}],
                 tracks: [
                     {
                         src: "http://www.videogular.com/assets/subs/pale-blue-dot.vtt",
@@ -62,6 +62,7 @@ angular.module('super-controllers',[])
             
         })
     }
+    $scope.videoLoad=true;
 
 })
 
@@ -184,9 +185,8 @@ angular.module('super-controllers',[])
      
      
     $scope.setFiles=function($files, $file, $newFiles, $duplicateFiles, $invalidFiles, $event){
-        console.log($files)
-       console.log($scope.newGallery.images);
-       console.log($scope.newGallery.featured_image);
+    
+       
 
     }
     $scope.hide=function(){

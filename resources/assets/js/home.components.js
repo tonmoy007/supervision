@@ -153,43 +153,52 @@ var components=angular.module('components',['ticker','simpleAngularTicker'])
     }
 }).directive('preload',function(){
     return{
+
         link:function(scope,elem,attr){
             elem.ready(function(){
                 var src=attr.srcImage;
-                
-                var img=new Image();
-                img.src=src;
                 var type=attr.type;
+                if(type!='video')
+                {
+                    var img=new Image();
+                    img.src=src;
 
-                $(img).on('load',function(){
+                    $(img).on('load',function(){
+                        
+                      var  t_src='url("'+this.src+'")';
+                      var  m_src=decodeURI(t_src);
+
+                   if(type=='background'){
+                     
+                     elem[0].style.backgroundImage=t_src;
+                     attr.src=this.src;
+                        
+                   }else{
+                    elem.find('img').attr({
+                        src: this.src,
+                    });
+                   }
+
+                        elem.find('.progress-loader').hide();
+                    });
+
+                    $(img).on('error',function(){
+                        if(type=='background'){
+                            elem[0].style.backgroundImage='url(https://dummyimage.com/600x400/ddd/1d1d1f&text=no+image+found)';
+                            attr.src='https://dummyimage.com/600x400/ddd/1d1d1f&text=no+image+found';
+                        }else{
+                            elem.find('img').attr({src:'https://dummyimage.com/600x400/ddd/1d1d1f&text=no+image+found'});
+                        }
+                        elem.find('.progress-loader').hide();
+                    })
                     
-                  var  t_src='url("'+this.src+'")';
-                  var  m_src=decodeURI(t_src);
-
-               if(type=='background'){
-                 
-                 elem[0].style.backgroundImage=t_src;
-                 attr.src=this.src;
-                    
-               }else{
-                elem.find('img').attr({
-                    src: this.src,
-                });
-               }
-
-                    elem.find('.progress-loader').hide();
-                });
-
-                $(img).on('error',function(){
-                    if(type=='background'){
-                        elem[0].style.backgroundImage='url(https://dummyimage.com/600x400/ddd/1d1d1f&text=no+image+found)';
-                        attr.src='https://dummyimage.com/600x400/ddd/1d1d1f&text=no+image+found';
-                    }else{
-                        elem.find('img').attr({src:'https://dummyimage.com/600x400/ddd/1d1d1f&text=no+image+found'});
-                    }
-                    elem.find('.progress-loader').hide();
-                })
                 
+                }else{
+                    console.log('video_found');
+                    elem.find('source').attr('src', src);
+                    elem.find('.progress-loader').hide();
+                }
+
                })
         }
     }
