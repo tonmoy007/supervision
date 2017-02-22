@@ -6,18 +6,19 @@
     </div>
     <!--/.Panel-->
     <md-card  class="cool-shadow" md-theme-watch>
-        <md-card-title>
+        <div class="p-a-1">
+        <md-card-title-media>
+            <div class="md-media-sm card-media">
+                <img ng-src="<%bani[0].featured_image%>" class="img-fluid" alt="">
+            </div>
+          </md-card-title-media>
           <md-card-title-text>
             <span class="md-headline"><%bani[0].title%></span>
             <span class="md-caption"><%bani[0].sub_title%></span>
             <p class="text-justify" ng-bind-html="bani[0].content"></p>
           </md-card-title-text>
-          <md-card-title-media>
-            <div class="md-media-sm card-media">
-                <img ng-src="<%bani[0].featured_image%>" class="img-fluid" alt="">
-            </div>
-          </md-card-title-media>
-        </md-card-title>
+          
+        </div >
         <!-- <md-card-actions layout="row" layout-align="end center">
           <md-button>Action 1</md-button>
           <md-button>Action 2</md-button>
@@ -27,7 +28,7 @@
                 
       </div>  
 
-<news-ticker news="khobor"></news-ticker>
+<news-ticker news="khobor" ng-if="khobor.length"></news-ticker>
 
  <div  class="space1">
                 

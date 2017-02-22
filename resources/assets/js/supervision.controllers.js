@@ -44,6 +44,24 @@ angular.module('super-controllers',[])
 .controller('galleryCtrl', function($scope,Gallery,$stateParams,superServices){
     $scope.gallery=Gallery;
     $scope.type=$stateParams.type;
+    if($scope.type=='video'){
+        $scope.video_config=[];
+        angular.forEach($scope.gallery,function(value,key){
+            $scope.video_config[key]={
+                sources:[{src:value.file,type:value.type}],
+                tracks: [
+                    {
+                        src: "http://www.videogular.com/assets/subs/pale-blue-dot.vtt",
+                        kind: "subtitles",
+                        srclang: "en",
+                        label: "English",
+                        default: ""
+                    }
+                ]
+            }
+            
+        })
+    }
 
 })
 

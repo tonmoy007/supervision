@@ -4,7 +4,7 @@
     <div class="list-card-contents" flex layout="column" layout-gt-sm="row">
       
         <div flex class="list-card-details" layout-padding flex ng-click="expand($index)">
-            <span class="md-title"><%school.title%></span>
+            <span class="md-title"><%school.user.name%></span>
             <span><%school.management%></span>
         </div>
         
@@ -24,7 +24,7 @@
                     
                 <div class="col-md-6">
                     <ul class="list-group">
-                      <li class="list-group-item"><span class="strong">Email :</span> <%school.email%></li>
+                      <li class="list-group-item"><span class="strong">Email :</span> <%school.user.email%></li>
                       <li class="list-group-item"><span class="strong">EIIN number :</span> <%school.eiin_number%></li>
                       <li class="list-group-item"><span class="strong">Zilla :</span> <%school.zilla%></li>
                       <li class="list-group-item"><span class="strong">UpoZilla :</span> <%school.upozilla%></li>

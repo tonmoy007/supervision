@@ -12,7 +12,7 @@
         
         </div>
             <form class="super-form" name="editForm" ng-submit="submitEditForm(editForm,data.editContent,'school')">
-                <md-input-container class="md-block">
+                <md-input-container class="md-block" ng-init="data.editContent.name=data.editContent.user.name">
                     <label>Name</label><input type="text" ng-model="data.editContent.name" name="title" value="" required>
                     <div ng-messages="editForm.title.$error" role="alert">
                         <div ng-message="required">
@@ -20,7 +20,7 @@
                         </div>
                       </div>
                 </md-input-container>
-                <md-input-container class="md-block">
+                <md-input-container class="md-block" ng-init="data.editContent.email=data.editContent.user.email">
                     <label>Email</label><input type="email" ng-model="data.editContent.email" name="email" required>
                     <div ng-messages="editForm.email.$error" role="alert">
                         <div ng-message="required">

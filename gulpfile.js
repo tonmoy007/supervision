@@ -20,7 +20,7 @@ elixir(mix => {
         'bootstrap.min.css',
         './node_modules/mdbootstrap/css/mdb.css',
         'font-awesome.min.css','ngGallery.css',
-        'ticker.min.css',
+        'ticker.min.css','./node_modules/videogular-themes-default/videogular.min.css',
         'angular.ticker.css',
         'new.css',
         'grid_loading_post.css',
@@ -28,6 +28,7 @@ elixir(mix => {
     ],'public/css/supervision.css');
 
     mix.webpack(['classie.js','ticker.min.js','./node_modules/ng-file-upload/dist/ng-file-upload.js',
+        './node_modules/videogular/videogular.min.js','./node_modules/videogular-controls/vg-controls.min.js',
         './node_modules/ng-file-upload/dist/ng-file-upload-shim.js','./node_modules/angular-trix/dist/angular-trix.min.js',
         'angular.ticker.js','home.components.js','supervision.factory.js','angular.authentication.js',
         './node_modules/angular-ui-router/release/angular-ui-router.js','./node_modules/angular-sanitize/angular-sanitize.js',

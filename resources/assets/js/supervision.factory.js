@@ -128,7 +128,7 @@ this.getMenu=function(type){
             'action_template':'getView/template.actions.home_contents',title:'Gallery',icon:'/img/accessories/gallery.svg'},
             {name:'profile.home_contents.employees',
             'action_template':'getView/template.actions.home_contents',title:'Employees',
-            icon:'/img/accessories/employee.svg'}
+            icon:'/img/accessories/employees.svg'}
             ];
     
       return menu[type]
@@ -488,20 +488,23 @@ this.deleteContent=function(ev,item_name,url,id){
         if(!value.length){
           tab[i]={parent:key}
         }
-        angular.forEach(value,function(val,k){
+        if(key=='যোগাযোগ'&&!contact&&typeof value[0].title!=undefined&&typeof value[0].title!=null){
+          contact=contact={name:value[0].title,url:'#/posts/'+value[0].id,parent:key};
+            
+        }else{
+         angular.forEach(value,function(val,k){
          
-          if(!val.is_employee&&key!='যোগাযোগ'){
-              tab[i][k]={name:val.title,url:'#/posts/'+val.id,parent:key};
-          }else if(key=='যোগাযোগ'){
-            contact={name:val.title,url:'#/posts/'+val.id,parent:key}
-            i--;
-          }else{
-            tab[i][k]={name:val.designation,url:'#/employees/'+val.designation,parent:key};
-          }
+            if(!val.is_employee){
+                tab[i][k]={name:val.title,url:'#/posts/'+val.id,parent:key};
+            }else{
+              tab[i][k]={name:val.designation,url:'#/employees/'+val.designation,parent:key};
+            }
 
-        })
+          })
+          
+          i++ 
+        }
         
-        i++
 
       });
     }

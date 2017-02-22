@@ -112,6 +112,7 @@ var components=angular.module('components',['ticker','simpleAngularTicker'])
         },
         link:function(scope){
             console.log(scope.news);
+            scope.myTicker=scope.news;
         }
     }
 

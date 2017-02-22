@@ -3,8 +3,8 @@
         
     <!-- <box-ticker></box-ticker> -->
 
-    <md-content class="md-block " ng-if="globals.current_state.current.name=='home'" ng-repeat="content in homePage track by $index">
-        <div class="padded white cool-border"  flex layout="column">
+    <md-content class="md-block " ng-if="globals.current_state.current.name=='home'" >
+        <div class="padded white cool-border m-b-1" ng-if="$index<3"  flex layout="column" ng-repeat="content in homePage track by $index">
             <h3 class="rgba-black-strong white-text" layout-padding><%content.title%></h3>
             <span class="space1"></span>
             <p class="text-justify" layout-padding ng-bind-html="content.content">

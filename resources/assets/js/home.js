@@ -1,5 +1,7 @@
 var app=angular.module('mainHome',['components','ui.router','ngSanitize','ngFileUpload','angularTrix',
-    'ngCookies','ngMessages','super-controllers','Authentication','super-factory']);
+    'ngCookies','ngMessages','super-controllers','Authentication','super-factory',
+            "com.2fdevs.videogular",
+            "com.2fdevs.videogular.plugins.controls"]);
 
 
 
