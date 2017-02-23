@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 Route::post('/login','UserController@authenticate');
 Route::get('/logout','UserController@logout')->middleware('ability:token');
 Route::get('/users','UserController@index')->middleware('ability:token');
-
+Auth::routes();
 Route::get('/homepage', "home\\HomeController@index");
 Route::get('/menu', "home\\HomeController@menu");
 Route::get('/sidebar', "home\\HomeController@sidebar");
@@ -39,3 +39,4 @@ Route::resource('slider', 'home\\SliderController');
 Route::resource('gallery', 'home\\GallaryController');
 
 Route::resource('class', 'school\\ClassController');
+Route::resource('attendance', 'school\\AttendanceController');
