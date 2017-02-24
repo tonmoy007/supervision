@@ -15,13 +15,13 @@ class CreateAttendancesTable extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('class_id')->default(1)->foreign()->references('id')->on('classes')->onDelete('cascade');
+            $table->unsignedInteger('classes_id')->default(1)->foreign()->references('id')->on('classes')->onDelete('cascade');
             $table->integer('present_students')->default(0);
             $table->date('present_date')->default(\Carbon\Carbon::now());
             $table->unsignedInteger('present_by');
             $table->timestamps();
 
-            $table->unique(['class_id', 'present_date']);
+            $table->unique(['classes_id', 'present_date']);
         });
     }
 

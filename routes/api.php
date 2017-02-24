@@ -39,4 +39,5 @@ Route::resource('slider', 'home\\SliderController');
 Route::resource('gallery', 'home\\GallaryController');
 
 Route::resource('class', 'school\\ClassController');
+Route::get('/attendance/{id}', 'school\\AttendanceController@schoolHistory');
 Route::resource('attendance', 'school\\AttendanceController');

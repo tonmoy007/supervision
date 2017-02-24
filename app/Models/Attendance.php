@@ -10,9 +10,10 @@ class Attendance extends Model
     protected $fillable = [
         'present_students',
         'present_date',
+        'present_by'
     ];
 
-    public function school() {
+    public function classes() {
         return $this->belongsTo('App\Models\Classes');
     }
 }

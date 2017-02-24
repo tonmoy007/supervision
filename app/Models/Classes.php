@@ -25,7 +25,7 @@ class Classes extends Model
         return $this->belongsTo('App\Models\School');
     }
 
-    public function attendance() {
+    public function attendances() {
         return $this->hasMany('App\Models\Attendance');
     }
 
