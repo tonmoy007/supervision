@@ -5,6 +5,7 @@ namespace App\Http\Controllers\school;
 use App\Models\Classes;
 use App\Models\School;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
@@ -30,17 +31,23 @@ class ClassController extends Controller
     public function index() {
         $userID = $this->user->id;
         $roles = User::find($userID)->roles;
-
+        $isAttendanceTaken = 0;
         if($roles[0]->name == "general_user") {
             $schools = User::find($userID)->schools;
             $classes = $schools->classes;
+            $today = Carbon::now()->toDateString();
+            $isAttendanceTaken = School::where('id','=',$schools->id)->whereHas('classes', function($query) use ($today) {
+                $query->whereHas('attendances', function ($query) use ($today){
+                    $query->where('present_date', $today);
+                });
+            })->count();
         } else {
-            $id = Request::get('id');
+            $id = Request::get('school_id');
             $schools= School::find($id);
             $classes = $schools->classes;
 
         }
-        return response()->json(['success' =>1, 'message'=>'all class list for '. $schools->name, 'classes'=> $classes]);
+        return response()->json(['success' =>1, 'isAttendanceTaken'=> $isAttendanceTaken, 'message'=>'all class list for '. $schools->name, 'classes'=> $classes]);
     }
 
     public function store(Request $request) {
@@ -80,4 +87,6 @@ class ClassController extends Controller
         return response()->json(['success'=>1,'message'=>'class successfully deleted']);
 
     }
+
+
 }

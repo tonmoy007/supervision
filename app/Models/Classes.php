@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Classes extends Model
@@ -19,7 +20,7 @@ class Classes extends Model
         return $school->name;
     }
 
-    protected $appends = array('school_name');
+    protected $appends = array('school_name'/*, 'is_attendance_taken'*/);
 
     public function school() {
         return $this->belongsTo('App\Models\School');
@@ -27,6 +28,10 @@ class Classes extends Model
 
     public function attendances() {
         return $this->hasMany('App\Models\Attendance');
+    }
+
+    public function getAttandance() {
+        return Classes::find($this->id)->attendances;
     }
 
 }
