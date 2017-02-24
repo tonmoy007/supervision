@@ -328,11 +328,15 @@ class ComposerStaticInit85be5e74d5864d7ba6c0ff0f73ebfadf
     );
 
     public static $classMap = array (
+        'ClassSeeder' => __DIR__ . '/../..' . '/database/seeds/ClassSeeder.php',
+        'CreateAttendancesTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_23_074652_create_attendances_table.php',
+        'CreateClassesTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_22_150933_create_classes_table.php',
         'CreateEmployeeCategoriesTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_17_233215_create_employee_categories_table.php',
         'CreateEmployeesTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_12_194810_create_employees_table.php',
         'CreateGallariesTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_17_164329_create_gallaries_table.php',
         'CreateLinkCategoriesTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_17_230513_create_link_categories_table.php',
         'CreateLinksTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_14_182944_create_links_table.php',
+        'CreateNoticesTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_23_160553_create_notices_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreatePostCategoriesTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_17_224921_create_post_categories_table.php',
         'CreateSchoolsTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_180308_create_schools_table.php',

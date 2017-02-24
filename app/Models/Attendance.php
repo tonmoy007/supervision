@@ -13,14 +13,23 @@ class Attendance extends Model
         'present_by'
     ];
 
-   /* public function getTotalStudentsAttribute()
+   public function getTotalStudentsAttribute()
     {
-        return "LOL";
-        $school = User::find($this->school_id);
-        return $school->name;
+        $class = Classes::whereHas("attendances", function($query) {
+            $query->where('id', $this->id);})->first();
+        return $class->total_students;
     }
 
-    protected $appends = array('total_students');*/
+    public function getAbsentStudentsAttribute() {
+        return $this->getTotalStudentsAttribute()-$this->present_students;
+    }
+
+    public function getClassNameAttribute() {
+        $class = Classes::whereHas("attendances", function($query) {
+            $query->where('id', $this->id);})->first();
+        return $class->name;
+    }
+    protected $appends = array('total_students','absent_students', 'class_name');
 
 
     public function classes() {
