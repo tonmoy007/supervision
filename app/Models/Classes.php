@@ -26,7 +26,7 @@ class Classes extends Model
         $today = Carbon::now()->toDateString();
         $attendance = Classes::find($this->id)->attendances()->where('present_date', $today)->first();
         if($attendance == null) {
-            return -1;
+            return 0;
         }
         return $attendance->present_students;
     }
