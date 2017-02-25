@@ -299,3 +299,8 @@ angular.module('super-controllers',[])
     
 })
 
+.controller('classCtrl',function($scope,$rootScope,Classes){
+    console.log(Classes)
+    $scope.classes=Classes.classes;
+    $scope.is_attendance_taken=Classes.isAttendanceTaken;
+})

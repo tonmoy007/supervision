@@ -108,14 +108,16 @@ angular.module('super-factory',['ngMaterial','ngAnimate'])
 this.getMenu=function(type){
   var menu=[];
   menu['profile']=[
-            {'name':'home','title':'Home','icon':'/img/accessories/home.svg','action_template':''},
-            {'name':'profile.reports','title':'Reports','icon':'/img/accessories/reports.svg','action_template':''},
-            {'name':'profile.notice','title':'Notice','icon':'/img/accessories/notice.svg','action_template':''},
+            {'name':'home','title':'Home','icon':'/img/accessories/home.svg','action_template':'',role:'all'},
+            {'name':'profile.reports','title':'Reports','icon':'/img/accessories/reports.svg','action_template':'',role:'all'},
+            {'name':'profile.notice','title':'Notice','icon':'/img/accessories/notice.svg','action_template':'',role:'all'},
             {'name':'profile.schools','title':'Schools','icon':'/img/accessories/schools.svg',
-            'action_template':'getView/template.actions.school'},
-            {'name':'profile.settings','title':'Settings','icon':'img/accessories/settings.svg','action_template':''},
+            'action_template':'getView/template.actions.school',role:'admin'},
+            {'name':'profile.settings','title':'Settings','icon':'img/accessories/settings.svg','action_template':'',role:'all'},
             {'name':'profile.home_contents','title':'Home Contents','icon':'/img/accessories/home_contents.svg',
-            'action_template':'getView/template.actions.home_contents'}
+            'action_template':'getView/template.actions.home_contents',role:'admin'},
+            {name:'profile.classes',title:'Class',icon:'img/accessories/class.svg',action_template:'',role:'general_user'},
+            {name:'profile.attendance',title:'Attendance',icon:'img/accessories/attendance.svg',action_template:'',role:'generateMenu'}
             ];
   menu['home_contents']=[
             {name:'profile.home_contents.posts',
@@ -388,6 +390,21 @@ this.deleteContent=function(ev,item_name,url,id){
     
     upload.then(success,error,progress);
     
+  }
+
+  this.getClasses=function(){
+    $rootScope.loadingData=true;
+    var role=$rootScope.globals.currentUser.role;
+    return $http.get('api/class').then(function(response){
+      $rootScope.loadingData=false;
+        if(response.data.success){
+          return response.data;
+        }else{
+          ShowSimpleToast.show(response.data.message);
+        }
+    },function(response){
+      SiteEssentials.responsCheck(response);
+    });
   }
 
 

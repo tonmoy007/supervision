@@ -6,11 +6,15 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'ClassSeeder' => $baseDir . '/database/seeds/ClassSeeder.php',
+    'CreateAttendancesTable' => $baseDir . '/database/migrations/2017_02_23_074652_create_attendances_table.php',
+    'CreateClassesTable' => $baseDir . '/database/migrations/2017_02_22_150933_create_classes_table.php',
     'CreateEmployeeCategoriesTable' => $baseDir . '/database/migrations/2017_02_17_233215_create_employee_categories_table.php',
     'CreateEmployeesTable' => $baseDir . '/database/migrations/2017_02_12_194810_create_employees_table.php',
     'CreateGallariesTable' => $baseDir . '/database/migrations/2017_02_17_164329_create_gallaries_table.php',
     'CreateLinkCategoriesTable' => $baseDir . '/database/migrations/2017_02_17_230513_create_link_categories_table.php',
     'CreateLinksTable' => $baseDir . '/database/migrations/2017_02_14_182944_create_links_table.php',
+    'CreateNoticesTable' => $baseDir . '/database/migrations/2017_02_23_160553_create_notices_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreatePostCategoriesTable' => $baseDir . '/database/migrations/2017_02_17_224921_create_post_categories_table.php',
     'CreateSchoolsTable' => $baseDir . '/database/migrations/2017_02_15_180308_create_schools_table.php',

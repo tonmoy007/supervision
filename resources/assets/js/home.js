@@ -13,6 +13,7 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         templateUrl:'getView/home.homepage',
         controller:'homeCtrl',
         url:'/',
+        role:'all',
         resolve:{
             
         }
@@ -23,12 +24,14 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         },
         title:'Contact',
         name:'contact',
+        role:'all',
         templateUrl:'getView/home.contact',
         url:'/contact'
     },
     {
         name:'gallery',
         title:'Galelry',
+        role:'all',
         url:'/gallery/:type',
         templateUrl:'getView/home.template.gallery',
         controller:'galleryCtrl',
@@ -41,6 +44,7 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
     {
         name:'posts',
         title:'Posts',
+        role:'all',
         controller:'HomePostCtrl',
         url:'/posts/:id',
         templateUrl:'getView/home.template.single_post',
@@ -55,6 +59,7 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         name:'employees',
         title:'Employees',
         controller:'employeeCtrl',
+        role:'all',
         url:'/employees/:type',
         templateUrl:'getView/home.template.employees',
         resolve:{
@@ -65,6 +70,7 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
     },{
         name:'institution',
         title:'Institution',
+        role:'all',
         controller:function($scope,Schools,$state,$stateParams){
             $scope.type=$stateParams.type;
             $scope.schools=Schools;
@@ -82,12 +88,14 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         title:'Login',
         controller:'LoginController',
         url:'/login',
+        role:'all',
         templateUrl:'getView/home.login'
     },
     {
         name:'profile',
         controller:'profileCtrl',
         url:'/profile',
+        role:'all',
         title:'profile',
         templateUrl:'getView/profile.dashboard',
         resolve:{
@@ -102,6 +110,7 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         title:'Reports',
         controller:'innerContentCtrl',
         url:'/reports',
+        role:'all',
         templateUrl:'getView/profile.reports'
     },
     {
@@ -109,11 +118,13 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         title:'Notice',
         controller:'innerContentCtrl',
         url:'/notice',
+        role:'all',
         templateUrl:'getView/profile.notice'
     },
     {
         name:'profile.schools',
         title:'Schools',
+        role:'admin',
         controller:'schoolCtrl',
         url:'/schools',
         templateUrl:'getView/profile.schools',
@@ -134,6 +145,7 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         name:'profile.home_contents',
         controller:'webContentsCtrl',
         title:'Home Contents',
+        role:'admin',
         url:'/home_contents',
         templateUrl:'getView/profile.home_contents',
         resolve:{
@@ -148,6 +160,7 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         controller:'contentCtrl',
         url:'/posts',
         title:'Posts',
+        role:'admin',
         templateUrl:'getView/profile.home_contents.posts',
         resolve:{
             Contents:function(superServices){
@@ -159,6 +172,7 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         name:'profile.home_contents.links',
         controller:'contentCtrl',
         url:'/links',
+        role:'admin',
         title:'Important Links',
         templateUrl:'getView/profile.home_contents.links',
         resolve:{
@@ -171,6 +185,7 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         name:'profile.home_contents.slider',
         controller:'contentCtrl',
         title:'Slider',
+        role:'admin',
         url:'/slider',
         templateUrl:'getView/profile.home_contents.slider',
         resolve:{
@@ -184,6 +199,7 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         controller:'contentCtrl',
         title:'Gallery',
         url:'/gallery',
+        role:'admin',
         templateUrl:'getView/profile.home_contents.gallery',
         resolve:{
             Contents:function(superServices){
@@ -196,10 +212,37 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         controller:'contentCtrl',
         title:'Employees',
         url:'/employees',
+        role:'admin',
         templateUrl:'getView/profile.home_contents.employees',
         resolve:{
             Contents:function(superServices){
                 return superServices.getContent('employee','employees');
+            }
+        }
+    },
+    {
+        name:'profile.classes',
+        controller:'classCtrl'
+        title:'Classes',
+        url:'/class',
+        role:'general_user',
+        templateUrl:'getView/profile.class.class',
+        resolve:{
+            Classes:function(superServices){
+                return superServices.getClasses();
+            }
+        }
+    },
+    {
+        name:'profile.attendance',
+        controller:'attendanceCtrl',
+        title:'Attendance',
+        url:'/attendance',
+        role:'general_user',
+        templateUrl:'getView/profile.attendance.attendance',
+        resolve:{
+            Attendance:function(superServices){
+                return true;
             }
         }
     }
