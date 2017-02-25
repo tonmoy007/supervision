@@ -50,6 +50,11 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\Models\SinglePost');
     }
 
+    public function notices()
+    {
+        return $this->hasMany('App\Models\Notice');
+    }
+
     public function isit($roleName)
     {
         foreach ($this->roles()->get() as $role)

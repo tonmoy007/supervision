@@ -31,7 +31,7 @@ class ClassController extends Controller
     public function index() {
         $userID = $this->user->id;
         $roles = User::find($userID)->roles;
-        $isAttendanceTaken = 0;
+        $isAttendanceTaken = false;
         if($roles[0]->name == "general_user") {
             $schools = User::find($userID)->schools;
             $classes = $schools->classes;
@@ -41,6 +41,9 @@ class ClassController extends Controller
                     $query->where('present_date', $today);
                 });
             })->count();
+            if($isAttendanceTaken >0 ) {
+                $isAttendanceTaken = true;
+            }
         } else {
             $id = Request::get('school_id');
             $schools= School::find($id);
