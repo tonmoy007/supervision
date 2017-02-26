@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Notice extends Model
 {
-    protected $table = 'links';
+    protected $table = 'notices';
     protected $fillable = [
         'title',
         'description',
