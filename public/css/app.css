@@ -759,4 +759,9 @@ md-dialog .dissmiss-button {
   opacity: 1;
 }
 
+svg path, svg rect {
+  color: #636b6f !important;
+  fill: #636b6f !important;
+}
+
 /*# sourceMappingURL=app.css.map */

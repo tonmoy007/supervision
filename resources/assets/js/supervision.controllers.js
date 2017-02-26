@@ -163,8 +163,11 @@ angular.module('super-controllers',[])
         console.log(query);
     }
     $scope.addNew=function(ev,type){
+        if(type==null){
+            type='';
+        }
          $mdDialog.show({
-          templateUrl: 'getView/'+$state.current.name+'.add',
+          templateUrl: 'getView/'+$state.current.name+'.add'+type,
           parent: angular.element(document.body),
           targetEvent: ev,
           controller:'addNewCtrl',
@@ -203,6 +206,17 @@ angular.module('super-controllers',[])
         images.splice(index,1);
         console.log(images);
     }
+    if($rootScope.school_data!=undefined){
+       $scope.attendance=$rootScope.school_data.classes;
+    }
+   
+   console.log($scope.attendance);
+   $scope.submitAttendance=function(form,attendance){
+    var data=[];
+     data['attendance']=attendance;
+    var url='attendance';
+        superServices.addNewContent(data,url,null,null,$scope);
+   }
    
 })
 
@@ -279,7 +293,7 @@ angular.module('super-controllers',[])
 
     var category_path='post';
 
-     if(!$scope.categories&&$rootScope.nav.state[1]!='schools')
+     if(!$scope.categories&&$rootScope.nav.state[1]=='home_contents')
             superServices.loadCategory($scope,category_path+'/category');
 
     $scope.hide=function(){
@@ -299,8 +313,102 @@ angular.module('super-controllers',[])
     
 })
 
-.controller('classCtrl',function($scope,$rootScope,Classes){
+.controller('classCtrl',function($scope,$rootScope,Classes,Attendance,Menu,$state,superServices){
     console.log(Classes)
+    console.log(Attendance);
+    var i=-1;
+     $scope.createactions=function(){
+        $scope.actions=[];
+        $scope.search_query=[];
+        console.log($scope.actions)
+     }
+
+     $rootScope.nav.item=Menu.find(function(item){
+        i++;
+        return item.name==$state.current.name
+     });
+
+    $rootScope.nav.profile_index=i;
+    $rootScope.school_data=[];
+    $rootScope.school_data.classes=Classes.classes;
+    $rootScope.school_data.attendance=Attendance.attendance;
     $scope.classes=Classes.classes;
+    $scope.attendance=Attendance;
+    $scope.classLoaded=true;
     $scope.is_attendance_taken=Classes.isAttendanceTaken;
+
+    $scope.search=function(query){
+        $scope.$parent.actions.search_query=query;
+        console.log(query);
+    }
+
+    $scope.expand=function(index,content,data,double,key){
+        console.log(key);
+        SiteEssentials.expand($scope[content],index,'expand',double,key);
+        // console.log($scope[content]);
+    }
+    $scope.delete=function(ev,item_name,url,id){
+        superServices.deleteContent(ev,item_name,url,id);
+    }
+    
+    $scope.showEdit=function(ev,name,data,data_index,key,category_path){
+
+     
+            superServices.showModelEdit(ev,$scope,name,data_index);
+       
+    }
+    $scope.getDate=function(date){
+        return SiteEssentials.getDate(date);
+    }
+    $scope.submitEditForm=function(form,data,link){
+        if(!form.$invalid)
+        superServices.submitEditForm($scope,data,link);
+    }
+
+})
+.controller('noticeCtrl',function($scope,Menu,$state,Notice,$rootScope,superServices,SiteEssentials){
+    console.log(Notice);
+    $scope.notices=Notice;
+    var i=-1;
+     $scope.createactions=function(){
+        $scope.actions=[];
+        $scope.search_query=[];
+        console.log($scope.actions)
+     }
+
+     $rootScope.nav.item=Menu.find(function(item){
+        i++;
+        return item.name==$state.current.name
+     });
+
+    $rootScope.nav.profile_index=i;
+    
+    $scope.search=function(query){
+        $scope.$parent.actions.search_query=query;
+        console.log(query);
+    }
+
+    $scope.expand=function(index,content,data,double,key){
+        console.log(key);
+        SiteEssentials.expand($scope[content],index,'expand',double,key);
+        // console.log($scope[content]);
+    }
+    $scope.delete=function(ev,item_name,url,id){
+        superServices.deleteContent(ev,item_name,url,id);
+    }
+    
+    $scope.showEdit=function(ev,name,data,data_index,key,category_path){
+
+     
+            superServices.showModelEdit(ev,$scope,name,data_index);
+       
+    }
+    $scope.getDate=function(date){
+        return SiteEssentials.getDate(date);
+    }
+    $scope.submitEditForm=function(form,data,link){
+        if(!form.$invalid)
+        superServices.submitEditForm($scope,data,link);
+    }
+
 })

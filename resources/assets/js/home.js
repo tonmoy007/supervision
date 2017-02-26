@@ -116,10 +116,15 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
     {
         name:'profile.notice',
         title:'Notice',
-        controller:'innerContentCtrl',
+        controller:'noticeCtrl',
         url:'/notice',
         role:'all',
-        templateUrl:'getView/profile.notice'
+        templateUrl:'getView/profile.notice',
+        resolve:{
+            Notice:function(superServices){
+                return superServices.getContent('notice','notices');
+            }
+        }
     },
     {
         name:'profile.schools',
@@ -221,8 +226,8 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         }
     },
     {
-        name:'profile.classes',
-        controller:'classCtrl'
+        name:'profile.class',
+        controller:'classCtrl',
         title:'Classes',
         url:'/class',
         role:'general_user',
@@ -230,19 +235,9 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         resolve:{
             Classes:function(superServices){
                 return superServices.getClasses();
-            }
-        }
-    },
-    {
-        name:'profile.attendance',
-        controller:'attendanceCtrl',
-        title:'Attendance',
-        url:'/attendance',
-        role:'general_user',
-        templateUrl:'getView/profile.attendance.attendance',
-        resolve:{
+            },
             Attendance:function(superServices){
-                return true;
+                return superServices.getAttendance();
             }
         }
     }
@@ -294,6 +289,7 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssent
                 $rootScope.nav.current_state=state[0];
                 $rootScope.nav.current_state_secendary=typeof state[1]!=undefined?state[1]:null;
                 $rootScope.nav.item=[];
+                $rootScope.school_data=[];
                 $rootScope.globals.current_state=$state;
                 $rootScope.nav.title=toState.title;
                 $rootScope.globals.title_bar=toState.title;

@@ -527,5 +527,11 @@ md-dialog{
                 opacity:1;
             }
         }
+  
     }
+}
+
+svg path,svg rect{
+    color:$text-color!important;
+    fill:$text-color!important;
 }

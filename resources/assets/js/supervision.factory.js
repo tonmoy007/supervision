@@ -87,6 +87,7 @@ angular.module('super-factory',['ngMaterial','ngAnimate'])
 })
 .service('superServices',  function($http,$rootScope,$q,SiteEssentials,
   AuthenticationService,$location,$state,Upload,$mdDialog,ShowSimpleToast){
+  this.classes=null;
   var methods=[];
   
   this.logout=function(){
@@ -110,14 +111,15 @@ this.getMenu=function(type){
   menu['profile']=[
             {'name':'home','title':'Home','icon':'/img/accessories/home.svg','action_template':'',role:'all'},
             {'name':'profile.reports','title':'Reports','icon':'/img/accessories/reports.svg','action_template':'',role:'all'},
-            {'name':'profile.notice','title':'Notice','icon':'/img/accessories/notice.svg','action_template':'',role:'all'},
+            {'name':'profile.notice','title':'Notice','icon':'/img/accessories/notice.svg',
+            'action_template':'getView/profile.notice.action_template',role:'all'},
             {'name':'profile.schools','title':'Schools','icon':'/img/accessories/schools.svg',
             'action_template':'getView/template.actions.school',role:'admin'},
             {'name':'profile.settings','title':'Settings','icon':'img/accessories/settings.svg','action_template':'',role:'all'},
             {'name':'profile.home_contents','title':'Home Contents','icon':'/img/accessories/home_contents.svg',
             'action_template':'getView/template.actions.home_contents',role:'admin'},
-            {name:'profile.classes',title:'Class',icon:'img/accessories/class.svg',action_template:'',role:'general_user'},
-            {name:'profile.attendance',title:'Attendance',icon:'img/accessories/attendance.svg',action_template:'',role:'generateMenu'}
+            {name:'profile.class',title:'Class',icon:'img/accessories/class.svg',
+            action_template:'getView/profile.class.action_template',role:'general_user'}
             ];
   menu['home_contents']=[
             {name:'profile.home_contents.posts',
@@ -406,7 +408,20 @@ this.deleteContent=function(ev,item_name,url,id){
       SiteEssentials.responsCheck(response);
     });
   }
-
+  this.getAttendance=function(){
+    $rootScope.loadingData=true;
+    return $http.get('api/attendance').then(function(response){
+      $rootScope.loadingData=false;
+      if(response.data.success){
+        return response.data;
+      }else{
+        return ShowSimpleToast.show(response.data.message);
+      }
+    },function(response){
+      $rootScope.loadingData=false;
+      SiteEssentials.responsCheck(response);
+    })
+  }
 
 
 })

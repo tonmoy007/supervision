@@ -10,7 +10,7 @@
             </form>
         </div>
         <div class="page-action-buttons">
-          <md-button ng-click="addNew(this,'Post')" class="md-icon-button" aria-label="add new"><md-icon md-svg-src="/img/accessories/plus-black-symbol.svg" ></md-icon> <md-tooltip>
+          <md-button ng-click="addNew(this)" class="md-icon-button" aria-label="add new"><md-icon md-svg-src="/img/accessories/plus-black-symbol.svg" ></md-icon> <md-tooltip>
             Add new Post
           </md-tooltip></md-button>
         </div>
