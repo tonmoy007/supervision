@@ -16,8 +16,11 @@ use Illuminate\Http\Request;
 
 Route::post('/login','UserController@authenticate');
 Route::get('/logout','UserController@logout')->middleware('ability:token');
-Route::get('/users','UserController@index')->middleware('ability:token');
+Route::post('/password/forget', "Auth\\PasswordController@askToken");
+Route::post('/password/validate', "Auth\\PasswordController@validateToken");
+Route::post('/password/reset', "Auth\\PasswordController@resetPassword");
 
+Route::get('/users','UserController@index')->middleware('ability:token');
 Route::get('/homepage', "home\\HomeController@index");
 Route::get('/menu', "home\\HomeController@menu");
 Route::get('/sidebar', "home\\HomeController@sidebar");
@@ -37,3 +40,9 @@ Route::get('school/category/{category}', 'school\\SchoolController@category');
 Route::resource('school', 'school\\SchoolController');
 Route::resource('slider', 'home\\SliderController');
 Route::resource('gallery', 'home\\GallaryController');
+
+Route::resource('class', 'school\\ClassController');
+Route::get('/attendance/{id}', 'school\\AttendanceController@schoolHistory');
+Route::resource('attendance', 'school\\AttendanceController');
+Route::resource('notice/new', 'notice\\NoticeController@newNotice');
+Route::resource('notice', 'notice\\NoticeController');

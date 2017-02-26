@@ -1,0 +1,1 @@
+<span class="cool-shadow alert alert-info m-t-1"  layout-padding flex> <%message%></span>
