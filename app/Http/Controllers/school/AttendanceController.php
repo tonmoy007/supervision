@@ -99,7 +99,7 @@ class AttendanceController extends Controller
                     'classes_id' => $pi['class_id']
                 ]);
 
-                $attendance->present_students = (int)$pi['present_student'];
+                $attendance->present_students = (int)$pi['present_students'];
                 $attendance->present_by = $this->user->id;
                 // $id = $attendance->save()->id;
                 $class->attendances()->save($attendance);
