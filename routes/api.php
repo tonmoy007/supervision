@@ -16,6 +16,10 @@ use Illuminate\Http\Request;
 
 Route::post('/login','UserController@authenticate');
 Route::get('/logout','UserController@logout')->middleware('ability:token');
+Route::post('/password/forget', "Auth\\PasswordController@askToken");
+Route::post('/password/validate', "Auth\\PasswordController@validateToken");
+Route::post('/password/reset', "Auth\\PasswordController@resetPassword");
+
 Route::get('/users','UserController@index')->middleware('ability:token');
 Route::get('/homepage', "home\\HomeController@index");
 Route::get('/menu', "home\\HomeController@menu");
