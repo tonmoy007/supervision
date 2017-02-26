@@ -96,7 +96,7 @@ class UserController extends Controller
 
         
         
-        return response()->json(['success'=>$success,'message'=>'Successfully logged out']);
+        return response()->json(['success'=>(int)$success,'message'=>'Successfully logged out']);
 
     }
 
