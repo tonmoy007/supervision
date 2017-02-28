@@ -1,8 +1,9 @@
 <?php
+
 namespace GuzzleHttp\Cookie;
 
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Message\RequestInterface;
+use GuzzleHttp\Message\ResponseInterface;
 
 /**
  * Stores HTTP cookies.
@@ -10,23 +11,21 @@ use Psr\Http\Message\ResponseInterface;
  * It extracts cookies from HTTP requests, and returns them in HTTP responses.
  * CookieJarInterface instances automatically expire contained cookies when
  * necessary. Subclasses are also responsible for storing and retrieving
- * cookies from a file, database, etc.
+ * cookies from a file, database, etc...
  *
  * @link http://docs.python.org/2/library/cookielib.html Inspiration
  */
 interface CookieJarInterface extends \Countable, \IteratorAggregate
 {
     /**
-     * Create a request with added cookie headers.
+     * Add a Cookie header to a request.
      *
      * If no matching cookies are found in the cookie jar, then no Cookie
-     * header is added to the request and the same request is returned.
+     * header is added to the request.
      *
-     * @param RequestInterface $request Request object to modify.
-     *
-     * @return RequestInterface returns the modified request.
+     * @param RequestInterface $request Request object to update
      */
-    public function withCookieHeader(RequestInterface $request);
+    public function addCookieHeader(RequestInterface $request);
 
     /**
      * Extract cookies from an HTTP response and store them in the CookieJar.
@@ -74,11 +73,4 @@ interface CookieJarInterface extends \Countable, \IteratorAggregate
      * to RFC 2965.
      */
     public function clearSessionCookies();
-
-    /**
-     * Converts the cookie jar to an array.
-     *
-     * @return array
-     */
-    public function toArray();
 }

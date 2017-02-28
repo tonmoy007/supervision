@@ -30,23 +30,19 @@
                         </div>
                       </div>
                 </md-input-container>
+                
+
                 <md-input-container class="md-block" >
-                    <label>Type</label>
-                    <md-select ng-model=" newschool.type" required name="type">
-                  <md-option value="স্কুল">
-                    স্কুল
-                  </md-option>
-                 <md-option value="কলেজ">
-                    কলেজ
-                  </md-option>
-                 <md-option value="মাদ্রাসা">
-                    মাদ্রাসা
+                    <label>Category</label>
+                    <md-select ng-model=" newschool.category" required name="category">
+                <md-option ng-value="category" ng-repeat="category in categories">
+                    <%category%>
                   </md-option>
 
                 </md-select>
-                <div ng-messages="addNewForm.type.$error" role="alert">
+                <div ng-messages="addNewForm.category.$error" role="alert">
                         <div ng-message="required">
-                          Type is required
+                          Category is required
                         </div>
                       </div>
                 </md-input-container >

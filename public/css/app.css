@@ -239,6 +239,16 @@
   margin-bottom: 30px;
 }
 
+.bg-danger {
+  background-color: #bf5329;
+}
+
+.badge.sticky {
+  position: absolute;
+  right: calc(50% - 17px);
+  top: 15px;
+}
+
 .fix_loader {
   position: absolute;
   left: 0;

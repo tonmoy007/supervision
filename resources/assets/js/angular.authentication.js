@@ -134,13 +134,26 @@ angular.module('Authentication',[])
   
     /* jshint ignore:end */
 }).controller('LoginController',
-    function ($scope, $rootScope, $location, AuthenticationService,$window) {
+    function ($scope, $rootScope, $location, AuthenticationService,$window,$mdDialog,
+        ShowSimpleToast,$http,SiteEssentials,$state) {
         // reset login status
         AuthenticationService.ClearCredentials();
+        var state=$state.current.name;
+        if(state=='login.validate'){
+            $scope.validating=true;
+            $scope.reseting_password=false;
+        }else if(state=='login.reset_password'){
+            $scope.reseting_password=true;
+            $scope.validating=false;
+        }else{
+            $scope.reseting_password=false;
+            $scope.validating=false;
+        }
         $rootScope.loggedin=false;
         $rootScope.body='login_body';
         $rootScope.page_title=' School | login';
         $scope.password_type='password';
+        
         $scope.toggleShow=function(){
             if($scope.password_type=='password'){
                 $scope.password_type='text';
@@ -171,6 +184,94 @@ angular.module('Authentication',[])
                 }
             },$scope);
         };
-        
+        $scope.cancel_forget=function(response){
+            $scope.reseting_password=false;
+            $scope.$parent.reseting_password=false;
+            $scope.$parent.validating=false;
+            $scope.validating=false;
+        }
+        $scope.askToken=function(email){
+            var data={};
+            data.email=email;
+            var next='login.validate';
+            $scope.loginChecking=true;
+            $scope.$parent.loginChecking=true;
+            $http({url:'api/password/forget',data:data,method:'POST'}).then(function(response){
+                $scope.loginChecking = false;
+            $scope.$parent.loginChecking=false;
+
+                console.log(response);
+                if(response.data.success){
+                    if($state.current.name!=next)$state.go('login.validate');
+                    else $state.reload('login.validate');
+                    $scope.validating=true;
+                    ShowSimpleToast.show(response.data.message);
+                }else{
+                    ShowSimpleToast.show(response.data.message);
+                }
+            },function(response){
+                 $scope.loginChecking = false;
+            $scope.$parent.loginChecking=false;
+
+                 SiteEssentials.responsCheck(response);
+                 $scope.cancel_forget();
+            })
+        }
+        $scope.forget_password=function(ev){
+            if(!$scope.user)$scope.user=[];
+             var confirm = $mdDialog.prompt()
+                  .title('Enter your email address')
+                  .textContent('An email with a token  will be sent to your email address if you are registered with us.')
+                  .placeholder('Email')
+                  .ariaLabel('email')
+                  .initialValue($scope.user.email)
+                  .targetEvent(ev)
+                  .ok('Send email')
+                  .cancel('Cancel');
+
+                $mdDialog.show(confirm).then(function(result) {
+                  $scope.user.email=result;
+                  console.log($scope.user.email);
+                  $scope.askToken($scope.user.email);
+                }, function() {
+                  $scope.status = false;
+                });
+        }
+
+        $scope.validate=function(pin){
+            var data={};
+            data.token=pin;
+            var next='login.reset_password';
+            $scope.$parent.loginChecking=true;
+            $http({url:'api/password/validate',data:data,method:'POST'}).then(function(response){
+                console.log(response)
+                $scope.$parent.loginChecking=false;
+                if(response.data.success){
+                    $scope.validating=false;
+                    $scope.reseting_password=true;
+                    if($state.current.name==next)$state.reload(next);
+                    else $state.go(next);
+                    
+                    $scope.user.id=response.data.id;
+                    ShowSimpleToast.show(response.data.message);
+                }else{
+                    ShowSimpleToast.show(response.data.message);
+                }
+            })
+        }
+        $scope.changePassword=function(password,id){
+            var data={};
+            data.user_id=id;
+            data.password=password;
+            $scope.$parent.loginChecking=true;
+            $http({url:'api/password/reset',data:data,method:'POST'}).then(function(response){
+                console.log(response);
+                $scope.$parent.loginChecking=false;
+               $scope.cancel_forget();
+               $state.go('login');
+               ShowSimpleToast.show(response.data.message);
+            })
+        }
+
 
     });

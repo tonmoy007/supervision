@@ -28,7 +28,7 @@ class ClassController extends Controller
 
     }
 
-    public function index() {
+    public function index(Request $request) {
         $userID = $this->user->id;
         $roles = User::find($userID)->roles;
         $isAttendanceTaken = false;
@@ -45,7 +45,7 @@ class ClassController extends Controller
                 $isAttendanceTaken = true;
             }
         } else {
-            $id = Request::get('school_id');
+            $id = $request->get('school_id');
             $schools= School::find($id);
             $classes = $schools->classes;
 

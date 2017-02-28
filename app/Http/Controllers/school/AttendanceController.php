@@ -34,22 +34,44 @@ class AttendanceController extends Controller
         }
     }
     public function index() {
-        $totalStudents = School::find($this->user->id)->classes->sum('total_students');
+        $school = School::where('user_id', $this->user->id)->first();
+        $totalStudents = School::find($school->id)->classes->sum('total_students');
         $today = Carbon::now()->toDateString();
-       // $classes = School::with('classes.attendances')->where('id', '=', $this->user->id)->get(); //find($this->user->id)->classes()->getAttendance();//->groupBy(function($classes){ return $classes->attendances; });
-        $classes = School::find($this->user->id)->classes;
-        $attendances = array();
-        $presentStudents = 0;
+        $school = School::where('user_id', $this->user->id)->first();
+        $classes = Classes::where('school_id', $school->id)->get();
+
+
+        $classIDs = array();
         foreach ($classes as $class) {
-            $attendance = $this->getAttandance($class->id, $today);
-            if(sizeof($attendance) >0) {
-                $presentStudents += $attendance[0]['present_students'];
-            }
-            $attendances = array_merge($attendances,  $attendance);
+            //die(var_dump($class));
+            array_push($classIDs, $class->id);
         }
-        return response()->json(['success'=>1,'message'=>'Attendance successfully added',
-                            'total_students' => $totalStudents, 'present_students' => $presentStudents,
-                            'absent_students' => $totalStudents- $presentStudents, 'attendance' => $attendances    ]);
+        $attendances = Attendance::whereHas("classes", function ($query) use($classIDs){
+            $query->whereIn('classes.id', $classIDs);
+        })->orderBy('attendances.present_date', 'desc')->groupBy('attendances.id', 'attendances.present_date', 'attendances.classes_id','attendances.present_students','attendances.present_by', 'attendances.created_at', 'attendances.updated_at' )->get();
+        $attendances = $attendances->toArray();
+        $resp = array();
+        $dates = array_column($attendances, 'present_date');
+        $dates = array_unique($dates);
+        foreach ($dates as $date) {
+            $classInfo = array();
+            $present=0;
+            $total=0;
+            $absent=0;
+            foreach ($attendances as $key =>$attendance) {
+                if($attendance['present_date'] == $date){
+                    array_push($classInfo, $attendance);
+                    $present += $attendance['present_students'];
+                    $total += $attendance['total_students'];
+                    $absent += $attendance['absent_students'];
+                    unset($attendances[$key]);
+                }
+            }
+            array_push($resp, ['present_date'=>$date, 'present_students'=> $present, 'absent_students'=> $absent,
+                'total_students'=> $total,'classes' =>$classInfo]);
+        }
+        return response()->json(['success'=>1,'message'=>'Attendance successfully found',
+                             'attendance' => $resp    ]);
     }
 
     public function show($id) {

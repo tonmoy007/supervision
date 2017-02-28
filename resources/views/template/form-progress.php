@@ -6,7 +6,7 @@
     </div>
     <loader class="form-loader" flex="auto"></loader> 
     <div flex="nogrow" layout-align="center center">
-      <span class="strong form-progress-counter"><% form.progress%> %</span>
+      <span class="strong form-progress-counter" ng-if="form.progress"><% form.progress%> %</span>
     </div>
     </div> 
 </div>

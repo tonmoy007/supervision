@@ -92,6 +92,22 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         templateUrl:'getView/home.login'
     },
     {
+        name:'login.validate',
+        title:'Validate',
+        url:'/validate',
+        role:'all',
+        controller:'LoginController',
+        templateUrl:'getView/home.template.validate_token',
+    },
+    {
+        name:'login.reset_password',
+        title:'Reset Password',
+        url:'/reset_password',
+        role:'all',
+        controller:'LoginController',
+        templateUrl:'getView/home.template.reset_password'
+    },
+    {
         name:'profile',
         controller:'profileCtrl',
         url:'/profile',
@@ -266,14 +282,21 @@ app.controller('homeCtrl',  function($scope,$http,$location,$state,superServices
     })
 });
 
-app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssentials,$state){
+app.run(function($rootScope,$http,$cookieStore,$location,$stateParams
+    ,SiteEssentials,$state,$interval,superServices,ShowSimpleToast){
    // keep user logged in after page refresh
        
         $rootScope.globals = $cookieStore.get('globals') || {};
         
         if ($rootScope.globals.currentUser) {
             $http.defaults.headers.common['Authorization'] = 'Bearer ' + $rootScope.globals.currentUser.token; // jshint ignore:line
+
         }
+
+        $rootScope.notification=$interval(function(){
+                if ($rootScope.globals.currentUser) 
+                    superServices.checkNotice();
+            },6000);
         
         $rootScope.nav={};
         // console.log($rootScope);
@@ -281,6 +304,7 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssent
         $rootScope.$on('$stateChangeStart', function (event, toState) {
             
                SiteEssentials.goTop();
+
                 // console.log(toState);
                 var state=toState.name.split('.');
                 $rootScope.data=[];
@@ -294,6 +318,18 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams,SiteEssent
                 $rootScope.nav.title=toState.title;
                 $rootScope.globals.title_bar=toState.title;
                 
+                if(!$rootScope.globals.currentUser&&state[0]=='profile'){
+                    $state.go('home');
+                    ShowSimpleToast.show('you must be lost ');
+               }else{
+                if($rootScope.globals.currentUser){
+                    role=$rootScope.globals.currentUser.role;
+                    if(toState.role!='all'&&toState.role!=role){
+                        $state.go('home');
+
+                    }
+                }
+               }
                 
                 if(state.length>1&&state[0]=='profile'){
                     angular.element(document.getElementById('body')).addClass('no_scroll');
