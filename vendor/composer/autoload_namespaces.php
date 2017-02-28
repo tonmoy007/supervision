@@ -17,5 +17,4 @@ return array(
     'File' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
     'Doctrine\\Common\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib'),
     'Crypt' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
-    'Cron' => array($vendorDir . '/mtdowling/cron-expression/src'),
 );

@@ -125,6 +125,9 @@ angular.module('super-controllers',[])
 .controller('schoolCtrl',function($scope,SiteEssentials,superServices,
     $rootScope,ShowSimpleToast,Schools,Menu,$state){
     $scope.schools=[];
+    $scope.categories=['স্কুল','কলেজ','মাদ্রাসা'];
+    $scope.types=['বালক','বালিকা','কো-এডুকেসন'];
+    $scope.managements=['সরকারী','বেসরকারী','অন্যান্য'];
     var i=-1;
     $rootScope.nav.item=Menu.find(function(item){
         i++;
@@ -184,14 +187,15 @@ angular.module('super-controllers',[])
     
     
 })
-.controller('addNewCtrl',function($scope,$mdDialog,$rootScope,superServices){
+.controller('addNewCtrl',function($scope,$mdDialog,$rootScope,superServices,$state){
      
-     
-    $scope.setFiles=function($files, $file, $newFiles, $duplicateFiles, $invalidFiles, $event){
-    
-       
+     if($state.current.name=='profile.schools'){
 
-    }
+        $scope.categories=['স্কুল','কলেজ','মাদ্রাসা'];
+        $scope.types=['বালক','বালিকা','কো-এডুকেসন'];
+        $scope.managements=['সরকারী','বেসরকারী','অন্যান্য'];
+     }
+    
     $scope.hide=function(){
         $mdDialog.hide();
     }
@@ -285,7 +289,7 @@ angular.module('super-controllers',[])
 })
 
 
-.controller('editModelCtrl',function($scope,$rootScope,$mdDialog,superServices,SiteEssentials){
+.controller('editModelCtrl',function($scope,$rootScope,$mdDialog,superServices,SiteEssentials,$state){
     $scope.data=[];
 
     $scope.data.editContent=$rootScope.data.editContent;
@@ -295,7 +299,12 @@ angular.module('super-controllers',[])
 
      if(!$scope.categories&&$rootScope.nav.state[1]=='home_contents')
             superServices.loadCategory($scope,category_path+'/category');
+     if($state.current.name=='profile.schools'){
 
+        $scope.categories=['স্কুল','কলেজ','মাদ্রাসা'];
+        $scope.types=['বালক','বালিকা','কো-এডুকেসন'];
+        $scope.managements=['সরকারী','বেসরকারী','অন্যান্য'];
+     }
     $scope.hide=function(){
         $mdDialog.hide();
     }
@@ -313,7 +322,7 @@ angular.module('super-controllers',[])
     
 })
 
-.controller('classCtrl',function($scope,$rootScope,Classes,Attendance,Menu,$state,superServices){
+.controller('classCtrl',function($scope,$rootScope,Classes,Attendance,Menu,$state,superServices,SiteEssentials){
     console.log(Classes)
     console.log(Attendance);
     var i=-1;
@@ -333,7 +342,7 @@ angular.module('super-controllers',[])
     $rootScope.school_data.classes=Classes.classes;
     $rootScope.school_data.attendance=Attendance.attendance;
     $scope.classes=Classes.classes;
-    $scope.attendance=Attendance;
+    $scope.attendance=Attendance.attendance;
     $scope.classLoaded=true;
     $scope.is_attendance_taken=Classes.isAttendanceTaken;
 
@@ -352,10 +361,7 @@ angular.module('super-controllers',[])
     }
     
     $scope.showEdit=function(ev,name,data,data_index,key,category_path){
-
-     
             superServices.showModelEdit(ev,$scope,name,data_index);
-       
     }
     $scope.getDate=function(date){
         return SiteEssentials.getDate(date);

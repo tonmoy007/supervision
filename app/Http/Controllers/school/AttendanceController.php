@@ -48,7 +48,7 @@ class AttendanceController extends Controller
         }
         $attendances = Attendance::whereHas("classes", function ($query) use($classIDs){
             $query->whereIn('classes.id', $classIDs);
-        })->orderBy('attendances.present_date', 'desc')->groupBy('attendances.id', 'attendances.present_date', 'attendances.classes_id' )->get();
+        })->orderBy('attendances.present_date', 'desc')->groupBy('attendances.id', 'attendances.present_date', 'attendances.classes_id','attendances.present_students','attendances.present_by', 'attendances.created_at', 'attendances.updated_at' )->get();
         $attendances = $attendances->toArray();
         $resp = array();
         $dates = array_column($attendances, 'present_date');

@@ -16,7 +16,7 @@
             <md-divider></md-divider>
              <md-list-item ng-if="!is_attendance_taken" class="animate-if" data-ng-include data-src="'/getView/template.info'" ng-init="message='Todays attendance is not submitted, please submit todays attendance'"></md-list-item>
 
-            <md-list ng-if="attendance.length" ng-include data-src="/getView/profile.class.single_attendance">
+            <md-list ng-show="attendance.length" ng-repeat="item in attendance track by $index" ng-include data-src="'/getView/profile.class.single_attendance'">
                 
             </md-list>
            

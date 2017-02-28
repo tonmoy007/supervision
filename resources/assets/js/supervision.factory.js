@@ -95,11 +95,20 @@ angular.module('super-factory',['ngMaterial','ngAnimate'])
     $http.get('api/logout').then(function(response){
       if(response.data.success){
         AuthenticationService.ClearCredentials();
-        $location.path('/');
-        $state.reload('home');
+        if($state.current.name!='home'){
+          $state.go('home');
+        }else{
+          $state.reload('home');
+        }
         ShowSimpleToast.show(response.data.message);
       }else{
+       
         AuthenticationService.ClearCredentials();
+        if($state.current.name!='home'){
+          $state.go('home');
+        }else{
+          $state.reload('home');
+        }
         ShowSimpleToast.show(response.data.message);
       }
     },function(response){
@@ -420,6 +429,23 @@ this.deleteContent=function(ev,item_name,url,id){
     },function(response){
       $rootScope.loadingData=false;
       SiteEssentials.responsCheck(response);
+    })
+  }
+  this.checkNotice=function(response){
+    $http.get('api/notice/new').then(function(response){
+      // console.log(response);
+      if(response.data.success){
+        $rootScope.globals.new_notice=response.data;
+        if(!$rootScope.notice_found){
+          $rootScope.notice_found=true;
+          ShowSimpleToast.show(response.data.message);
+        }
+
+      }
+    },function(response){
+      ShowSimpleToast.show('Failed to connect !!');
+      $interval.cancel($rootScope.notification);
+      console.log($rootScope.notification);
     })
   }
 

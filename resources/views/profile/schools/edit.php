@@ -31,33 +31,47 @@
                         </div>
                       </div>
                 </md-input-container>
-                <div flex>
-                    <md-input-container class="md-block" flex>
-                        <label>Type</label>
-                        <md-select ng-model=" data.editContent.type" required>
-                      <md-option value="স্কুল">
-                        স্কুল
-                      </md-option>
-                     <md-option value="কলেজ">
-                        কলেজ
-                      </md-option>
-                     <md-option value="মাদ্রাসা">
-                        মাদ্রাসা
-                      </md-option>
 
-                    </md-select>
-                    <div ng-messages="editForm.type.$error" role="alert">
-                            <div ng-message="required">
-                              Type is required
-                            </div>
-                          </div>
-                    </md-input-container >
+                <div flex>
+                    <md-input-container class="md-block" >
+                    <label>Type</label>
+                    <md-select ng-model=" data.editContent.type"  name="type">
+                <md-option ng-value="type" ng-repeat="type in types">
+                    <%type%>
+                  </md-option>
+
+                </md-select>
+                
+                </md-input-container >
+                <md-input-container class="md-block" >
+                    <label>Category</label>
+                    <md-select ng-model=" data.editContent.category" required name="category">
+                <md-option ng-value="category" ng-repeat="category in categories">
+                    <%category%>
+                  </md-option>
+
+                </md-select>
+                <div ng-messages="editForm.category.$error" role="alert">
+                        <div ng-message="required">
+                          Category is required
+                        </div>
+                      </div>
+                </md-input-container >
                     <md-input-container class="md-block" flex>
                         <label>EIIN Number</label><input type="text" ng-model="data.editContent.eiin_number" name="eiin_number" >
                         
                     </md-input-container>
                 </div>
                <div flex>
+               <md-input-container class="md-block" >
+                    <label>Management</label>
+                    <md-select ng-model=" data.editContent.management" required name="management">
+                <md-option ng-value="item" ng-repeat="item in managements">
+                    <%item%>
+                  </md-option>
+
+                </md-select>
+                </md-input-container>
                    <md-input-container class="md-block" flex>
                     <label>Total Teacher</label><input type="number" ng-model="data.editContent.teacher" name="teacher" >
                     
@@ -69,11 +83,11 @@
                </div>
                 <div flex>
                     <md-input-container class="md-block" flex>
-                    <label>Zilla</label><input type="text" ng-model="data.editContent.zilla" name="zilla" >
+                    <label>Zila</label><input type="text" ng-model="data.editContent.zilla" name="zilla" >
                     
                 </md-input-container>
                 <md-input-container class="md-block" flex>
-                    <label>Upo Zilla</label><input type="text" ng-model="data.editContent.upozilla" name="upozilla" >
+                    <label>Upo Zila</label><input type="text" ng-model="data.editContent.upozilla" name="upozilla" >
                     
                 </md-input-container>
                 </div>
@@ -83,7 +97,7 @@
                     
                 </md-input-container>
                 <md-input-container class="md-block" ng-init="data.editContent.mpo_date=getDate(data.editContent.mpo_date)">
-                    <label>Upo Date</label><md-datepicker ng-model="data.editContent.mpo_date"></md-datepicker>
+                    <label>Mpo Date</label><md-datepicker ng-model="data.editContent.mpo_date"></md-datepicker>
                     
                 </md-input-container>
                </div>
