@@ -43,11 +43,11 @@ class QuestionSeeder extends Seeder
 
         Options::create([
             'option' => "হ্যাঁ",
-            'option_value' =>1,
+            'option_value' =>0,
         ]);
         Options::create([
             'option' => "না",
-            'option_value' =>0,
+            'option_value' =>1,
         ]);
 
         $op = Options::find(1);
