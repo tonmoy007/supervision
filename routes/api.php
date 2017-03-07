@@ -46,3 +46,8 @@ Route::get('/attendance/{id}', 'school\\AttendanceController@schoolHistory');
 Route::resource('attendance', 'school\\AttendanceController');
 Route::resource('notice/new', 'notice\\NoticeController@newNotice');
 Route::resource('notice', 'notice\\NoticeController');
+
+Route::get('/questions/menu', "Questions\\QuestionController@index");
+Route::get('/questions/environments', "Questions\\QuestionController@environment");
+
+Route::resource('questions', "Questions\\QuestionController");
