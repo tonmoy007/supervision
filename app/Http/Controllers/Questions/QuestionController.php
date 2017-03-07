@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Questions;
 
+use App\Models\Options;
 use App\Models\Questions;
 use App\Models\UsersAnswer;
 use Carbon\Carbon;
@@ -63,9 +64,15 @@ class QuestionController extends Controller
         $QA = array(['title' => "শিক্ষা প্রতিষ্ঠানের  শিখন শেখানো পরিবেশ", 'url' => "/api/questions/environments"],);
         foreach ($questions as $question) {
             $qa = $question->toArray();
-            $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->get();
+            $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->first();
 
-            $qa['answers'] = $ans->toArray();
+            $opv=-1;
+            if($ans != null) {
+                $opt = Options::where('id', $ans->option_id)->first();
+
+                $opv =  $opt->option_value;
+            }
+            $qa['answer'] = $opv;
             array_push($QA, $qa);
         }
         $message = "Environment question found";
@@ -92,6 +99,7 @@ class QuestionController extends Controller
             ]);
             $ans->save();
         }
+        return response()->json(['success'=>1,'message'=> "answer submitted",]);
 
     }
 }
