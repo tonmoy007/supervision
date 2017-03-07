@@ -3,11 +3,31 @@
 namespace App\Http\Controllers\Questions;
 
 use App\Models\Questions;
+use App\Models\UsersAnswer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 
 class QuestionController extends Controller
 {
+    protected $user;
+    public function __construct(Request $request)
+    {
+        $method = $request->method();
+        /*if($method != 'post') {
+            return;
+        }*/
+        try {
+            $this->middleware('ability:token',['except' => ['index']]);
+            $this->user = JWTAuth::parseToken()->toUser();
+        }catch (TokenExpiredException $e) {
+            $token = JWTAuth::getToken();
+            $newToken = JWTAuth::refresh($token);
+            $this->user = JWTAuth::setToken($newToken)->toUser();
+        }
+    }
     public function index(){
         $menu = [
             ['title' => "শিক্ষা প্রতিষ্ঠানের  শিখন শেখানো পরিবেশ", 'url' => "/api/questions/environments"],
@@ -40,10 +60,12 @@ class QuestionController extends Controller
         $questions = Questions::where('id', '<=', 8)->with('options')->get();
 
         //die(var_dump($questions->questions));
-        $QA = array();
+        $QA = array(['title' => "শিক্ষা প্রতিষ্ঠানের  শিখন শেখানো পরিবেশ", 'url' => "/api/questions/environments"],);
         foreach ($questions as $question) {
             $qa = $question->toArray();
-            $qa['answers'] = array();
+            $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->get();
+
+            $qa['answers'] = $ans->toArray();
             array_push($QA, $qa);
         }
         $message = "Environment question found";
@@ -53,7 +75,23 @@ class QuestionController extends Controller
         $options = $question->options;
         die(var_dump($options->toArray()));
     }
-    public function environmentAnswer() {
+    public function environmentAnswer(Request $request) {
+        $answers = $request->get('answers');
+        if(!is_array($answers)) {
+            $answers = json_decode($answers, true);
+        }
+
+        foreach ($answers as $answer) {
+            $ans = new UsersAnswer([
+                'user_id' => $this->user->id,
+                'question_id' => $answer['question_id'],
+                'option_id' => $answer['answer_id'],
+                'answer' => $answer['answer'],
+                'xtra' => 'education',
+                'answer_date' => Carbon::now()->toDateString()
+            ]);
+            $ans->save();
+        }
 
     }
 }
