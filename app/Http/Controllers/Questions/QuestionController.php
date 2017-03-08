@@ -61,7 +61,9 @@ class QuestionController extends Controller
         $questions = Questions::where('id', '<=', 8)->with('options')->get();
 
         //die(var_dump($questions->questions));
-        $QA = array(['title' => "শিক্ষা প্রতিষ্ঠানের  শিখন শেখানো পরিবেশ", 'url' => "/api/questions/environments"],);
+        $title = ['value' => "শিক্ষা প্রতিষ্ঠানের  শিখন শেখানো পরিবেশ", 'url' => "/api/questions/environments"];
+
+        $QA = array();
         foreach ($questions as $question) {
             $qa = $question->toArray();
             $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->first();
@@ -76,7 +78,8 @@ class QuestionController extends Controller
             array_push($QA, $qa);
         }
         $message = "Environment question found";
-        return response()->json(['success'=>1,'message'=> $message, 'questions' => $QA]);
+        $form = array("title"=>$title, "questions" => $QA);
+        return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
         die(var_dump($QA));
         die(var_dump($question->toArray()));
         $options = $question->options;
