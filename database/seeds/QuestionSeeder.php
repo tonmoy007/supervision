@@ -131,6 +131,97 @@ class QuestionSeeder extends Seeder
         $qa->save();
         $qa->options()->saveMany($options);
 
+        $options = [
+            new Options([
+                'option' => "উত্তম",
+                'option_value' => 0
+            ]),
+            new Options([
+                'option' => "মধ্যম",
+                'option_value' => 1
+            ]),
+            new Options([
+                'option' => "পরিষ্কার",
+                'option_value' => 2
+            ]),
+
+        ];
+        $qa = new Questions([
+            'question' => "পরিষ্কার পরিচ্ছন্নতা",
+            'type' => 'option'
+
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+
+        $options = [
+            new Options([
+                'option' => "পর্যাপ্ত",
+                'option_value' => 0
+            ]),
+            new Options([
+                'option' => "মধ্যম",
+                'option_value' => 1
+            ]),
+            new Options([
+                'option' => "অপর্যাপ্ত",
+                'option_value' => 2
+            ]),
+
+        ];
+        $qa = new Questions([
+            'question' => "শিক্ষা উপকরণ ও সজ্জিতকরণ",
+            'type' => 'option'
+
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+
+        $options = [
+            new Options([
+                'option' => "পর্যাপ্ত",
+                'option_value' => 0
+            ]),
+            new Options([
+                'option' => "মধ্যম",
+                'option_value' => 1
+            ]),
+            new Options([
+                'option' => "ব্যবহার উপযোগী নয়",
+                'option_value' => 2
+            ]),
+
+        ];
+        $qa = new Questions([
+            'question' => "ব্ল্যাকবোর্ডের অবস্থা",
+            'type' => 'option'
+
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+
+        $options = [
+            new Options([
+                'option' => "ইউ আকৃতির",
+                'option_value' => 0
+            ]),
+            new Options([
+                'option' => "একপাশে (সনাতন পদ্ধতি )",
+                'option_value' => 1
+            ]),
+            new Options([
+                'option' => "কোন পদ্ধতি অনুসরণ করা হয় না",
+                'option_value' => 2
+            ]),
+
+        ];
+        $qa = new Questions([
+            'question' => "শিক্ষার্থীদের বসার অবস্থা",
+            'type' => 'option'
+
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
 
     }
 }

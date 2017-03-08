@@ -18,7 +18,7 @@ class CreateUsersAnswersTable extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('question_id');
             $table->unsignedInteger('option_id');
-            $table->unsignedInteger('class_id')->default(0);
+            $table->unsignedInteger('class_id');
             $table->string('xtra');
             $table->string('answer');
             $table->date('answer_date');

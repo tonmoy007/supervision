@@ -50,5 +50,7 @@ Route::resource('notice', 'notice\\NoticeController');
 Route::get('/questions/menu', "Questions\\QuestionController@index");
 Route::get('/questions/environments', "Questions\\QuestionController@environment");
 Route::post('/questions/environments', "Questions\\QuestionController@environmentAnswer");
+Route::get('/questions/classrooms', "Questions\\QuestionController@classroom");
+Route::post('/questions/classrooms', "Questions\\QuestionController@classroomAnswer");
 
 //Route::resource('questions', "Questions\\QuestionController");
