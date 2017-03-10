@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Questions;
 
 use App\Models\Options;
 use App\Models\Questions;
+use App\Models\User;
 use App\Models\UsersAnswer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -32,7 +33,7 @@ class QuestionController extends Controller
     public function index(){
         $menu = [
             ['title' => "শিক্ষা প্রতিষ্ঠানের  শিখন শেখানো পরিবেশ", 'url' => "/api/questions/environments"],
-            ['title' => "শ্রেণীকক্ষ সংক্রান্ত তথ্য", 'url' => "/api/questions/environments"],
+            ['title' => "শ্রেণীকক্ষ সংক্রান্ত তথ্য", 'url' => "/api/questions/classrooms"],
             ['title' => "বিজ্ঞানাগার, কম্পিউটার ল্যাব ও লাইব্রেরী সংক্রান্ত তথ্য ( বিগত মাসের রেকর্ড)", 'url' => "/api/questions/environments"],
             ['title' => "শিক্ষক সংক্রান্ত  তথ্য", 'url' => "/api/questions/environments"],
             ['title' => "শ্রেণী পাঠদান পর্যবেক্ষণ  ( নূয়নতম দুটি ক্লাস পর্যবেক্ষণ করে শ্রেণির তথ্য পূরণ করুন )", 'url' => "/api/questions/environments"],
@@ -55,10 +56,7 @@ class QuestionController extends Controller
 
     }
     public function environment() {
-        for($i=1; $i<= 8; $i++) {
-
-        }
-        $questions = Questions::where('id', '<=', 8)->with('options')->get();
+        $questions = Questions::where('id', '<=', 9)->with('options')->get();
 
         //die(var_dump($questions->questions));
         $title = ['value' => "শিক্ষা প্রতিষ্ঠানের  শিখন শেখানো পরিবেশ", 'url' => "/api/questions/environments"];
@@ -68,13 +66,13 @@ class QuestionController extends Controller
             $qa = $question->toArray();
             $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->first();
 
-            $opv=-1;
+            $opt = array();
             if($ans != null) {
                 $opt = Options::where('id', $ans->option_id)->first();
 
-                $opv =  $opt->option_value;
+                $opt =  $opt->toArray();
             }
-            $qa['answer'] = $opv;
+            $qa['answer'] = $opt;
             array_push($QA, $qa);
         }
         $message = "Environment question found";
@@ -96,7 +94,8 @@ class QuestionController extends Controller
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
                 'option_id' => $answer['answer_id'],
-                'answer' => $answer['answer'],
+                'class_id' => -1,
+                'answer' => "answer",
                 'xtra' => 'education',
                 'answer_date' => Carbon::now()->toDateString()
             ]);
@@ -105,4 +104,55 @@ class QuestionController extends Controller
         return response()->json(['success'=>1,'message'=> "answer submitted",]);
 
     }
+
+    public function classroom() {
+        $questions = Questions::where('id', '>', 9)->where('id', '<=', 13)->with('options')->get();
+        $title = ['title' => "শ্রেণীকক্ষ সংক্রান্ত তথ্য", 'url' => "/api/questions/classrooms"];
+        $QA = array();
+        $schools = User::find($this->user->id)->schools;
+        $classes = $schools->classes;
+        //$classes = $classes->toArray();
+        foreach ($classes as $class) {
+            $cl = $class->toArray();
+            $qs = array();
+            foreach ($questions as $question) {
+                $qa = $question->toArray();
+                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $class->id)->first();
+                $opt = array();
+                if ($ans != null) {
+                    $opt = Options::where('id', $ans->option_id)->first();
+
+                    $opt = $opt->toArray();
+                }
+                $qa['answer'] = $opt;
+                array_push($qs, $qa);
+            }
+            $cl['questions'] = $qs;
+            array_push($QA, $cl);
+        }
+        $message = "Classroom question found";
+        $form = array("title"=>$title, "questions" => $QA);
+        return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
+    }
+
+    public function classroomAnswer(Request $request) {
+        $answers = $request->get('answers');
+        if(!is_array($answers)) {
+            $answers = json_decode($answers, true);
+        }
+        foreach ($answers as $answer) {
+            $ans = new UsersAnswer([
+                'user_id' => $this->user->id,
+                'question_id' => $answer['question_id'],
+                'option_id' => $answer['answer_id'],
+                'class_id' => $answer['class_id'],
+                'answer' => "answer",
+                'xtra' => 'education',
+                'answer_date' => Carbon::now()->toDateString()
+            ]);
+            $ans->save();
+        }
+        return response()->json(['success'=>1,'message'=> "answer submitted",]);
+    }
+
 }
