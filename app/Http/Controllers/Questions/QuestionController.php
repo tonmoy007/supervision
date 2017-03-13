@@ -32,23 +32,23 @@ class QuestionController extends Controller
     }
     public function index(){
         $menu = [
-            ['title' => "শিক্ষা প্রতিষ্ঠানের  শিখন শেখানো পরিবেশ", 'url' => "/api/questions/environments"],
-            ['title' => "শ্রেণীকক্ষ সংক্রান্ত তথ্য", 'url' => "/api/questions/classrooms"],
-            ['title' => "বিজ্ঞানাগার, কম্পিউটার ল্যাব ও লাইব্রেরী সংক্রান্ত তথ্য ( বিগত মাসের রেকর্ড)", 'url' => "/api/questions/environments"],
-            ['title' => "শিক্ষক সংক্রান্ত  তথ্য", 'url' => "/api/questions/environments"],
-            ['title' => "শ্রেণী পাঠদান পর্যবেক্ষণ  ( নূয়নতম দুটি ক্লাস পর্যবেক্ষণ করে শ্রেণির তথ্য পূরণ করুন )", 'url' => "/api/questions/environments"],
-            ['title' => "মাল্টিমিডিয়া ক্লাসরুম ব্যবহার সংক্রান্ত তথ্য ( বিগত মাসের )", 'url' => "/api/questions/environments"],
-            ['title' => "পঞ্চবার্ষিক / বার্ষিক উন্নয়ন পরিকল্পনা সংক্রান্ত তথ্য", 'url' => "/api/questions/environments"],
-            ['title' => "প্রতিষ্ঠান প্রধানের রেজিস্টার ও শিক্ষকের ডায়েরী  সংক্রান্ত তথ্য", 'url' => "/api/questions/environments"],
-            ['title' => "শ্রেণি পাঠদান পর্যবেক্ষণে প্রতিষ্ঠান প্রধানের ভূমিকা", 'url' => "/api/questions/environments"],
-            ['title' => "সভা সংক্রান্ত তথ্য", 'url' => "/api/questions/environments"],
-            ['title' => "সহ-শিক্ষাক্রমিক কার্যক্রম", 'url' => "/api/questions/environments"],
-            ['title' => "স্বল্প কৃতিধারী শিক্ষার্থীদের চিহ্নিতকরণ   সংক্রান্ত তথ্য", 'url' => "/api/questions/environments"],
-            ['title' => "সৃজনশীল প্রশ্ন প্রণয়ন পদ্ধতি বাস্তবায়ন বিষয়ক তথ্য", 'url' => "/api/questions/environments"],
-            ['title' => "ধারাবাহিক মূল্যায়ন (CA) সংক্রান্ত তথ্য", 'url' => "/api/questions/environments"],
-            ['title' => "পরীক্ষার ফলাফল সম্পর্কিত তথ্য", 'url' => "/api/questions/environments"],
-            ['title' => "সংশ্লিষ্ট প্রতিষ্ঠানের সার্বিক মানোন্নয়ন পরিদর্শনকারী কর্মকর্তা কর্তিক প্রদত্ত সুপারিশসমুহ", 'url' => "/api/questions/environments"],
-            ['title' => "পরিদর্শনকারী কর্মকর্তার সার্বিক মন্তব্য", 'url' => "/api/questions/environments"],
+            ['title' => "শিক্ষা প্রতিষ্ঠানের  শিখন শেখানো পরিবেশ", 'url' => "environments"],
+            ['title' => "শ্রেণীকক্ষ সংক্রান্ত তথ্য", 'url' => "classrooms"],
+            ['title' => "বিজ্ঞানাগার, কম্পিউটার ল্যাব ও লাইব্রেরী সংক্রান্ত তথ্য ( বিগত মাসের রেকর্ড)", 'url' => "environments"],
+            ['title' => "শিক্ষক সংক্রান্ত  তথ্য", 'url' => "environments"],
+            ['title' => "শ্রেণী পাঠদান পর্যবেক্ষণ  ( নূয়নতম দুটি ক্লাস পর্যবেক্ষণ করে শ্রেণির তথ্য পূরণ করুন )", 'url' => "environments"],
+            ['title' => "মাল্টিমিডিয়া ক্লাসরুম ব্যবহার সংক্রান্ত তথ্য ( বিগত মাসের )", 'url' => "environments"],
+            ['title' => "পঞ্চবার্ষিক / বার্ষিক উন্নয়ন পরিকল্পনা সংক্রান্ত তথ্য", 'url' => "environments"],
+            ['title' => "প্রতিষ্ঠান প্রধানের রেজিস্টার ও শিক্ষকের ডায়েরী  সংক্রান্ত তথ্য", 'url' => "environments"],
+            ['title' => "শ্রেণি পাঠদান পর্যবেক্ষণে প্রতিষ্ঠান প্রধানের ভূমিকা", 'url' => "environments"],
+            ['title' => "সভা সংক্রান্ত তথ্য", 'url' => "environments"],
+            ['title' => "সহ-শিক্ষাক্রমিক কার্যক্রম", 'url' => "environments"],
+            ['title' => "স্বল্প কৃতিধারী শিক্ষার্থীদের চিহ্নিতকরণ   সংক্রান্ত তথ্য", 'url' => "environments"],
+            ['title' => "সৃজনশীল প্রশ্ন প্রণয়ন পদ্ধতি বাস্তবায়ন বিষয়ক তথ্য", 'url' => "environments"],
+            ['title' => "ধারাবাহিক মূল্যায়ন (CA) সংক্রান্ত তথ্য", 'url' => "environments"],
+            ['title' => "পরীক্ষার ফলাফল সম্পর্কিত তথ্য", 'url' => "environments"],
+            ['title' => "সংশ্লিষ্ট প্রতিষ্ঠানের সার্বিক মানোন্নয়ন পরিদর্শনকারী কর্মকর্তা কর্তিক প্রদত্ত সুপারিশসমুহ", 'url' => "environments"],
+            ['title' => "পরিদর্শনকারী কর্মকর্তার সার্বিক মন্তব্য", 'url' => "environments"],
         ];
         $message = "Menue found";
         return response()->json(['success'=>1,'message'=> $message, 'menu' => $menu]);
@@ -94,7 +94,7 @@ class QuestionController extends Controller
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
                 'option_id' => $answer['answer_id'],
-                'class_id' => -1,
+                'class_id' => 0,
                 'answer' => "answer",
                 'xtra' => 'education',
                 'answer_date' => Carbon::now()->toDateString()
@@ -107,7 +107,7 @@ class QuestionController extends Controller
 
     public function classroom() {
         $questions = Questions::where('id', '>', 9)->where('id', '<=', 13)->with('options')->get();
-        $title = ['title' => "শ্রেণীকক্ষ সংক্রান্ত তথ্য", 'url' => "/api/questions/classrooms"];
+        $title = ['title' => "শ্রেণীকক্ষ সংক্রান্ত তথ্য", 'url' => "classrooms"];
         $QA = array();
         $schools = User::find($this->user->id)->schools;
         $classes = $schools->classes;
@@ -131,7 +131,7 @@ class QuestionController extends Controller
             array_push($QA, $cl);
         }
         $message = "Classroom question found";
-        $form = array("title"=>$title, "questions" => $QA);
+        $form = array("title"=>$title, "classes" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
     }
 
