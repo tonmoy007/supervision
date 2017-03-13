@@ -22,3 +22,11 @@ Route::get('getView/{name}',function($name){
 });
 
 Route::get('/get_post', 'posts\\SinglePostController@getPost');
+
+Route::get('/home', 'HomeController@index');
+
+Route::get('menu', "Questions\\QuestionController@index");
+Route::get('environments', "Questions\\QuestionController@environment");
+Route::post('environments', "Questions\\QuestionController@environmentAnswer");
+Route::get('classrooms', "Questions\\QuestionController@classroom");
+Route::post('classrooms', "Questions\\QuestionController@classroomAnswer");
