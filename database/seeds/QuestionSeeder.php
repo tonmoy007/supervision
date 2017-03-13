@@ -16,27 +16,27 @@ class QuestionSeeder extends Seeder
         $questions = [
             new Questions([
                 'question' => "সীমানা প্রাচীর আছে কিনা?",
-                'type' => 'checkbox'
+                'type' => 'radio'
 
             ]),
             new Questions([
                 'question' => "খেলার মাঠ আছে কিনা?",
-                'type' => 'checkbox'
+                'type' => 'radio'
 
             ]),
             new Questions([
                 'question' => "শিক্ষক  কমনরুম আছে কিনা?",
-                'type' => 'checkbox'
+                'type' => 'radio'
 
             ]),
             new Questions([
                 'question' => "পর্যাপ্ত শ্রেণি কক্ষ আছে কিনা?",
-                'type' => 'checkbox'
+                'type' => 'radio'
 
             ]),
             new Questions([
                 'question' => "গেইট আছে কিনা?",
-                'type' => 'checkbox'
+                'type' => 'radio'
 
             ]),
         ];
@@ -81,7 +81,7 @@ class QuestionSeeder extends Seeder
         ];
         $qa = new Questions([
             'question' => "শিক্ষা প্রতিষ্ঠানের  আঙ্গিনা",
-            'type' => 'option'
+            'type' => 'select'
 
         ]);
          $qa->save();
@@ -103,7 +103,7 @@ class QuestionSeeder extends Seeder
         ];
         $qa = new Questions([
             'question' => "শিক্ষার্থীদের টয়লেট",
-            'type' => 'option'
+            'type' => 'select'
 
         ]);
         $qa->save();
@@ -125,7 +125,7 @@ class QuestionSeeder extends Seeder
         ];
         $qa = new Questions([
             'question' => "শিক্ষার্থীদের নিরাপদ পানীয় জল",
-            'type' => 'option'
+            'type' => 'select'
 
         ]);
         $qa->save();
@@ -148,7 +148,7 @@ class QuestionSeeder extends Seeder
         ];
         $qa = new Questions([
             'question' => "পরিষ্কার পরিচ্ছন্নতা",
-            'type' => 'option'
+            'type' => 'select'
 
         ]);
         $qa->save();
@@ -171,7 +171,7 @@ class QuestionSeeder extends Seeder
         ];
         $qa = new Questions([
             'question' => "শিক্ষা উপকরণ ও সজ্জিতকরণ",
-            'type' => 'option'
+            'type' => 'select'
 
         ]);
         $qa->save();
@@ -194,7 +194,7 @@ class QuestionSeeder extends Seeder
         ];
         $qa = new Questions([
             'question' => "ব্ল্যাকবোর্ডের অবস্থা",
-            'type' => 'option'
+            'type' => 'select'
 
         ]);
         $qa->save();
@@ -217,7 +217,7 @@ class QuestionSeeder extends Seeder
         ];
         $qa = new Questions([
             'question' => "শিক্ষার্থীদের বসার অবস্থা",
-            'type' => 'option'
+            'type' => 'select'
 
         ]);
         $qa->save();
