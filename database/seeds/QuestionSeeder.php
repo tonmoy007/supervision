@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\Options;
 use App\Models\Questions;
+use App\Models\QuestionType;
 
 class QuestionSeeder extends Seeder
 {
@@ -103,7 +104,7 @@ class QuestionSeeder extends Seeder
         ];
         $qa = new Questions([
             'question' => "শিক্ষার্থীদের টয়লেট",
-            'type' => 'select'
+            'type' => 'radio'
 
         ]);
         $qa->save();
@@ -125,7 +126,7 @@ class QuestionSeeder extends Seeder
         ];
         $qa = new Questions([
             'question' => "শিক্ষার্থীদের নিরাপদ পানীয় জল",
-            'type' => 'select'
+            'type' => 'radio'
 
         ]);
         $qa->save();
@@ -148,7 +149,7 @@ class QuestionSeeder extends Seeder
         ];
         $qa = new Questions([
             'question' => "পরিষ্কার পরিচ্ছন্নতা",
-            'type' => 'select'
+            'type' => 'radio'
 
         ]);
         $qa->save();
@@ -171,7 +172,7 @@ class QuestionSeeder extends Seeder
         ];
         $qa = new Questions([
             'question' => "শিক্ষা উপকরণ ও সজ্জিতকরণ",
-            'type' => 'select'
+            'type' => 'radio'
 
         ]);
         $qa->save();
@@ -194,7 +195,7 @@ class QuestionSeeder extends Seeder
         ];
         $qa = new Questions([
             'question' => "ব্ল্যাকবোর্ডের অবস্থা",
-            'type' => 'select'
+            'type' => 'radio'
 
         ]);
         $qa->save();
@@ -217,11 +218,139 @@ class QuestionSeeder extends Seeder
         ];
         $qa = new Questions([
             'question' => "শিক্ষার্থীদের বসার অবস্থা",
+            'type' => 'radio'
+
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+
+        $type =new QuestionType([
+                'type' => "বিজ্ঞানাগার"
+            ]);
+        $type->save();
+
+        $type = new QuestionType([
+                'type' => "কম্পিউটার ল্যাব"
+            ]);
+        $type->save();
+        $type = new QuestionType([
+                'type' => "লাইব্রেরী"
+            ]);
+        $type->save();
+
+
+        $options = [
+            new Options([
+                'option' => "আছে",
+                'option_value' => 0
+            ]),
+            new Options([
+                'option' => "নাই",
+                'option_value' => 1
+            ]),
+            new Options([
+                'option' => "ব্যাবহার উপযোগী",
+                'option_value' => 2
+            ]),
+            new Options([
+                'option' => "ব্যাবহার উপযোগী নয়",
+                'option_value' => 3
+            ]),
+
+        ];
+        $qa = new Questions([
+            'question' => "পৃথক কক্ষ",
             'type' => 'select'
 
         ]);
         $qa->save();
         $qa->options()->saveMany($options);
+
+        $options = [
+            new Options([
+                'option' => "পর্যাপ্ত",
+                'option_value' => 0
+            ]),
+            new Options([
+                'option' => "অপর্যাপ্ত",
+                'option_value' => 1
+            ]),
+            new Options([
+                'option' => "ব্যাবহার উপযোগী নয়",
+                'option_value' => 3
+            ]),
+
+        ];
+        $qa = new Questions([
+            'question' => "বৈজ্ঞানিক সরঞ্জামাদি / কম্পিউটার / বই পুস্তক",
+            'type' => 'radio'
+
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+
+        $options = [
+            new Options([
+                'option' => "ব্যবহার হয়",
+                'option_value' => 0
+            ]),
+            new Options([
+                'option' => "ব্যবহার  হয় না",
+                'option_value' => 1
+            ]),
+        ];
+        $qa = new Questions([
+            'question' => "নিয়মিত কার্যক্রম ব্যবহার",
+            'type' => 'radio'
+
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+
+        $qu = new Questions();
+        $qu->question = "ব্যবহারকারী শিক্ষার্থীর সংখ্যা ( গত মাসের)";
+        $qu->type = "input";
+        $qu->save();
+
+        $questions = [
+            new Questions([
+                'question' => "শিক্ষার্থীর সংখ্যা",
+                'type' => 'input'
+
+            ]),
+            new Questions([
+                'question' => "উপস্থিত  শিক্ষার্থীর সংখ্যা",
+                'type' => 'input'
+
+            ]),
+            new Questions([
+                'question' => "বিগত মাসে একাধারে ৫ বা ততোধিক দিন অনুপস্থিত শিক্ষার্থীর সংখ্যা",
+                'type' => 'input'
+
+            ]),
+
+        ];
+        $oop = new Options([
+            'option' => "ছাত্র",
+            'option_value' =>0,
+        ]);
+        $oop->save();
+
+        $op = Options::find($oop->id);
+        $op->questions()->saveMany($questions);
+        $oop = new Options([
+            'option' => "ছাত্রী",
+            'option_value' =>1,
+        ]);
+        $oop->save();
+        $op = Options::find($oop->id);
+        //$q->options()->attach($op);
+        $op->questions()->saveMany($questions);
+
+        $qu = new Questions();
+        $qu->question = "একাধারে ৫ বা ততোধিক দিন অনুপস্থিত শিক্ষার্থীর বিষয়ে গৃহীত ব্যবস্থা";
+        $qu->type = "input";
+        $qu->save();
 
     }
 }
