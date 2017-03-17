@@ -102,14 +102,20 @@ class QuestionController extends Controller
 
         foreach ($answers as $answer) {
             $answerID = 0;
-            if(isset($answer['answer_id'])){
+            if(isset($answer['answer_id']) && $answer['answer_id'] != "0"){
                 $answerID = $answer['answer_id'];
             }
             $ans = 0;
             if(isset($answer['answer_value'])) {
                 $ans = $answer['answer_value'];
             }
-            $ans = new UsersAnswer([
+            $ua = UsersAnswer::updateOrCreate(
+                [
+                    'user_id' => $this->user->id,
+                    'question_id' => $answer['question_id'],
+                    'option_id' => $answerID,
+                ],
+                [
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
                 'option_id' => $answerID,
@@ -118,7 +124,7 @@ class QuestionController extends Controller
                 'xtra' => 'education',
                 'answer_date' => Carbon::now()->toDateString()
             ]);
-            $ans->save();
+            $ua->save();
         }
         return response()->json(['success'=>1,'message'=> "answer submitted",]);
 
@@ -160,7 +166,12 @@ class QuestionController extends Controller
             $answers = json_decode($answers, true);
         }
         foreach ($answers as $answer) {
-            $ans = new UsersAnswer([
+            $ans =  UsersAnswer::updateOrCreate([
+                'user_id' => $this->user->id,
+                'question_id' => $answer['question_id'],
+                'option_id' => $answer['answer_id'],
+                ],
+                [
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
                 'option_id' => $answer['answer_id'],
@@ -226,7 +237,12 @@ class QuestionController extends Controller
             if(isset($answer['answer_value'])) {
                 $ans = $answer['answer_value'];
             }
-            $ans = new UsersAnswer([
+            $ans = UsersAnswer::updateOrCreate([
+                'user_id' => $this->user->id,
+                'question_id' => $answer['question_id'],
+                'option_id' => $answer['answer_id'],
+                ],
+                [
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
                 'option_id' => $answerID,
@@ -276,7 +292,12 @@ class QuestionController extends Controller
             $answers = json_decode($answers, true);
         }
         foreach ($answers as $answer) {
-            $ans = new UsersAnswer([
+            $ans = UsersAnswer::updateOrCreate([
+                'user_id' => $this->user->id,
+                'question_id' => $answer['question_id'],
+                'option_id' => $answer['answer_id'],
+                ],
+                [
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
                 'option_id' => $answer['answer_id'],
