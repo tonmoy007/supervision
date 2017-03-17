@@ -86,7 +86,7 @@ angular.module('super-factory',['ngMaterial','ngAnimate'])
     
 })
 .service('superServices',  function($http,$rootScope,$q,SiteEssentials,
-  AuthenticationService,$location,$state,Upload,$mdDialog,ShowSimpleToast){
+  AuthenticationService,$location,$state,Upload,$mdDialog,ShowSimpleToast,$interval){
   this.classes=null;
   var methods=[];
   
@@ -119,7 +119,8 @@ this.getMenu=function(type){
   var menu=[];
   menu['profile']=[
             {'name':'home','title':'Home','icon':'/img/accessories/home.svg','action_template':'',role:'all'},
-            {'name':'profile.reports','title':'Reports','icon':'/img/accessories/reports.svg','action_template':'',role:'all'},
+            {'name':'profile.reports','title':'Reports','icon':'/img/accessories/reports.svg',
+            'action_template':'getView/profile.reports.actions',role:'all'},
             {'name':'profile.notice','title':'Notice','icon':'/img/accessories/notice.svg',
             'action_template':'getView/profile.notice.action_template',role:'all'},
             {'name':'profile.schools','title':'Schools','icon':'/img/accessories/schools.svg',
@@ -449,6 +450,43 @@ this.deleteContent=function(ev,item_name,url,id){
     })
   }
 
+  this.getReportForm=function(param){
+    $rootScope.loadingData=true;
+    return $http.get('api/questions/'+param.name).then(function(response){
+      if(response.data.success){
+        console.log(response);
+        $rootScope.loadingData=false;
+        return response.data;
+      }else{
+        ShowSimpleToast.show(response.data.message);
+      }
+    },function(response){
+      $rootScope.loadingData=false;
+      SiteEssentials.responsCheck(response);
+    })
+  }
+this.getAnswers=function(report,type){
+  answers=[];
+  if(type=='no_class'){
+    angular.forEach(report.questions, function(value, key){
+      value.answer.answer_id=value.answer.id;
+      value.answer.question_id=value.id;
+      answers.push(value.answer)
+    });
+  }
+  return answers;
+}
+this.submitAnswer=function(scope,answer){
+  scope.formSubmitting=true;
+  $http({url:'api/questions/'+scope.name,method:'POST',data:{answers:answer},dataType:'JSON'}).then(function(response){
+    scope.formSubmitting=false;
+    console.log(response);
+    ShowSimpleToast.show(response.data.message);
+  },function(response){
+    scope.formSubmitting=false;
+    SiteEssentials.responsCheck(response);
+  })
+}
 
 })
 

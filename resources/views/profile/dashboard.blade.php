@@ -1,7 +1,7 @@
 
 
 <div flex layout-gt-sm="row" layout="column" ng-show="nav.current_state=='profile'">
-    <div flex="100"  class="p-x-1">
+    <div flex="100"  class="p-x-0">
         
     <div layout="row" layout-align="start center" ng-show="nav.state.length>1" class="page-nav">
         <span flex="nogrow">

@@ -243,10 +243,22 @@
   background-color: #bf5329;
 }
 
+.inline {
+  display: inline-block;
+}
+
+.bg-light-gray {
+  background-color: #f2f2f2;
+}
+
 .badge.sticky {
   position: absolute;
   right: calc(50% - 17px);
   top: 15px;
+}
+
+.no-radius {
+  border-radius: 0 !important;
 }
 
 .fix_loader {
@@ -769,9 +781,35 @@ md-dialog .dissmiss-button {
   opacity: 1;
 }
 
+.menu_label {
+  width: calc(100% - 47px);
+}
+
+.menu_label .meta__label {
+  line-height: 60px;
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 svg path, svg rect {
   color: #636b6f !important;
   fill: #636b6f !important;
+}
+
+.form_submit {
+  position: relative;
+  width: 100%;
+  display: inline-block;
+  z-index: 1;
+  text-align: right;
+}
+
+.bottom-fix {
+  position: fixed;
+  bottom: 0;
+  left: calc(50% - 60px);
 }
 
 /*# sourceMappingURL=app.css.map */

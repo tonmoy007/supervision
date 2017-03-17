@@ -65,10 +65,19 @@
 .bg-danger{
     background-color:$brand-danger;
 }
+.inline{
+    display:inline-block;
+}
+.bg-light-gray{
+    background-color:darken(white, 5%);
+}
 .badge.sticky{
     position:absolute;
     right:calc(50% - 17px);
     top:15px;
+}
+.no-radius{
+    border-radius:0!important;
 }
 .fix_loader{
     position:absolute;
@@ -538,8 +547,33 @@ md-dialog{
   
     }
 }
-
+.menu_label{
+    width:calc(100% - 47px);
+    .meta__label{
+        
+        line-height:60px;
+        vertical-align:middle;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+    }
+}
 svg path,svg rect{
     color:$text-color!important;
     fill:$text-color!important;
 }
+
+.form_submit{
+   position:relative;
+   width:100%;
+   display:inline-block;
+   z-index:1;
+   text-align:right;
+
+}
+.bottom-fix{
+    position: fixed;
+    bottom:0;
+    left:calc(50% - 60px);
+    
+   }

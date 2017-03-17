@@ -418,3 +418,33 @@ angular.module('super-controllers',[])
     }
 
 })
+
+.controller('reportCtrl',function($scope,$rootScope,ReportMenu,superServices,$state){
+    console.log(ReportMenu);
+
+    $scope.state=$state;
+
+    $scope.report_menu=ReportMenu;
+    $scope.openReport=function(item){
+        
+        $state.go("profile.reports.form",{'name':item.url});
+
+    }
+})
+.controller('formCtrl',function($scope,$rootScope,Questions,$state,$stateParams,superServices){
+    
+    $scope.name=$stateParams.name;
+    $scope.view='/getView/profile.reports.'+$scope.name;
+    $scope.form=Questions.form;
+    $rootScope.nav.title=$scope.form.title.value;
+    $scope.submitAnswer=function(form,report,type){
+        if(form.$invalid)return;
+
+        var answers=superServices.getAnswers(report,type);
+        console.log(answers);
+        superServices.submitAnswer($scope,answers);
+
+    }
+
+
+})

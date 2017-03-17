@@ -124,10 +124,28 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
     {
         name:'profile.reports',
         title:'Reports',
-        controller:'innerContentCtrl',
+        controller:'reportCtrl',
         url:'/reports',
         role:'all',
-        templateUrl:'getView/profile.reports'
+        templateUrl:'getView/profile.reports',
+        resolve:{
+            ReportMenu:function(superServices){
+               return superServices.getContent('questions/menu','menu');
+            }
+        }
+    },
+    {
+        name:'profile.reports.form',
+        title:'Reports',
+        url:'/:name',
+        role:'general_user',
+        controller:'formCtrl',
+        templateUrl:'getView/profile.reports.form_view',
+        resolve:{
+            Questions:function(superServices,$stateParams){
+                return superServices.getReportForm($stateParams);
+            }
+        }
     },
     {
         name:'profile.notice',
