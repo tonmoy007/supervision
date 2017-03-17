@@ -469,7 +469,9 @@ this.getAnswers=function(report,type){
   answers=[];
   if(type=='no_class'){
     angular.forEach(report.questions, function(value, key){
-      value.answer.answer_id=value.answer.id;
+
+    if(value.type!='input')value.answer.answer_id=value.answer.id;
+
       value.answer.question_id=value.id;
       answers.push(value.answer)
     });
@@ -477,13 +479,16 @@ this.getAnswers=function(report,type){
   return answers;
 }
 this.submitAnswer=function(scope,answer){
-  scope.formSubmitting=true;
+  $rootScope.loadingData=true;
   $http({url:'api/questions/'+scope.name,method:'POST',data:{answers:answer},dataType:'JSON'}).then(function(response){
-    scope.formSubmitting=false;
+    $rootScope.loadingData=false;
+    if(response.data.success){
+      $state.reload($state.current.name);
+    }
     console.log(response);
     ShowSimpleToast.show(response.data.message);
   },function(response){
-    scope.formSubmitting=false;
+    $rootScope.loadingData=false;
     SiteEssentials.responsCheck(response);
   })
 }
