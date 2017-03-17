@@ -483,8 +483,6 @@ return array(
     'PHP_Token_XOR_EQUAL' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_YIELD' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_YIELD_FROM' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
-    'PurchaseListSeeder' => $baseDir . '/database/seeds/PurchaseListSeeder.php',
-    'PurcheseListTable' => $baseDir . '/database/migrations/2017_03_16_214232_purchese_list_table.php',
     'QuestionSeeder' => $baseDir . '/database/seeds/QuestionSeeder.php',
     'SchoolSeeder' => $baseDir . '/database/seeds/SchoolSeeder.php',
     'SebastianBergmann\\CodeCoverage\\CodeCoverage' => $vendorDir . '/phpunit/php-code-coverage/src/CodeCoverage.php',

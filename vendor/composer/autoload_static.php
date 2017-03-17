@@ -821,8 +821,6 @@ class ComposerStaticInit85be5e74d5864d7ba6c0ff0f73ebfadf
         'PHP_Token_XOR_EQUAL' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD_FROM' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
-        'PurchaseListSeeder' => __DIR__ . '/../..' . '/database/seeds/PurchaseListSeeder.php',
-        'PurcheseListTable' => __DIR__ . '/../..' . '/database/migrations/2017_03_16_214232_purchese_list_table.php',
         'QuestionSeeder' => __DIR__ . '/../..' . '/database/seeds/QuestionSeeder.php',
         'SchoolSeeder' => __DIR__ . '/../..' . '/database/seeds/SchoolSeeder.php',
         'SebastianBergmann\\CodeCoverage\\CodeCoverage' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage.php',
