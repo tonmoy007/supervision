@@ -106,8 +106,8 @@ class QuestionController extends Controller
                 $answerID = $answer['answer_id'];
             }
             $ans = 0;
-            if(isset($answer['answer_value'])) {
-                $ans = $answer['answer_value'];
+            if(isset($answer['option_value'])) {
+                $ans = $answer['option_value'];
             }
             $ua = UsersAnswer::updateOrCreate(
                 [
@@ -234,8 +234,8 @@ class QuestionController extends Controller
                 $answerID = $answer['answer_id'];
             }
             $ans = 0;
-            if(isset($answer['answer_value'])) {
-                $ans = $answer['answer_value'];
+            if(isset($answer['option_value'])) {
+                $ans = $answer['option_value'];
             }
             $ans = UsersAnswer::updateOrCreate([
                 'user_id' => $this->user->id,
@@ -302,7 +302,7 @@ class QuestionController extends Controller
                 'question_id' => $answer['question_id'],
                 'option_id' => $answer['answer_id'],
                 'class_id' => $answer['class_id'],
-                'answer' => $answer['answer_value'],
+                'answer' => $answer['option_value'],
                 'xtra' => 'education',
                 'answer_date' => Carbon::now()->toDateString()
             ]);
