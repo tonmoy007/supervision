@@ -56,4 +56,5 @@ Route::get('/questions/sciencelab', "Questions\\QuestionController@scienceLab");
 Route::post('/questions/sciencelab', "Questions\\QuestionController@scienceLabAnswer");
 Route::get('/questions/students', "Questions\\QuestionController@students");
 Route::post('/questions/students', "Questions\\QuestionController@studentsAnswer");
+Route::get('/questions/teachers', "Questions\\QuestionController@teachers");
 //Route::resource('questions', "Questions\\QuestionController");

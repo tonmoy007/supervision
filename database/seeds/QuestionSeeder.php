@@ -352,5 +352,167 @@ class QuestionSeeder extends Seeder
         $qu->type = "input";
         $qu->save();
 
+        $type =new QuestionType([
+            'type' => "পুরুষ"
+        ]);
+        $type->save();
+        $type =new QuestionType([
+            'type' => "মহিলা"
+        ]);
+        $type->save();
+        $type =new QuestionType([
+            'type' => "মোট"
+        ]);
+        $type->save();
+
+        $qu = new Questions();
+        $qu->question = "কর্মরত শিক্ষক";
+        $qu->type = "input";
+        $qu->save();
+        $qu = new Questions();
+        $qu->question = "এমপিও ভুক্ত শিক্ষক";
+        $qu->type = "input";
+        $qu->save();
+        $qu = new Questions();
+        $qu->question = "খন্ডকালীন শিক্ষক";
+        $qu->type = "input";
+        $qu->save();
+        $qu = new Questions();
+        $qu->question = "বিএড";
+        $qu->type = "input";
+        $qu->save();
+
+        $qu = new Questions();
+        $qu->question = "পিবিএম প্রশিক্ষণ";
+        $qu->type = "input";
+        $qu->save();
+        $qu = new Questions();
+        $qu->question = "সিকিঊ প্রশিক্ষণ";
+        $qu->type = "input";
+        $qu->save();
+        $qu = new Questions();
+        $qu->question = "কারিকুলাম প্রশিক্ষণ";
+        $qu->type = "input";
+        $qu->save();
+        $qu = new Questions();
+        $qu->question = "সিপিডি প্রশিক্ষণ";
+        $qu->type = "input";
+        $qu->save();
+        $qu = new Questions();
+        $qu->question = "কম্পিউটার প্রশিক্ষণ";
+        $qu->type = "input";
+        $qu->save();
+        $qu = new Questions();
+        $qu->question = "আইসিটি প্রশিক্ষণ";
+        $qu->type = "input";
+        $qu->save();
+        $qu = new Questions();
+        $qu->question = "অফিস ব্যবস্থাপনা প্রশিক্ষণ";
+        $qu->type = "input";
+        $qu->save();
+        $qu = new Questions();
+        $qu->question = "অন্যান্য প্রশিক্ষণ";
+        $qu->type = "input";
+        $qu->save();
+
+        $options = [
+            new Options([
+                'option' => "হ্যাঁ",
+                'option_value' => 0
+            ]),
+            new Options([
+                'option' => "না",
+                'option_value' => 1
+            ]),
+        ];
+        $qa = new Questions([
+            'question' => "শিক্ষকদের প্রশিক্ষণ সংক্রান্ত রেজিস্টার সংরক্ষণ করা হয় কিনা",
+            'type' => 'radio'
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+
+        $qu = new Questions();
+        $qu->question = "বিষয়ের নাম";
+        $qu->type = "input";
+        $qu->save();
+        $qa = new Questions([
+            'question' => "শিক্ষক পাঠ পরিকল্পনা অনুসরণ করছেন",
+            'type' => 'radio'
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+        $qa = new Questions([
+            'question' => "ব্ল্যাক বোর্ডে পাঠ শিরোনাম যথাযথ ভাবে লিখা ছিল কিনা",
+            'type' => 'radio'
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+        $qa = new Questions([
+            'question' => "শিক্ষক পুরো শ্রেণীকক্ষ ঘুরে পাঠদান ও দলীয় কাজে সহায়তা করেছেন ",
+            'type' => 'radio'
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+        $qa = new Questions([
+            'question' => "পাঠদানে অংশগ্রহণ মূলক পদ্ধতিতে সকল শিক্ষার্থী অংশগ্রহণ করেছে",
+            'type' => 'radio'
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+        $qa = new Questions([
+            'question' => "শিক্ষার্থীরা দলীয় কাজ উপস্থাপন করেছে বা ব্ল্যাকবোর্ড ব্যবহার করেছে",
+            'type' => 'radio'
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+        $qa = new Questions([
+            'question' => "শিক্ষা উপকরণ ব্যবহ্রত হয়েছে",
+            'type' => 'radio'
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+        $qa->options()->saveMany($options);
+        $qa = new Questions([
+            'question' => "শিক্ষক বাড়ির কাজ পর্যবেক্ষণ করে শিক্ষার্থীদের পরামর্শ দিয়েছেন ",
+            'type' => 'radio'
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+        $qa->options()->saveMany($options);
+        $qa = new Questions([
+            'question' => "শিক্ষক সময় সম্পর্কে সচেতন ছিলেন",
+            'type' => 'radio'
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+        $qa->options()->saveMany($options);
+        $qa = new Questions([
+            'question' => "ডিজিটাল কন্টেন্ট ব্যবহার করে ক্লাস নেয়া হয়েছে কিনা ?",
+            'type' => 'radio'
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+
+        $options = [
+            new Options([
+                'option' => "পুরো সময়",
+                'option_value' => 0
+            ]),
+            new Options([
+                'option' => "আংশিক",
+                'option_value' => 1
+            ]),
+        ];
+        $qa = new Questions([
+            'question' => "পাঠদানে বক্তৃতা পদ্ধতি অনুসরণ হয়েছে",
+            'type' => 'radio'
+
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+
+        
+
     }
 }
