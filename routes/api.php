@@ -57,4 +57,11 @@ Route::post('/questions/sciencelab', "Questions\\QuestionController@scienceLabAn
 Route::get('/questions/students', "Questions\\QuestionController@students");
 Route::post('/questions/students', "Questions\\QuestionController@studentsAnswer");
 Route::get('/questions/teachers', "Questions\\QuestionController@teachers");
+Route::post('/questions/teachers', "Questions\\QuestionController@teachersAnswer");
+Route::get('/questions/lectures', "Questions\\QuestionController@lectures");
+Route::post('/questions/lectures', "Questions\\QuestionController@lecturesAnswer");
+Route::get('/questions/multimedia', "Questions\\QuestionController@multimedia");
+Route::post('/questions/multimedia', "Questions\\QuestionController@multimediaAnswer");
+Route::get('/questions/yearlyplan', "Questions\\QuestionController@yearlyplan");
+Route::post('/questions/yearlyplan', "Questions\\QuestionController@yearlyplanAnswer");
 //Route::resource('questions', "Questions\\QuestionController");

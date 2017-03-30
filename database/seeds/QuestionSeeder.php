@@ -415,7 +415,7 @@ class QuestionSeeder extends Seeder
         $qu->type = "input";
         $qu->save();
 
-        $options = [
+        $yesno = [
             new Options([
                 'option' => "হ্যাঁ",
                 'option_value' => 0
@@ -430,7 +430,7 @@ class QuestionSeeder extends Seeder
             'type' => 'radio'
         ]);
         $qa->save();
-        $qa->options()->saveMany($options);
+        $qa->options()->saveMany($yesno);
 
         $qu = new Questions();
         $qu->question = "বিষয়ের নাম";
@@ -441,58 +441,58 @@ class QuestionSeeder extends Seeder
             'type' => 'radio'
         ]);
         $qa->save();
-        $qa->options()->saveMany($options);
+        $qa->options()->saveMany($yesno);
         $qa = new Questions([
             'question' => "ব্ল্যাক বোর্ডে পাঠ শিরোনাম যথাযথ ভাবে লিখা ছিল কিনা",
             'type' => 'radio'
         ]);
         $qa->save();
-        $qa->options()->saveMany($options);
+        $qa->options()->saveMany($yesno);
         $qa = new Questions([
             'question' => "শিক্ষক পুরো শ্রেণীকক্ষ ঘুরে পাঠদান ও দলীয় কাজে সহায়তা করেছেন ",
             'type' => 'radio'
         ]);
         $qa->save();
-        $qa->options()->saveMany($options);
+        $qa->options()->saveMany($yesno);
         $qa = new Questions([
             'question' => "পাঠদানে অংশগ্রহণ মূলক পদ্ধতিতে সকল শিক্ষার্থী অংশগ্রহণ করেছে",
             'type' => 'radio'
         ]);
         $qa->save();
-        $qa->options()->saveMany($options);
+        $qa->options()->saveMany($yesno);
         $qa = new Questions([
             'question' => "শিক্ষার্থীরা দলীয় কাজ উপস্থাপন করেছে বা ব্ল্যাকবোর্ড ব্যবহার করেছে",
             'type' => 'radio'
         ]);
         $qa->save();
-        $qa->options()->saveMany($options);
+        $qa->options()->saveMany($yesno);
         $qa = new Questions([
             'question' => "শিক্ষা উপকরণ ব্যবহ্রত হয়েছে",
             'type' => 'radio'
         ]);
         $qa->save();
-        $qa->options()->saveMany($options);
-        $qa->options()->saveMany($options);
+        $qa->options()->saveMany($yesno);
+
         $qa = new Questions([
             'question' => "শিক্ষক বাড়ির কাজ পর্যবেক্ষণ করে শিক্ষার্থীদের পরামর্শ দিয়েছেন ",
             'type' => 'radio'
         ]);
         $qa->save();
-        $qa->options()->saveMany($options);
-        $qa->options()->saveMany($options);
+        $qa->options()->saveMany($yesno);
+
         $qa = new Questions([
             'question' => "শিক্ষক সময় সম্পর্কে সচেতন ছিলেন",
             'type' => 'radio'
         ]);
         $qa->save();
-        $qa->options()->saveMany($options);
-        $qa->options()->saveMany($options);
+        $qa->options()->saveMany($yesno);
+
         $qa = new Questions([
             'question' => "ডিজিটাল কন্টেন্ট ব্যবহার করে ক্লাস নেয়া হয়েছে কিনা ?",
             'type' => 'radio'
         ]);
         $qa->save();
-        $qa->options()->saveMany($options);
+        $qa->options()->saveMany($yesno);
 
         $options = [
             new Options([
@@ -512,7 +512,77 @@ class QuestionSeeder extends Seeder
         $qa->save();
         $qa->options()->saveMany($options);
 
-        
+        $qu = new Questions();
+        $qu->question = "ইংরেজি";
+        $qu->type = "input";
+        $qu->save();
+        $qu = new Questions();
+        $qu->question = "গণিত";
+        $qu->type = "input";
+        $qu->save();
+        $qu = new Questions();
+        $qu->question = "বিজ্ঞান";
+        $qu->type = "input";
+        $qu->save();
+
+        $qa = new Questions([
+            'question' => "রুটিনে ক্লাস আছে কিনা",
+            'type' => 'radio'
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($yesno);
+
+        $qu = new Questions();
+        $qu->question = "মাল্টিমিডিয়া ব্যবহার করে সপ্তাহে কয়টি ক্লাস নয়া হয়? (ক্লাসের সংখ্যা)";
+        $qu->type = "input";
+        $qu->save();
+        $qu = new Questions();
+        $qu->question = "শিক্ষকরা নিজেরাই ডিজিটাল কন্টেন্ট তৈরি করে ক্লাস নিয়ে থাকেন এরূপ শিক্ষক সংখ্যা";
+        $qu->type = "input";
+        $qu->save();
+        $qu = new Questions();
+        $qu->question = "শিক্ষক বাতায়ন ব্যবহার করে ডিজিটাল কন্টেন্টের ক্লাস নেন এরূপ শিক্ষক সংখ্যা";
+        $qu->type = "input";
+        $qu->save();
+        $qu = new Questions();
+        $qu->question = "অন্য কোন উৎস ব্যবহার করে ডিজিটাল কন্টেন্টের ক্লাস নেন এরূপ শিক্ষক সংখ্যা";
+        $qu->type = "input";
+        $qu->save();
+        $qu = new Questions();
+        $qu->question = "ডিজিটাল কন্টেন্টে ক্লাস নেওয়া হয় না";
+        $qu->type = "input";
+        $qu->save();
+        $qa = new Questions([
+            'question' => "স্থায়ী মাল্টিমিডিয়া ক্লাসরুম আছে কিনা? ",
+            'type' => 'radio'
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($yesno);
+
+        $qa = new Questions([
+            'question' => "প্রতিষ্ঠান উন্নয়নে পঞ্চবার্ষিক উন্নয়ন পরিকল্পনা প্রণয়ন করা হয়েছে কিনা ?",
+            'type' => 'radio'
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($yesno);
+        $qa = new Questions([
+            'question' => "প্রতিষ্ঠান উন্নয়নে বার্ষিক উন্নয়ন পরিকল্পনা প্রণয়ন করা হয়েছে কিনা ?",
+            'type' => 'radio'
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($yesno);
+        $qa = new Questions([
+            'question' => "পরিকল্পনা প্রণয়নে এসএমসি/গভর্নিং বডি/একাডেমিক কাউন্সিল, অভিভাবক, সংশ্লিষ্ট ক্লাস্টার কর্মকর্তা অংশগ্রহণ করেছেন কিনা?",
+            'type' => 'radio'
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($yesno);
+        $qa = new Questions([
+            'question' => "প্রতিষ্ঠান উন্নয়ন পরিকল্পনায় লক্ষ্যমাত্রা বাস্তবায়নে সর্বশেষ এসএমসি সভা অথবা শিক্ষক সভায় আলোচনা হয়েছে কিনা?",
+            'type' => 'radio'
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($yesno);
 
     }
 }
