@@ -5,6 +5,7 @@ use App\Models\UsersAnswer;
 use App\Models\User;
 use Carbon\Carbon;
 use App\Models\QuestionType;
+use Faker\Factory as Faker;
 
 class AnswerSeeder extends Seeder
 {
@@ -137,5 +138,115 @@ class AnswerSeeder extends Seeder
                 $x+=3;
             }
         }
+        $types = QuestionType::where('id', '>=', 4)->where('id', '<=', 6)->get();
+        foreach ($types as $type) {
+            for ($i = 22; $i <= 25; $i++) {
+                $ans = new UsersAnswer([
+                    'user_id' => 1,
+                    'question_id' => $i,
+                    'option_id' => 0,
+                    'class_id' => $type->id,
+                    'answer' => rand(50, 100),
+                    'xtra' => 'education',
+                    'answer_date' => Carbon::now()->toDateString()
+                ]);
+                $ans->save();
+            }
+        }
+        for ($i = 26; $i <= 33; $i++) {
+            $ans = new UsersAnswer([
+                'user_id' => 1,
+                'question_id' => $i,
+                'option_id' => 0,
+                'class_id' => 0,
+                'answer' => rand(50, 100),
+                'xtra' => 'education',
+                'answer_date' => Carbon::now()->toDateString()
+            ]);
+            $ans->save();
+        }
+        $ans = new UsersAnswer([
+            'user_id' => 1,
+            'question_id' => 34,
+            'option_id' => rand(35,36),
+            'class_id' => 0,
+            'answer' => 0,
+            'xtra' => 'education',
+            'answer_date' => Carbon::now()->toDateString()
+        ]);
+        $ans->save();
+        $faker=Faker::create();
+        foreach ($classes as $class) {
+            $ans = new UsersAnswer([
+                'user_id' => 1,
+                'question_id' => 35,
+                'option_id' => 0,
+                'class_id' => $class->id,
+                'answer' => $faker->name,
+                'xtra' => 'education',
+                'answer_date' => Carbon::now()->toDateString()
+            ]);
+            $ans->save();
+            for ($i = 36; $i <= 45; $i++) {
+                $ans = new UsersAnswer([
+                    'user_id' => 1,
+                    'question_id' => $i,
+                    'option_id' => rand(35,36),
+                    'class_id' => $class->id,
+                    'answer' => 0,
+                    'xtra' => 'education',
+                    'answer_date' => Carbon::now()->toDateString()
+                ]);
+                $ans->save();
+                $x+=3;
+            }
+            for($i=46; $i<=48; $i++) {
+                $ans = new UsersAnswer([
+                    'user_id' => 1,
+                    'question_id' => $i,
+                    'option_id' => 0,
+                    'class_id' => $class->id,
+                    'answer' => rand(10, 40),
+                    'xtra' => 'education',
+                    'answer_date' => Carbon::now()->toDateString()
+                ]);
+                $ans->save();
+            }
+            $ans = new UsersAnswer([
+                'user_id' => 1,
+                'question_id' => 49,
+                'option_id' => rand(35,36),
+                'class_id' => $class->id,
+                'answer' => 0,
+                'xtra' => 'education',
+                'answer_date' => Carbon::now()->toDateString()
+            ]);
+            $ans->save();
+            for($i=50; $i<=54; $i++) {
+                $ans = new UsersAnswer([
+                    'user_id' => 1,
+                    'question_id' => $i,
+                    'option_id' => 0,
+                    'class_id' => $class->id,
+                    'answer' => rand(10, 40),
+                    'xtra' => 'education',
+                    'answer_date' => Carbon::now()->toDateString()
+                ]);
+                $ans->save();
+            }
+            for($i=55; $i<=59; $i++) {
+                $ans = new UsersAnswer([
+                    'user_id' => 1,
+                    'question_id' => $i,
+                    'option_id' => rand(35,36),
+                    'class_id' => $class->id,
+                    'answer' => 0,
+                    'xtra' => 'education',
+                    'answer_date' => Carbon::now()->toDateString()
+                ]);
+                $ans->save();
+            }
+        }
+
     }
 }
