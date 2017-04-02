@@ -41,16 +41,16 @@ class QuestionController extends Controller
             ['title' => "শ্রেণী পাঠদান পর্যবেক্ষণ  ( নূয়নতম দুটি ক্লাস পর্যবেক্ষণ করে শ্রেণির তথ্য পূরণ করুন )", 'url' => "lectures"],
             ['title' => "মাল্টিমিডিয়া ক্লাসরুম ব্যবহার সংক্রান্ত তথ্য ( বিগত মাসের )", 'url' => "multimedia"],
             ['title' => "পঞ্চবার্ষিক / বার্ষিক উন্নয়ন পরিকল্পনা সংক্রান্ত তথ্য", 'url' => "yearlyplan"],
-            ['title' => "প্রতিষ্ঠান প্রধানের রেজিস্টার ও শিক্ষকের ডায়েরী  সংক্রান্ত তথ্য", 'url' => "environments"],
-            ['title' => "শ্রেণি পাঠদান পর্যবেক্ষণে প্রতিষ্ঠান প্রধানের ভূমিকা", 'url' => "environments"],
-            ['title' => "সভা সংক্রান্ত তথ্য", 'url' => "environments"],
-            ['title' => "সহ-শিক্ষাক্রমিক কার্যক্রম", 'url' => "environments"],
-            ['title' => "স্বল্প কৃতিধারী শিক্ষার্থীদের চিহ্নিতকরণ   সংক্রান্ত তথ্য", 'url' => "environments"],
-            ['title' => "সৃজনশীল প্রশ্ন প্রণয়ন পদ্ধতি বাস্তবায়ন বিষয়ক তথ্য", 'url' => "environments"],
-            ['title' => "ধারাবাহিক মূল্যায়ন (CA) সংক্রান্ত তথ্য", 'url' => "environments"],
-            ['title' => "পরীক্ষার ফলাফল সম্পর্কিত তথ্য", 'url' => "environments"],
-            ['title' => "সংশ্লিষ্ট প্রতিষ্ঠানের সার্বিক মানোন্নয়ন পরিদর্শনকারী কর্মকর্তা কর্তিক প্রদত্ত সুপারিশসমুহ", 'url' => "environments"],
-            ['title' => "পরিদর্শনকারী কর্মকর্তার সার্বিক মন্তব্য", 'url' => "environments"],
+            ['title' => "প্রতিষ্ঠান প্রধানের রেজিস্টার ও শিক্ষকের ডায়েরী  সংক্রান্ত তথ্য", 'url' => "diary"],
+            ['title' => "শ্রেণি পাঠদান পর্যবেক্ষণে প্রতিষ্ঠান প্রধানের ভূমিকা", 'url' => "study"],
+            ['title' => "সভা সংক্রান্ত তথ্য", 'url' => "meetings"],
+            ['title' => "সহ-শিক্ষাক্রমিক কার্যক্রম", 'url' => "extracuriculumn"],
+            ['title' => "স্বল্প কৃতিধারী শিক্ষার্থীদের চিহ্নিতকরণ   সংক্রান্ত তথ্য", 'url' => 'lastbenchers'],
+            ['title' => "সৃজনশীল প্রশ্ন প্রণয়ন পদ্ধতি বাস্তবায়ন বিষয়ক তথ্য", 'url' => "creative"],
+            ['title' => "ধারাবাহিক মূল্যায়ন (CA) সংক্রান্ত তথ্য", 'url' => "assessment"],
+            ['title' => "পরীক্ষার ফলাফল সম্পর্কিত তথ্য", 'url' => "result"],
+            ['title' => "সংশ্লিষ্ট প্রতিষ্ঠানের সার্বিক মানোন্নয়ন পরিদর্শনকারী কর্মকর্তা কর্তিক প্রদত্ত সুপারিশসমুহ", 'url' => "academic"],
+            ['title' => "পরিদর্শনকারী কর্মকর্তার সার্বিক মন্তব্য", 'url' => "comment"],
         ];
         $message = "Menue found";
         return response()->json(['success'=>1,'message'=> $message, 'menu' => $menu]);
@@ -110,6 +110,12 @@ class QuestionController extends Controller
             if(isset($answer['option_value'])) {
                 $ans = $answer['option_value'];
             }
+            $classId= 0;
+            if(isset($answer['type_id'])) {
+                $classId = $answer['type_id'];
+            }else if(isset($answer['class_id'])) {
+                $classId = $answer['class_id'];
+            }
             $ua = UsersAnswer::updateOrCreate(
                 [
                     'user_id' => $this->user->id,
@@ -120,7 +126,7 @@ class QuestionController extends Controller
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
                 'option_id' => $answerID,
-                'class_id' => 0,
+                'class_id' => $classId,
                 'answer' => $ans,
                 'xtra' => 'education',
                 'answer_date' => Carbon::now()->toDateString()
@@ -166,6 +172,7 @@ class QuestionController extends Controller
         if(!is_array($answers)) {
             $answers = json_decode($answers, true);
         }
+
         foreach ($answers as $answer) {
             $ans =  UsersAnswer::updateOrCreate([
                 'user_id' => $this->user->id,
@@ -197,7 +204,7 @@ class QuestionController extends Controller
             $qs = array();
             foreach ($questions as $question) {
                 $qa = $question->toArray();
-                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->first();
+                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $type->id)->first();
                 $opt = array();
                 if ($ans != null) {
                     if ($ans->option_id != 0) {
@@ -238,6 +245,12 @@ class QuestionController extends Controller
             if(isset($answer['option_value'])) {
                 $ans = $answer['option_value'];
             }
+            $classId= 0;
+            if(isset($answer['type_id'])) {
+                $classId = $answer['type_id'];
+            }else if(isset($answer['class_id'])) {
+                $classId = $answer['class_id'];
+            }
             $ans = UsersAnswer::updateOrCreate([
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
@@ -247,7 +260,7 @@ class QuestionController extends Controller
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
                 'option_id' => $answerID,
-                'class_id' => $answer['type_id'],
+                'class_id' => $classId,
                 'answer' => $ans,
                 'xtra' => 'education',
                 'answer_date' => Carbon::now()->toDateString()
@@ -293,6 +306,20 @@ class QuestionController extends Controller
             $answers = json_decode($answers, true);
         }
         foreach ($answers as $answer) {
+            $answerID = 0;
+            if(isset($answer['answer_id'])){
+                $answerID = $answer['answer_id'];
+            }
+            $ans = 0;
+            if(isset($answer['option_value'])) {
+                $ans = $answer['option_value'];
+            }
+            $classId= 0;
+            if(isset($answer['type_id'])) {
+                $classId = $answer['type_id'];
+            }else if(isset($answer['class_id'])) {
+                $classId = $answer['class_id'];
+            }
             $ans = UsersAnswer::updateOrCreate([
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
@@ -301,9 +328,9 @@ class QuestionController extends Controller
                 [
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
-                'option_id' => $answer['answer_id'],
-                'class_id' => $answer['class_id'],
-                'answer' => $answer['option_value'],
+                'option_id' => $answerID,
+                'class_id' => $classId,
+                'answer' => $ans,
                 'xtra' => 'education',
                 'answer_date' => Carbon::now()->toDateString()
             ]);
@@ -323,7 +350,7 @@ class QuestionController extends Controller
             $qs = array();
             foreach ($questions as $question) {
                 $qa = $question->toArray();
-                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->first();
+                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $type->id)->first();
                 $opt = array();
                 if ($ans != null) {
                     if ($ans->option_id != 0) {
@@ -393,6 +420,12 @@ class QuestionController extends Controller
             if(isset($answer['option_value'])) {
                 $ans = $answer['option_value'];
             }
+            $classId= 0;
+            if(isset($answer['type_id'])) {
+                $classId = $answer['type_id'];
+            }else if(isset($answer['class_id'])) {
+                $classId = $answer['class_id'];
+            }
             $ua = UsersAnswer::updateOrCreate(
                 [
                     'user_id' => $this->user->id,
@@ -403,7 +436,7 @@ class QuestionController extends Controller
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
-                    'class_id' => 0,
+                    'class_id' => $classId,
                     'answer' => $ans,
                     'xtra' => 'education',
                     'answer_date' => Carbon::now()->toDateString()
@@ -485,6 +518,12 @@ class QuestionController extends Controller
             if(isset($answer['option_value'])) {
                 $ans = $answer['option_value'];
             }
+            $classId= 0;
+            if(isset($answer['type_id'])) {
+                $classId = $answer['type_id'];
+            }else if(isset($answer['class_id'])) {
+                $classId = $answer['class_id'];
+            }
             $ua = UsersAnswer::updateOrCreate(
                 [
                     'user_id' => $this->user->id,
@@ -495,7 +534,7 @@ class QuestionController extends Controller
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
-                    'class_id' => 0,
+                    'class_id' => $classId,
                     'answer' => $ans,
                     'xtra' => 'education',
                     'answer_date' => Carbon::now()->toDateString()
@@ -578,6 +617,12 @@ class QuestionController extends Controller
             if(isset($answer['option_value'])) {
                 $ans = $answer['option_value'];
             }
+            $classId= 0;
+            if(isset($answer['type_id'])) {
+                $classId = $answer['type_id'];
+            }else if(isset($answer['class_id'])) {
+                $classId = $answer['class_id'];
+            }
             $ua = UsersAnswer::updateOrCreate(
                 [
                     'user_id' => $this->user->id,
@@ -588,7 +633,7 @@ class QuestionController extends Controller
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
-                    'class_id' => 0,
+                    'class_id' => $classId,
                     'answer' => $ans,
                     'xtra' => 'education',
                     'answer_date' => Carbon::now()->toDateString()
@@ -641,6 +686,12 @@ class QuestionController extends Controller
             if(isset($answer['option_value'])) {
                 $ans = $answer['option_value'];
             }
+            $classId= 0;
+            if(isset($answer['type_id'])) {
+                $classId = $answer['type_id'];
+            }else if(isset($answer['class_id'])) {
+                $classId = $answer['class_id'];
+            }
             $ua = UsersAnswer::updateOrCreate(
                 [
                     'user_id' => $this->user->id,
@@ -651,7 +702,7 @@ class QuestionController extends Controller
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
-                    'class_id' => 0,
+                    'class_id' => $classId,
                     'answer' => $ans,
                     'xtra' => 'education',
                     'answer_date' => Carbon::now()->toDateString()
@@ -660,4 +711,520 @@ class QuestionController extends Controller
         }
         return response()->json(['success'=>1,'message'=> "answer submitted",]);
     }
+
+    public function diary() {
+        $question = Questions::where('id', '=', 60)->with('options')->get();
+        $title = ['value' => "প্রতিষ্ঠান প্রধানের রেজিস্টার ও শিক্ষকের ডায়েরী  সংক্রান্ত তথ্য", 'url' => "diary"];
+       // die(var_dump($question->id));
+        $QA = array();
+        $qa = $question->toArray();
+        $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', 60)->first();
+        $opt = array();
+        if ($ans != null) {
+            if ($ans->option_id != 0) {
+                $opt = Options::where('id', $ans->option_id)->first();
+                $opt = $opt->toArray();
+            } else {
+                $opt = [
+                    "id" => -1,
+                    "option" => "",
+                    "option_value" => (int)$ans->answer,
+                    "created_at" => "",
+                    "updated_at" => ""
+                ];
+            }
+        }
+        $qa['answer'] = $opt;
+        array_push($QA, $qa);
+
+
+        $questions = Questions::where('id', '=', 61)->with('options')->get();
+        $types = QuestionType::where('id', '>=', 7)->where('id', '<=', 9)->get();
+        foreach ($types as $type) {
+            $cl = $type->toArray();
+            $qs = array();
+            foreach ($questions as $question) {
+                $qa = $question->toArray();
+                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $type->id)->first();
+                $opt = array();
+                if ($ans != null) {
+                    if ($ans->option_id != 0) {
+                        $opt = Options::where('id', $ans->option_id)->first();
+                        $opt = $opt->toArray();
+                    } else {
+                        $opt = [
+                            "id" => -1,
+                            "option" => "",
+                            "option_value" => (int)$ans->answer,
+                            "created_at" => "",
+                            "updated_at" => ""
+                        ];
+                    }
+                }
+                $qa['answer'] = $opt;
+                array_push($qs, $qa);
+            }
+            $cl['questions'] = $qs;
+            array_push($QA, $cl);
+        }
+
+        $question = Questions::where('id', '=', 62)->with('options')->get();
+        $qa = $question->toArray();
+        $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', 62)->first();
+        $opt = array();
+        if ($ans != null) {
+            if ($ans->option_id != 0) {
+                $opt = Options::where('id', $ans->option_id)->first();
+                $opt = $opt->toArray();
+            } else {
+                $opt = [
+                    "id" => -1,
+                    "option" => "",
+                    "option_value" => $ans->answer,
+                    "created_at" => "",
+                    "updated_at" => ""
+                ];
+            }
+        }
+        $qa['answer'] = $opt;
+        array_push($QA, $qa);
+
+        $message = "Diary question found";
+        $form = array("title"=>$title, "types" => $QA);
+        return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
+    }
+    public function diaryAnswer(Request $request) {
+        $answers = $request->get('answers');
+        if(!is_array($answers)) {
+            $answers = json_decode($answers, true);
+        }
+
+        foreach ($answers as $answer) {
+            $answerID = 0;
+            if(isset($answer['answer_id']) && $answer['answer_id'] != "0"){
+                $answerID = $answer['answer_id'];
+            }
+            $ans = 0;
+            if(isset($answer['option_value'])) {
+                $ans = $answer['option_value'];
+            }
+            $classId= 0;
+            if(isset($answer['type_id'])) {
+                $classId = $answer['type_id'];
+            }else if(isset($answer['class_id'])) {
+                $classId = $answer['class_id'];
+            }
+            $ua = UsersAnswer::updateOrCreate(
+                [
+                    'user_id' => $this->user->id,
+                    'question_id' => $answer['question_id'],
+                    'option_id' => $answerID,
+                ],
+                [
+                    'user_id' => $this->user->id,
+                    'question_id' => $answer['question_id'],
+                    'option_id' => $answerID,
+                    'class_id' => $classId,
+                    'answer' => $ans,
+                    'xtra' => 'education',
+                    'answer_date' => Carbon::now()->toDateString()
+                ]);
+            $ua->save();
+        }
+        return response()->json(['success'=>1,'message'=> "answer submitted",]);
+    }
+
+    public function study() {
+        $questions = Questions::where('id', '>', 62)->where('id', '<=', 64)->with('options')->get();
+        $title = ['value' => "শ্রেণি পাঠদান পর্যবেক্ষণে প্রতিষ্ঠান প্রধানের ভূমিকা", 'url' => "multimedia"];
+        $QA = array();
+        $schools = User::find($this->user->id)->schools;
+        $classes = $schools->classes;
+        $qs = array();
+        foreach ($questions as $question) {
+            $qa = $question->toArray();
+            $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->first();
+            $opt = array();
+            if ($ans != null) {
+                if ($ans->option_id != 0) {
+                    $opt = Options::where('id', $ans->option_id)->first();
+                    $opt = $opt->toArray();
+                } else {
+                    $opt = [
+                        "id" => -1,
+                        "option" => "",
+                        "option_value" => $ans->answer,
+                        "created_at" => "",
+                        "updated_at" => ""
+                    ];
+                }
+            }
+            $qa['answer'] = $opt;
+            array_push($qs, $qa);
+        }
+        $cl['questions'] = $qs;
+        array_push($QA, $cl);
+        $message = "study plan question found";
+        $form = array("title"=>$title, "plans" => $QA);
+        return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
+    }
+    public function overallAnswer(Request $request) {
+        $answers = $request->get('answers');
+        if(!is_array($answers)) {
+            $answers = json_decode($answers, true);
+        }
+
+        foreach ($answers as $answer) {
+            $answerID = 0;
+            if(isset($answer['answer_id']) && $answer['answer_id'] != "0"){
+                $answerID = $answer['answer_id'];
+            }
+            $ans = 0;
+            if(isset($answer['option_value'])) {
+                $ans = $answer['option_value'];
+            }
+            $classId= 0;
+            if(isset($answer['type_id'])) {
+                $classId = $answer['type_id'];
+            }else if(isset($answer['class_id'])) {
+                $classId = $answer['class_id'];
+            }
+            $ua = UsersAnswer::updateOrCreate(
+                [
+                    'user_id' => $this->user->id,
+                    'question_id' => $answer['question_id'],
+                    'option_id' => $answerID,
+                ],
+                [
+                    'user_id' => $this->user->id,
+                    'question_id' => $answer['question_id'],
+                    'option_id' => $answerID,
+                    'class_id' => $classId,
+                    'answer' => $ans,
+                    'xtra' => 'education',
+                    'answer_date' => Carbon::now()->toDateString()
+                ]);
+            $ua->save();
+        }
+        return response()->json(['success'=>1,'message'=> "answer submitted",]);
+    }
+
+    public function meetings() {
+        $questions = Questions::where('id', '>', 64)->where('id', '<=', 68)->with('options')->get();
+        $title = ['value' => "সভা সংক্রান্ত তথ্য", 'url' => "meetings"];
+        $QA = array();
+        $types = QuestionType::where('id', '>=', 10)->where('id', '<=', 13)->get();
+        foreach ($types as $type) {
+            $cl = $type->toArray();
+            $qs = array();
+            foreach ($questions as $question) {
+                $qa = $question->toArray();
+                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $type->id)->first();
+                $opt = array();
+                if ($ans != null) {
+                    if ($ans->option_id != 0) {
+                        $opt = Options::where('id', $ans->option_id)->first();
+                        $opt = $opt->toArray();
+                    } else {
+                        $opt = [
+                            "id" => -1,
+                            "option" => "",
+                            "option_value" => $ans->answer,
+                            "created_at" => "",
+                            "updated_at" => ""
+                        ];
+                    }
+                }
+                $qa['answer'] = $opt;
+                array_push($qs, $qa);
+            }
+            $cl['questions'] = $qs;
+            array_push($QA, $cl);
+        }
+
+
+        $message = "Meetings question found";
+        $form = array("title"=>$title, "types" => $QA);
+        return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
+    }
+
+    public function extracuriculumn() {
+        $questions = Questions::where('id', '>', 68)->where('id', '<=', 71)->with('options')->get();
+        $title = ['value' => "সহ-শিক্ষাক্রমিক কার্যক্রম", 'url' => "extracuriculumn"];
+        $QA = array();
+        $types = QuestionType::where('id', '=', 14)->get();
+        foreach ($types as $type) {
+            $cl = $type->toArray();
+            $qs = array();
+            foreach ($questions as $question) {
+                $qa = $question->toArray();
+                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $type->id)->first();
+                $opt = array();
+                if ($ans != null) {
+                    if ($ans->option_id != 0) {
+                        $opt = Options::where('id', $ans->option_id)->first();
+                        $opt = $opt->toArray();
+                    } else {
+                        $opt = [
+                            "id" => -1,
+                            "option" => "",
+                            "option_value" => $ans->answer,
+                            "created_at" => "",
+                            "updated_at" => ""
+                        ];
+                    }
+                }
+                $qa['answer'] = $opt;
+                array_push($qs, $qa);
+            }
+            $cl['questions'] = $qs;
+            array_push($QA, $cl);
+        }
+
+
+        $message = "Meetings question found";
+        $form = array("title"=>$title, "types" => $QA);
+        return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
+    }
+
+    public function lastbenchers() {
+        $questions = Questions::where('id', '=', 72)->with('options')->get();
+        $title = ['value' => "স্বল্প কৃতিধারী শিক্ষার্থীদের চিহ্নিতকরণ   সংক্রান্ত তথ্য", 'url' => "lastbenchers"];
+        $QA = array();
+        $qa = $questions->toArray();
+        $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', 72)->first();
+        $opt = array();
+        if ($ans != null) {
+            if ($ans->option_id != 0) {
+                $opt = Options::where('id', $ans->option_id)->first();
+                $opt = $opt->toArray();
+            } else {
+                $opt = [
+                    "id" => -1,
+                    "option" => "",
+                    "option_value" => $ans->answer,
+                    "created_at" => "",
+                    "updated_at" => ""
+                ];
+            }
+        }
+        $qa['answer'] = $opt;
+
+
+    $cl['questions'] = $qa;
+    array_push($QA, $cl);
+        $message = "Lastbenchers question found";
+        $form = array("title"=>$title, "types" => $QA);
+        return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
+    }
+
+    public function creative() {
+        $questions = Questions::where('id', '=', 73)->with('options')->get();
+        $title = ['value' => "সৃজনশীল প্রশ্ন প্রণয়ন পদ্ধতি বাস্তবায়ন বিষয়ক তথ্য", 'url' => "creative"];
+        $QA = array();
+        $qa = $questions->toArray();
+        $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', 73)->first();
+        $opt = array();
+        if ($ans != null) {
+            if ($ans->option_id != 0) {
+                $opt = Options::where('id', $ans->option_id)->first();
+                $opt = $opt->toArray();
+            } else {
+                $opt = [
+                    "id" => -1,
+                    "option" => "",
+                    "option_value" => $ans->answer,
+                    "created_at" => "",
+                    "updated_at" => ""
+                ];
+            }
+        }
+        $qa['answer'] = $opt;
+
+
+        $cl['questions'] = $qa;
+        array_push($QA, $cl);
+        $message = "Creative question found";
+        $form = array("title"=>$title, "types" => $QA);
+        return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
+    }
+
+    public function assessment() {
+        $questions = Questions::where('id', '>', 73)->where('id', '<=', 76)->with('options')->get();
+        $title = ['value' => "ধারাবাহিক মূল্যায়ন (CA) সংক্রান্ত তথ্য", 'url' => "assessment"];
+        $QA = array();
+        $types = QuestionType::where('id', '=', 15)->get();
+        foreach ($types as $type) {
+            $cl = $type->toArray();
+            $qs = array();
+            foreach ($questions as $question) {
+                $qa = $question->toArray();
+                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $type->id)->first();
+                $opt = array();
+                if ($ans != null) {
+                    if ($ans->option_id != 0) {
+                        $opt = Options::where('id', $ans->option_id)->first();
+                        $opt = $opt->toArray();
+                    } else {
+                        $opt = [
+                            "id" => -1,
+                            "option" => "",
+                            "option_value" => $ans->answer,
+                            "created_at" => "",
+                            "updated_at" => ""
+                        ];
+                    }
+                }
+                $qa['answer'] = $opt;
+                array_push($qs, $qa);
+            }
+            $cl['questions'] = $qs;
+            array_push($QA, $cl);
+        }
+
+
+        $message = "Assesment question found";
+        $form = array("title"=>$title, "types" => $QA);
+        return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
+    }
+
+    public function result() {
+        $questions = Questions::where('id', '>', 76)->where('id', '<=', 80)->with('options')->get();
+        $title = ['value' => "পরীক্ষার ফলাফল সম্পর্কিত তথ্য", 'url' => "result"];
+        // die(var_dump($questions->toArray()));
+        $QA = array();
+        $schools = User::find($this->user->id)->schools;
+        $classes = $schools->classes;
+        foreach ($classes as $class) {
+            $cl = $class->toArray();
+            $qs = array();
+            foreach ($questions as $question) {
+                $qa = $question->toArray();
+                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $class->id)->first();
+                $opt = array();
+                if ($ans != null) {
+                    if ($ans->option_id != 0) {
+                        $opt = Options::where('id', $ans->option_id)->first();
+                        $opt = $opt->toArray();
+                    } else {
+                        $opt = [
+                            "id" => -1,
+                            "option" => "",
+                            "option_value" => $ans->answer,
+                            "created_at" => "",
+                            "updated_at" => ""
+                        ];
+                    }
+                }
+                $qa['answer'] = $opt;
+                array_push($qs, $qa);
+            }
+            $cl['questions'] = $qs;
+            array_push($QA, $cl);
+        }
+        $types = QuestionType::where('id', '>=', 16)->where('id', '<=', 17)->get();
+        foreach ($types as $type) {
+            $cl = $type->toArray();
+            $qs = array();
+            foreach ($questions as $question) {
+                $qa = $question->toArray();
+                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $type->id)->first();
+                $opt = array();
+                if ($ans != null) {
+                    if ($ans->option_id != 0) {
+                        $opt = Options::where('id', $ans->option_id)->first();
+                        $opt = $opt->toArray();
+                    } else {
+                        $opt = [
+                            "id" => -1,
+                            "option" => "",
+                            "option_value" => $ans->answer,
+                            "created_at" => "",
+                            "updated_at" => ""
+                        ];
+                    }
+                }
+                $qa['answer'] = $opt;
+                array_push($qs, $qa);
+            }
+            $cl['questions'] = $qs;
+            array_push($QA, $cl);
+        }
+        $message = "Students question found";
+        $form = array("title"=>$title, "students" => $QA);
+        return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
+    }
+
+    public function academic() {
+        $questions = Questions::where('id', '>', 80)->where('id', '<=', 83)->with('options')->get();
+        $title = ['value' => "সংশ্লিষ্ট প্রতিষ্ঠানের সার্বিক মানোন্নয়ন পরিদর্শনকারী কর্মকর্তা কর্তিক প্রদত্ত সুপারিশসমুহ", 'url' => "academic"];
+        $QA = array();
+        $types = QuestionType::where('id', '>=', 18)->where('id', '<=', 23)->get();
+        foreach ($types as $type) {
+            $cl = $type->toArray();
+            $qs = array();
+            foreach ($questions as $question) {
+                $qa = $question->toArray();
+                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $type->id)->first();
+                $opt = array();
+                if ($ans != null) {
+                    if ($ans->option_id != 0) {
+                        $opt = Options::where('id', $ans->option_id)->first();
+                        $opt = $opt->toArray();
+                    } else {
+                        $opt = [
+                            "id" => -1,
+                            "option" => "",
+                            "option_value" => $ans->answer,
+                            "created_at" => "",
+                            "updated_at" => ""
+                        ];
+                    }
+                }
+                $qa['answer'] = $opt;
+                array_push($qs, $qa);
+            }
+            $cl['questions'] = $qs;
+            array_push($QA, $cl);
+        }
+
+
+        $message = "Academic question found";
+        $form = array("title"=>$title, "types" => $QA);
+        return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
+    }
+    public function comment() {
+        $questions = Questions::where('id', '=', 84)->with('options')->get();
+        $title = ['value' => "পরিদর্শনকারী কর্মকর্তার সার্বিক মন্তব্য", 'url' => "comment"];
+        $QA = array();
+        $qa = $questions->toArray();
+        $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', 84)->first();
+        $opt = array();
+        if ($ans != null) {
+            if ($ans->option_id != 0) {
+                $opt = Options::where('id', $ans->option_id)->first();
+                $opt = $opt->toArray();
+            } else {
+                $opt = [
+                    "id" => -1,
+                    "option" => "",
+                    "option_value" => $ans->answer,
+                    "created_at" => "",
+                    "updated_at" => ""
+                ];
+            }
+        }
+        $qa['answer'] = $opt;
+
+
+        $cl['questions'] = $qa;
+        array_push($QA, $cl);
+        $message = "Comment question found";
+        $form = array("title"=>$title, "types" => $QA);
+        return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
+    }
+
 }
+
+
+

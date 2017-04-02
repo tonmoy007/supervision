@@ -584,5 +584,285 @@ class QuestionSeeder extends Seeder
         $qa->save();
         $qa->options()->saveMany($yesno);
 
+        $options = [
+            new Options([
+                'option' => "সম্পূর্ণ হালনাগাদ",
+                'option_value' => 0
+            ]),
+            new Options([
+                'option' => "আংশিক হালনাগাদ",
+                'option_value' => 1
+            ]),
+            new Options([
+                'option' => "হালনাগাদ নয়",
+                'option_value' => 2
+            ]),
+        ];
+        $qa = new Questions([
+            'question' => "প্রতিষ্ঠান প্রধানের রেজিস্টার",
+            'type' => 'radio'
+
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+
+        $type =new QuestionType([
+            'type' => "সম্পূর্ণ হালনাগাদ"
+        ]);
+        $type->save();
+
+        $type = new QuestionType([
+            'type' => "আংশিক হালনাগাদ"
+        ]);
+        $type->save();
+        $type = new QuestionType([
+            'type' => "হালনাগাদ নয়"
+        ]);
+        $type->save();
+
+        $qa = new Questions([
+            'question' => "শিক্ষকের ডায়েরি (সংখ্যায় )",
+            'type' => 'input'
+
+        ]);
+        $qa->save();
+
+        $qa = new Questions([
+            'question' => "মন্তব্য",
+            'type' => 'input'
+        ]);
+        $qa->save();
+
+        $qa = new Questions([
+            'question' => "প্রতিষ্ঠান প্রধান শ্রেনি পাঠদান পর্যবেক্ষন করেন",
+            'type' => 'radio'
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($yesno);
+        $qa = new Questions([
+            'question' => "শ্রেনি পাঠদান পর্যবেক্ষন করে থাকলে বিগত একমাসে কতজন শিক্ষকের শ্রেনি পাঠদান পর্যবেক্ষন করেছেন",
+            'type' => 'input'
+        ]);
+        $qa->save();
+
+        $type =new QuestionType([
+            'type' => "প্রতিষ্ঠান প্রধান শিখন-শিখানো বিষয়ে গুরুত্ব দিয়ে পূর্ণ শিক্ষক সভা আয়োজন করেন কিনা"
+        ]);
+        $type->save();
+
+        $type = new QuestionType([
+            'type' => "বিষয়ভিত্তিক শিক্ষক সভা আয়োজন করেন কিনা (প্রতি টার্মে ১ বার)"
+        ]);
+        $type->save();
+        $type = new QuestionType([
+            'type' => "নিয়মিত এসএমসি সভা করেন কিনা (দুই মাসে ১ টি) (এসএমসি সংক্রান্ত সমস্যা থাকলে মন্তব্যের কলামে উল্লেখ করুন) "
+        ]);
+        $type->save();
+        $type = new QuestionType([
+            'type' => "নিয়মিত পিটিএ/অভিভাবক সভা করেন কিনা (প্রতি টার্মে ১ বার)"
+        ]);
+        $type->save();
+
+        $qa = new Questions([
+            'question' => "হ্যা/না",
+            'type' => 'radio'
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($yesno);
+        $qa = new Questions([
+            'question' => "সর্বশেষ সভার তারিখ",
+            'type' => 'input'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "রেজিস্টার সংরক্ষণ করা হয় কিনা",
+            'type' => 'input'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "সভা সংক্রান্ত মন্তব্য",
+            'type' => 'input'
+        ]);
+        $qa->save();
+
+        $type = new QuestionType([
+            'type' => "৬ষ্ট - ১০ম"
+        ]);
+        $type->save();
+        $qa = new Questions([
+            'question' => "বিগত মাস্যা গৃহীত সহ - শিক্ষাক্রমিক কার্যক্রমের নাম",
+            'type' => 'text'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "রেজিস্টার সংরক্ষণ করা হয় কিনা",
+            'type' => 'text'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "সহ - শিক্ষাক্রমিক মন্তব্য",
+            'type' => 'text'
+        ]);
+        $qa->save();
+
+        $options = [
+            new Options([
+                'option' => "স্বল্প  কৃতিধারী শিক্ষার্থীদের চিহ্নিত করে পদক্ষেপ গ্রহণ করা হয়",
+                'option_value' => 0
+            ]),
+            new Options([
+                'option' => "স্বল্প  কৃতিধারী শিক্ষার্থীদের চিহ্নিত করা হয় কিন্তু কোন পদক্ষেপ গ্রহণ করা হয় না",
+                'option_value' => 1
+            ]),
+            new Options([
+                'option' => "স্বল্প  কৃতিধারী শিক্ষার্থীদের চিহ্নিত করা হয় না",
+                'option_value' => 2
+            ]),
+
+        ];
+        $qa = new Questions([
+            'question' => "স্বল্প  কৃতিধারী শিক্ষার্থীদের চিহ্নিতকরণ",
+            'type' => 'select'
+
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+
+
+        $options = [
+            new Options([
+                'option' => "প্রতিষ্ঠানের শিক্ষকগণ সৃজনশীল প্রশ্ন প্রণয়ন করেন",
+                'option_value' => 0
+            ]),
+            new Options([
+                'option' => "অন্য প্রতিষ্ঠানের সহযোগিতায় সৃজনশীল প্রশ্ন প্রণয়ন করেন ",
+                'option_value' => 1
+            ]),
+            new Options([
+                'option' => "বাহির থেকে সৃজনশীল প্রশ্ন সংগ্রহ করেন ",
+                'option_value' => 2
+            ]),
+
+        ];
+        $qa = new Questions([
+            'question' => "সৃজনশীল প্রশ্ন প্রণয়ন পদ্ধতি",
+            'type' => 'select'
+
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+
+        $type = new QuestionType([
+            'type' => "ধারাবাহিক মূল্যায়ন (CA) অনুসারে শিক্ষার্থীর কৃতিত্বের রেকর্ড সংরক্ষণ"
+        ]);
+        $type->save();
+        $qa = new Questions([
+            'question' => "পূর্ণাঙ্গ রেকর্ড সংরক্ষণকারী শিক্ষকের সংখ্যা",
+            'type' => 'input'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "আংশিকভাবে রেকর্ড সংরক্ষণকারী শিক্ষকের সংখ্যা",
+            'type' => 'input'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "রেকর্ড সংরক্ষণ করেন না এরূপ শিক্ষকের সংখ্যা",
+            'type' => 'input'
+        ]);
+        $qa->save();
+
+        $qa = new Questions([
+            'question' => "অংশগ্রহণকারী শিক্ষার্থী সংখ্যা",
+            'type' => 'input'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "কৃতকার্য শিক্ষার্থী সংখ্যা",
+            'type' => 'input'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "অকৃতকার্য শিক্ষার্থীর মানোন্নয়নে গৃহীত পদক্ষেপ",
+            'type' => 'input'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "পরীক্ষার ফলাফল উন্নয়নে পরিদর্শণকারী কর্মকর্তার সুপারিশ",
+            'type' => 'input'
+        ]);
+        $qa->save();
+
+        $type = new QuestionType([
+            'type' => "জে.এস.সি / জে.ডি.সি"
+        ]);
+        $type->save();
+        $type = new QuestionType([
+            'type' => "এস.এস.সি / দাখিল"
+        ]);
+        $type->save();
+
+        $type = new QuestionType([
+            'type' => "ভৌত পরিবেশ উন্নয়ন সংক্রান্ত"
+        ]);
+        $type->save();
+        $type = new QuestionType([
+            'type' => "পিবিএম বাস্তবায়ন সংক্রান্ত"
+        ]);
+        $type->save();
+        $type = new QuestionType([
+            'type' => "শ্রেণি পাঠদান সংক্রান্ত"
+        ]);
+        $type->save();
+        $type = new QuestionType([
+            'type' => "সৃজনশীল প্রশ্নের মানোন্নয়ন"
+        ]);
+        $type->save();
+        $type = new QuestionType([
+            'type' => "D ও  E ক্যাটাগরিভুক্ত প্রতিষ্ঠানের  মানোন্নয়ন"
+        ]);
+        $type->save();
+        $type = new QuestionType([
+            'type' => "অন্যান্য"
+        ]);
+        $type->save();
+        $options = [
+            new Options([
+                'option' => "সন্তোষজনক",
+                'option_value' => 0
+            ]),
+            new Options([
+                'option' => "মোটামুটি",
+                'option_value' => 1
+            ]),
+            new Options([
+                'option' => "সন্তোষজনক নয়",
+                'option_value' => 2
+            ]),
+
+        ];
+        $qa = new Questions([
+            'question' => "বর্তমান অবস্থা",
+            'type' => 'select'
+
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+
+        $qa = new Questions([
+            'question' => "পরিদর্শনকারী কর্মকর্তার সুপারিশ",
+            'type' => 'input'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "সংশ্লিষ্ট প্রতিষ্ঠানের সার্বিক মানোন্নয়নে মন্তব্য",
+            'type' => 'input'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "পরিদর্শণকারী কর্মকর্তার সার্বিক মন্তব্য",
+            'type' => 'text'
+        ]);
+        $qa->save();
     }
 }
