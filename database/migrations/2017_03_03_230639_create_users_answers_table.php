@@ -19,12 +19,13 @@ class CreateUsersAnswersTable extends Migration
             $table->unsignedInteger('question_id');
             $table->unsignedInteger('option_id');
             $table->unsignedInteger('class_id');
+            $table->unsignedInteger('type_id');
             $table->string('xtra');
             $table->string('answer');
             $table->date('answer_date');
             $table->timestamps();
 
-            $table->unique(['user_id', 'question_id', 'option_id', 'class_id']);
+            $table->unique(['user_id', 'question_id', 'option_id', 'class_id', 'type_id'], 'users_answers_unique_key');
         });
     }
 

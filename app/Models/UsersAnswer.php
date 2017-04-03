@@ -12,6 +12,7 @@ class UsersAnswer extends Model
         'question_id',
         'option_id',
         'class_id',
+        'type_id',
         'answer',
         'xtra',
         'answer_date',

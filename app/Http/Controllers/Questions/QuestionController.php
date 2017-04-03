@@ -111,9 +111,11 @@ class QuestionController extends Controller
                 $ans = $answer['option_value'];
             }
             $classId= 0;
+            $typeId=0;
             if(isset($answer['type_id'])) {
-                $classId = $answer['type_id'];
-            }else if(isset($answer['class_id'])) {
+                $typeId = $answer['type_id'];
+            }
+            if(isset($answer['class_id'])) {
                 $classId = $answer['class_id'];
             }
             $ua = UsersAnswer::updateOrCreate(
@@ -127,6 +129,7 @@ class QuestionController extends Controller
                 'question_id' => $answer['question_id'],
                 'option_id' => $answerID,
                 'class_id' => $classId,
+                'type_id' => $typeId,
                 'answer' => $ans,
                 'xtra' => 'education',
                 'answer_date' => Carbon::now()->toDateString()
@@ -174,6 +177,14 @@ class QuestionController extends Controller
         }
 
         foreach ($answers as $answer) {
+            $classId= 0;
+            $typeId=0;
+            if(isset($answer['type_id'])) {
+                $typeId = $answer['type_id'];
+            }
+            if(isset($answer['class_id'])) {
+                $classId = $answer['class_id'];
+            }
             $ans =  UsersAnswer::updateOrCreate([
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
@@ -183,7 +194,8 @@ class QuestionController extends Controller
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
                 'option_id' => $answer['answer_id'],
-                'class_id' => $answer['class_id'],
+                'class_id' => $classId,
+                 'type_id' => $typeId,
                 'answer' => "answer",
                 'xtra' => 'education',
                 'answer_date' => Carbon::now()->toDateString()
@@ -204,7 +216,7 @@ class QuestionController extends Controller
             $qs = array();
             foreach ($questions as $question) {
                 $qa = $question->toArray();
-                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $type->id)->first();
+                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('type_id', $type->id)->first();
                 $opt = array();
                 if ($ans != null) {
                     if ($ans->option_id != 0) {
@@ -246,9 +258,11 @@ class QuestionController extends Controller
                 $ans = $answer['option_value'];
             }
             $classId= 0;
+            $typeId =0;
             if(isset($answer['type_id'])) {
-                $classId = $answer['type_id'];
-            }else if(isset($answer['class_id'])) {
+                $typeId = $answer['type_id'];
+            }
+            if(isset($answer['class_id'])) {
                 $classId = $answer['class_id'];
             }
             $ans = UsersAnswer::updateOrCreate([
@@ -261,6 +275,7 @@ class QuestionController extends Controller
                 'question_id' => $answer['question_id'],
                 'option_id' => $answerID,
                 'class_id' => $classId,
+                'type_id' => $typeId,
                 'answer' => $ans,
                 'xtra' => 'education',
                 'answer_date' => Carbon::now()->toDateString()
@@ -324,9 +339,11 @@ class QuestionController extends Controller
                 $ans = $answer['option_value'];
             }
             $classId= 0;
+            $typeID = 0;
             if(isset($answer['type_id'])) {
-                $classId = $answer['type_id'];
-            }else if(isset($answer['class_id'])) {
+                $typeID = $answer['type_id'];
+            }
+            if(isset($answer['class_id'])) {
                 $classId = $answer['class_id'];
             }
             $ans = UsersAnswer::updateOrCreate([
@@ -339,6 +356,7 @@ class QuestionController extends Controller
                 'question_id' => $answer['question_id'],
                 'option_id' => $answerID,
                 'class_id' => $classId,
+                'type_id' => $typeID,
                 'answer' => $ans,
                 'xtra' => 'education',
                 'answer_date' => Carbon::now()->toDateString()
@@ -359,7 +377,7 @@ class QuestionController extends Controller
             $qs = array();
             foreach ($questions as $question) {
                 $qa = $question->toArray();
-                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $type->id)->first();
+                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('type_id', $type->id)->first();
                 $opt = array();
                 if ($ans != null) {
                     if ($ans->option_id != 0) {
@@ -430,9 +448,11 @@ class QuestionController extends Controller
                 $ans = $answer['option_value'];
             }
             $classId= 0;
+            $typeId=0;
             if(isset($answer['type_id'])) {
-                $classId = $answer['type_id'];
-            }else if(isset($answer['class_id'])) {
+                $typeId = $answer['type_id'];
+            }
+            if(isset($answer['class_id'])) {
                 $classId = $answer['class_id'];
             }
             $ua = UsersAnswer::updateOrCreate(
@@ -446,6 +466,7 @@ class QuestionController extends Controller
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
                     'class_id' => $classId,
+                    'type_id' => $typeId,
                     'answer' => $ans,
                     'xtra' => 'education',
                     'answer_date' => Carbon::now()->toDateString()
@@ -537,9 +558,11 @@ class QuestionController extends Controller
                 $ans = $answer['option_value'];
             }
             $classId= 0;
+            $typeId=0;
             if(isset($answer['type_id'])) {
-                $classId = $answer['type_id'];
-            }else if(isset($answer['class_id'])) {
+                $typeId = $answer['type_id'];
+            }
+            if(isset($answer['class_id'])) {
                 $classId = $answer['class_id'];
             }
             $ua = UsersAnswer::updateOrCreate(
@@ -553,6 +576,7 @@ class QuestionController extends Controller
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
                     'class_id' => $classId,
+                    'type_id' => $typeId,
                     'answer' => $ans,
                     'xtra' => 'education',
                     'answer_date' => Carbon::now()->toDateString()
@@ -645,9 +669,11 @@ class QuestionController extends Controller
                 $ans = $answer['option_value'];
             }
             $classId= 0;
+            $typeId=0;
             if(isset($answer['type_id'])) {
-                $classId = $answer['type_id'];
-            }else if(isset($answer['class_id'])) {
+                $typeId = $answer['type_id'];
+            }
+            if(isset($answer['class_id'])) {
                 $classId = $answer['class_id'];
             }
             $ua = UsersAnswer::updateOrCreate(
@@ -661,6 +687,7 @@ class QuestionController extends Controller
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
                     'class_id' => $classId,
+                    'type_id' => $typeId,
                     'answer' => $ans,
                     'xtra' => 'education',
                     'answer_date' => Carbon::now()->toDateString()
@@ -723,9 +750,11 @@ class QuestionController extends Controller
                 $ans = $answer['option_value'];
             }
             $classId= 0;
+            $typeId=0;
             if(isset($answer['type_id'])) {
-                $classId = $answer['type_id'];
-            }else if(isset($answer['class_id'])) {
+                $typeId = $answer['type_id'];
+            }
+            if(isset($answer['class_id'])) {
                 $classId = $answer['class_id'];
             }
             $ua = UsersAnswer::updateOrCreate(
@@ -739,6 +768,7 @@ class QuestionController extends Controller
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
                     'class_id' => $classId,
+                    'type_id' => $typeId,
                     'answer' => $ans,
                     'xtra' => 'education',
                     'answer_date' => Carbon::now()->toDateString()
@@ -781,7 +811,7 @@ class QuestionController extends Controller
             $qs = array();
             foreach ($questions as $question) {
                 $qa = $question->toArray();
-                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $type->id)->first();
+                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('type_id', $type->id)->first();
                 $opt = array();
                 if ($ans != null) {
                     if ($ans->option_id != 0) {
@@ -845,9 +875,11 @@ class QuestionController extends Controller
                 $ans = $answer['option_value'];
             }
             $classId= 0;
+            $typeId=0;
             if(isset($answer['type_id'])) {
-                $classId = $answer['type_id'];
-            }else if(isset($answer['class_id'])) {
+                $typeId = $answer['type_id'];
+            }
+            if(isset($answer['class_id'])) {
                 $classId = $answer['class_id'];
             }
             $ua = UsersAnswer::updateOrCreate(
@@ -861,6 +893,7 @@ class QuestionController extends Controller
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
                     'class_id' => $classId,
+                    'type_id' => $typeId,
                     'answer' => $ans,
                     'xtra' => 'education',
                     'answer_date' => Carbon::now()->toDateString()
@@ -920,9 +953,11 @@ class QuestionController extends Controller
                 $ans = $answer['option_value'];
             }
             $classId= 0;
+            $typeId=0;
             if(isset($answer['type_id'])) {
-                $classId = $answer['type_id'];
-            }else if(isset($answer['class_id'])) {
+                $typeId = $answer['type_id'];
+            }
+            if(isset($answer['class_id'])) {
                 $classId = $answer['class_id'];
             }
             $ua = UsersAnswer::updateOrCreate(
@@ -936,6 +971,7 @@ class QuestionController extends Controller
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
                     'class_id' => $classId,
+                    'type_id' => $typeId,
                     'answer' => $ans,
                     'xtra' => 'education',
                     'answer_date' => Carbon::now()->toDateString()
@@ -955,7 +991,7 @@ class QuestionController extends Controller
             $qs = array();
             foreach ($questions as $question) {
                 $qa = $question->toArray();
-                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $type->id)->first();
+                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('type_id', $type->id)->first();
                 $opt = array();
                 if ($ans != null) {
                     if ($ans->option_id != 0) {
@@ -994,7 +1030,7 @@ class QuestionController extends Controller
             $qs = array();
             foreach ($questions as $question) {
                 $qa = $question->toArray();
-                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $type->id)->first();
+                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('type_id', $type->id)->first();
                 $opt = array();
                 if ($ans != null) {
                     if ($ans->option_id != 0) {
@@ -1095,7 +1131,7 @@ class QuestionController extends Controller
             $qs = array();
             foreach ($questions as $question) {
                 $qa = $question->toArray();
-                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $type->id)->first();
+                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('type_id', $type->id)->first();
                 $opt = array();
                 if ($ans != null) {
                     if ($ans->option_id != 0) {
@@ -1164,7 +1200,7 @@ class QuestionController extends Controller
             $qs = array();
             foreach ($questions as $question) {
                 $qa = $question->toArray();
-                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $type->id)->first();
+                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('type_id', $type->id)->first();
                 $opt = array();
                 if ($ans != null) {
                     if ($ans->option_id != 0) {
@@ -1201,7 +1237,7 @@ class QuestionController extends Controller
             $qs = array();
             foreach ($questions as $question) {
                 $qa = $question->toArray();
-                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $type->id)->first();
+                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('type_id', $type->id)->first();
                 $opt = array();
                 if ($ans != null) {
                     if ($ans->option_id != 0) {
