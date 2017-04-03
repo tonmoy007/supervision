@@ -285,9 +285,18 @@ class QuestionController extends Controller
                 $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $class->id)->first();
                 $opt = array();
                 if ($ans != null) {
-                    $opt = Options::where('id', $ans->option_id)->first();
-
-                    $opt = $opt->toArray();
+                    if ($ans->option_id != 0) {
+                        $opt = Options::where('id', $ans->option_id)->first();
+                        $opt = $opt->toArray();
+                    } else {
+                        $opt = [
+                            "id" => -1,
+                            "option" => "",
+                            "option_value" => $ans->answer,
+                            "created_at" => "",
+                            "updated_at" => ""
+                        ];
+                    }
                 }
                 $qa['answer'] = $opt;
                 array_push($qs, $qa);
@@ -461,9 +470,18 @@ class QuestionController extends Controller
                 $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $class->id)->first();
                 $opt = array();
                 if ($ans != null) {
-                    $opt = Options::where('id', $ans->option_id)->first();
-
-                    $opt = $opt->toArray();
+                    if ($ans->option_id != 0) {
+                        $opt = Options::where('id', $ans->option_id)->first();
+                        $opt = $opt->toArray();
+                    } else {
+                        $opt = [
+                            "id" => -1,
+                            "option" => "",
+                            "option_value" => $ans->answer,
+                            "created_at" => "",
+                            "updated_at" => ""
+                        ];
+                    };
                 }
                 $qa['answer'] = $opt;
                 array_push($qs, $qa);
@@ -559,9 +577,18 @@ class QuestionController extends Controller
                 $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $class->id)->first();
                 $opt = array();
                 if ($ans != null) {
-                    $opt = Options::where('id', $ans->option_id)->first();
-
-                    $opt = $opt->toArray();
+                    if ($ans->option_id != 0) {
+                        $opt = Options::where('id', $ans->option_id)->first();
+                        $opt = $opt->toArray();
+                    } else {
+                        $opt = [
+                            "id" => -1,
+                            "option" => "",
+                            "option_value" => $ans->answer,
+                            "created_at" => "",
+                            "updated_at" => ""
+                        ];
+                    }
                 }
                 $qa['answer'] = $opt;
                 array_push($qs, $qa);
@@ -655,9 +682,18 @@ class QuestionController extends Controller
             $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->first();
             $opt = array();
             if ($ans != null) {
-                $opt = Options::where('id', $ans->option_id)->first();
-
-                $opt = $opt->toArray();
+                if ($ans->option_id != 0) {
+                    $opt = Options::where('id', $ans->option_id)->first();
+                    $opt = $opt->toArray();
+                } else {
+                    $opt = [
+                        "id" => -1,
+                        "option" => "",
+                        "option_value" => $ans->answer,
+                        "created_at" => "",
+                        "updated_at" => ""
+                    ];
+                }
             }
             $qa['answer'] = $opt;
             array_push($qs, $qa);
