@@ -179,6 +179,10 @@ class QuestionController extends Controller
         foreach ($answers as $answer) {
             $classId= 0;
             $typeId=0;
+            $answerId =0;
+            if(isset($answer['answer_id'])) {
+                $answerId = $answer['answer_id'];
+            }
             if(isset($answer['type_id'])) {
                 $typeId = $answer['type_id'];
             }
@@ -188,14 +192,14 @@ class QuestionController extends Controller
             $ans =  UsersAnswer::updateOrCreate([
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
-                'option_id' => $answer['answer_id'],
+                'option_id' => $answerId,
                 'class_id' => $classId,
                 'type_id' => $typeId,
                 ],
                 [
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
-                'option_id' => $answer['answer_id'],
+                'option_id' => $answerId,
                 'answer' => "answer",
                 'xtra' => 'education',
                 'answer_date' => Carbon::now()->toDateString()
@@ -268,7 +272,7 @@ class QuestionController extends Controller
             $ans = UsersAnswer::updateOrCreate([
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
-                'option_id' => $answer['answer_id'],
+                'option_id' => $answerID,
                 'class_id' => $classId,
                 'type_id' => $typeId,
                 ],
@@ -349,7 +353,7 @@ class QuestionController extends Controller
             $ans = UsersAnswer::updateOrCreate([
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
-                'option_id' => $answer['answer_id'],
+                'option_id' => $answerID,
                 'class_id' => $classId,
                 'type_id' => $typeID,
                 ],
