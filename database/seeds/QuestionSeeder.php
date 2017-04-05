@@ -629,7 +629,7 @@ class QuestionSeeder extends Seeder
 
         $qa = new Questions([
             'question' => "মন্তব্য",
-            'type' => 'input'
+            'type' => 'textarea'
         ]);
         $qa->save();
 
@@ -681,7 +681,7 @@ class QuestionSeeder extends Seeder
         $qa->save();
         $qa = new Questions([
             'question' => "সভা সংক্রান্ত মন্তব্য",
-            'type' => 'input'
+            'type' => 'textarea'
         ]);
         $qa->save();
 
@@ -701,7 +701,7 @@ class QuestionSeeder extends Seeder
         $qa->save();
         $qa = new Questions([
             'question' => "সহ - শিক্ষাক্রমিক মন্তব্য",
-            'type' => 'text'
+            'type' => 'textarea'
         ]);
         $qa->save();
 
@@ -856,12 +856,12 @@ class QuestionSeeder extends Seeder
         $qa->save();
         $qa = new Questions([
             'question' => "সংশ্লিষ্ট প্রতিষ্ঠানের সার্বিক মানোন্নয়নে মন্তব্য",
-            'type' => 'input'
+            'type' => 'textarea'
         ]);
         $qa->save();
         $qa = new Questions([
             'question' => "পরিদর্শণকারী কর্মকর্তার সার্বিক মন্তব্য",
-            'type' => 'text'
+            'type' => 'textarea'
         ]);
         $qa->save();
     }
