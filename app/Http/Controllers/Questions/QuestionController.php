@@ -836,8 +836,10 @@ class QuestionController extends Controller
                     }
                 }
                 $qa['answer'] = $opt;
-                array_push($QA, $qa);
+                array_push($qs, $qa);
             }
+            $cl['questions'] = $qs;
+            array_push($QA, $cl);
 
         }
 
@@ -937,10 +939,11 @@ class QuestionController extends Controller
                 }
             }
             $qa['answer'] = $opt;
-            array_push($qs, $qa);
+            //array_push($qs, $qa);
+            array_push($QA, $qa);
         }
-        $cl['questions'] = $qs;
-        array_push($QA, $cl);
+        //$cl['questions'] = $qs;
+
         $message = "study plan question found";
         $form = array("title"=>$title, "questions" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
