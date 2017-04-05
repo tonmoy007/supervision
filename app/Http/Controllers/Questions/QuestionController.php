@@ -793,6 +793,7 @@ class QuestionController extends Controller
             $qa = $question->toArray();
             $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', 60)->first();
             $opt = array();
+            $qs  = array();
             if ($ans != null) {
                 if ($ans->option_id != 0) {
                     $opt = Options::where('id', $ans->option_id)->first();
@@ -808,7 +809,9 @@ class QuestionController extends Controller
                 }
             }
             $qa['answer'] = $opt;
-            $cl['questions'] = $qa;
+            array_push($qs, $qa);
+            $cl['questions'] = $qs;
+
             array_push($QA, $cl);
         }
 
@@ -840,7 +843,7 @@ class QuestionController extends Controller
                 $qa['answer'] = $opt;
                 array_push($qs, $qa);
             }
-            $cl['questions'] = $qa;
+            $cl['questions'] = $qs;
             array_push($QA, $cl);
         }
 
@@ -849,6 +852,7 @@ class QuestionController extends Controller
             $qa = $question->toArray();
             $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', 62)->first();
             $opt = array();
+            $qs=array();
             if ($ans != null) {
                 if ($ans->option_id != 0) {
                     $opt = Options::where('id', $ans->option_id)->first();
@@ -864,7 +868,8 @@ class QuestionController extends Controller
                 }
             }
             $qa['answer'] = $opt;
-            $cl['questions'] = $qa;
+            array_push($qs, $qa);
+            $cl['questions'] = $qs;
             array_push($QA, $cl);
         }
 
@@ -941,10 +946,11 @@ class QuestionController extends Controller
                 }
             }
             $qa['answer'] = $opt;
-            array_push($qs, $qa);
+            //array_push($qs, $qa);
+            array_push($QA, $qa);
+            //
         }
-        $cl['questions'] = $qs;
-        array_push($QA, $cl);
+        //$cl['questions'] = $qs;
         $message = "study plan question found";
         $form = array("title"=>$title, "questions" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
