@@ -371,15 +371,15 @@ class QuestionController extends Controller
     }
 
     public function teachers() {
-        $questions = Questions::where('id', '>', 21)->where('id', '<=', 25)->with('options')->get();
+        $allquestions = Questions::where('id', '>', 21)->where('id', '<=', 25)->with('options')->get();
         $title = ['value' => "শিক্ষক সংক্রান্ত  তথ্য", 'url' => "teachers"];
         // die(var_dump($questions->toArray()));
         $QA = array();
-        $types = QuestionType::where('id', '>=', 4)->where('id', '<=', 6)->get();
+        $types = QuestionType::where('id', '>=', 4)->where('id', '<=', 5)->get();
         foreach ($types as $type) {
             $cl = $type->toArray();
             $qs = array();
-            foreach ($questions as $question) {
+            foreach ($allquestions as $question) {
                 $qa = $question->toArray();
                 $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('type_id', $type->id)->first();
                 $opt = array();
@@ -429,7 +429,7 @@ class QuestionController extends Controller
             $qa['answer'] = $opt;
             array_push($QAA, $qa);
         }
-        $qa = ['title' => "প্রশিক্ষণ সংক্রান্ত তথ্য ", "questions" => $QAA];
+        $qa = ['type' => "প্রশিক্ষণ সংক্রান্ত তথ্য ", "questions" => $QAA];
         array_push($QA, $qa);
         $message = "Teachers question found";
         $form = array("title"=>$title, "types" => $QA);
@@ -481,7 +481,7 @@ class QuestionController extends Controller
 
     }
     public function lectures() {
-        $questions = Questions::where('id', '>', 34)->where('id', '<=', 45)->with('options')->get();
+        $allquestions = Questions::where('id', '>', 34)->where('id', '<=', 45)->with('options')->get();
         $title = ['value' => "শ্রেণী পাঠদান পর্যবেক্ষণ (নূন্যতম দুটি ক্লাস পর্যবেক্ষণ করে শ্রেণীর তথ্য পূরণ করুন)", 'url' => "lectures"];
         $QA = array();
         $schools = User::find($this->user->id)->schools;
@@ -490,7 +490,7 @@ class QuestionController extends Controller
         foreach ($classes as $class) {
             $cl = $class->toArray();
             $qs = array();
-            foreach ($questions as $question) {
+            foreach ($allquestions as $question) {
                 $qa = $question->toArray();
                 $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $class->id)->first();
                 $opt = array();
@@ -512,12 +512,12 @@ class QuestionController extends Controller
                 array_push($qs, $qa);
             }
             $cl['questions'] = $qs;
-            array_push($QA, $cl);
+
             $questions = Questions::where('id', '>', 45)->where('id', '<=', 48)->with('options')->get();
             $QAA = array();
             foreach ($questions as $question) {
                 $qa = $question->toArray();
-                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->first();
+                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $class->id)->first();
 
                 $opt = array();
                 if ($ans != null) {
@@ -539,7 +539,9 @@ class QuestionController extends Controller
                 array_push($QAA, $qa);
             }
             $qa = ['title' => "বিগত এক মাসে ইংরেজি, গণিত ও বিজ্ঞান বিষয়ে কতগুলি অতিরিক্ত ক্লাস নেয়া হয়েছে?", "questions" => $QAA];
-            array_push($QA, $qa);
+            $cl['inner'] = $qa;
+            array_push($QA, $cl);
+            //array_push($QA, $qa);
         }
 
         $message = "Lecture question found";
