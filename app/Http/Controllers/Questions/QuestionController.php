@@ -77,7 +77,7 @@ class QuestionController extends Controller
                     $opt = [
                         "id" => -1,
                         "option" => "",
-                        "option_value"=> (int)$ans->answer,
+                        "option_value"=> $ans->answer,
                         "created_at" => "",
                         "updated_at" => ""
                     ];
@@ -155,9 +155,18 @@ class QuestionController extends Controller
                 $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $class->id)->first();
                 $opt = array();
                 if ($ans != null) {
-                    $opt = Options::where('id', $ans->option_id)->first();
-
-                    $opt = $opt->toArray();
+                    if($ans->option_id != 0) {
+                        $opt = Options::where('id', $ans->option_id)->first();
+                        $opt =  $opt->toArray();
+                    }else {
+                        $opt = [
+                            "id" => -1,
+                            "option" => "",
+                            "option_value"=> $ans->answer,
+                            "created_at" => "",
+                            "updated_at" => ""
+                        ];
+                    }
                 }
                 $qa['answer'] = $opt;
                 array_push($qs, $qa);
@@ -230,7 +239,7 @@ class QuestionController extends Controller
                         $opt = [
                             "id" => -1,
                             "option" => "",
-                            "option_value" => (int)$ans->answer,
+                            "option_value" => $ans->answer,
                             "created_at" => "",
                             "updated_at" => ""
                         ];
@@ -391,7 +400,7 @@ class QuestionController extends Controller
                         $opt = [
                             "id" => -1,
                             "option" => "",
-                            "option_value" => (int)$ans->answer,
+                            "option_value" => $ans->answer,
                             "created_at" => "",
                             "updated_at" => ""
                         ];
@@ -528,7 +537,7 @@ class QuestionController extends Controller
                         $opt = [
                             "id" => -1,
                             "option" => "",
-                            "option_value" => (int)$ans->answer,
+                            "option_value" => $ans->answer,
                             "created_at" => "",
                             "updated_at" => ""
                         ];
@@ -593,7 +602,7 @@ class QuestionController extends Controller
     }
 
     public function multimedia() {
-        $questions = Questions::where('id', '>', 48)->where('id', '<=', 50)->with('options')->get();
+        $allquestions = Questions::where('id', '>', 48)->where('id', '<=', 50)->with('options')->get();
         $title = ['value' => "মাল্টিমিডিয়া ক্লাসরুম ব্যবহার সংক্রান্ত তথ্য ( বিগত মাসের )", 'url' => "multimedia"];
         $QA = array();
         $schools = User::find($this->user->id)->schools;
@@ -602,7 +611,7 @@ class QuestionController extends Controller
         foreach ($classes as $class) {
             $cl = $class->toArray();
             $qs = array();
-            foreach ($questions as $question) {
+            foreach ($allquestions as $question) {
                 $qa = $question->toArray();
                 $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('class_id', $class->id)->first();
                 $opt = array();
@@ -624,7 +633,7 @@ class QuestionController extends Controller
                 array_push($qs, $qa);
             }
             $cl['questions'] = $qs;
-            array_push($QA, $cl);
+
             $questions = Questions::where('id', '>', 51)->where('id', '<=', 55)->with('options')->get();
             $QAA = array();
             foreach ($questions as $question) {
@@ -640,7 +649,7 @@ class QuestionController extends Controller
                         $opt = [
                             "id" => -1,
                             "option" => "",
-                            "option_value" => (int)$ans->answer,
+                            "option_value" => $ans->answer,
                             "created_at" => "",
                             "updated_at" => ""
                         ];
@@ -651,7 +660,8 @@ class QuestionController extends Controller
                 array_push($QAA, $qa);
             }
             $qa = ['title' => "ডিজিটাল কন্টেন্ট", "questions" => $QAA];
-            array_push($QA, $qa);
+            $cl['inner'] = $qa;
+            aarray_push($QA, $cl);
         }
 
         $message = "Lecture question found";
@@ -731,8 +741,6 @@ class QuestionController extends Controller
             $qa['answer'] = $opt;
             array_push($qs, $qa);
         }
-        $cl['questions'] = $qs;
-        array_push($QA, $cl);
 
 
         $message = "Yearly plan question found";
@@ -800,7 +808,7 @@ class QuestionController extends Controller
                 $opt = [
                     "id" => -1,
                     "option" => "",
-                    "option_value" => (int)$ans->answer,
+                    "option_value" => $ans->answer,
                     "created_at" => "",
                     "updated_at" => ""
                 ];
