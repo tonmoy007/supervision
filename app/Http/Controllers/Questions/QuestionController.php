@@ -869,8 +869,8 @@ class QuestionController extends Controller
             }
             $qa['answer'] = $opt;
             array_push($qs, $qa);
-            $cl['questions'] = $qs;
-            array_push($QA, $cl);
+            $bl['questions'] = $qs;
+            array_push($QA, $bl);
         }
 
         $message = "Diary question found";
