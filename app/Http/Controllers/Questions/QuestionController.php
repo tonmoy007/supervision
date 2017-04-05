@@ -862,7 +862,7 @@ class QuestionController extends Controller
         array_push($QA, $qa);
 
         $message = "Diary question found";
-        $form = array("title"=>$title, "types" => $QA);
+        $form = array("title"=>$title, "questions" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
     }
     public function diaryAnswer(Request $request) {
