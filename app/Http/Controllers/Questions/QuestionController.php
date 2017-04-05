@@ -808,8 +808,10 @@ class QuestionController extends Controller
                 }
             }
             $qa['answer'] = $opt;
+            $cl['questions'] = $qa;
             array_push($QA, $qa);
         }
+
 
 
         $questions = Questions::where('id', '=', 61)->with('options')->get();
@@ -838,9 +840,8 @@ class QuestionController extends Controller
                 $qa['answer'] = $opt;
                 array_push($qs, $qa);
             }
-            $cl['questions'] = $qs;
+            $cl['questions'] = $qa;
             array_push($QA, $cl);
-
         }
 
         $questions = Questions::where('id', '=', 62)->with('options')->get();
@@ -863,11 +864,12 @@ class QuestionController extends Controller
                 }
             }
             $qa['answer'] = $opt;
+            $cl['questions'] = $qa;
             array_push($QA, $qa);
         }
 
         $message = "Diary question found";
-        $form = array("title"=>$title, "questions" => $QA);
+        $form = array("title"=>$title, "types" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
     }
     public function diaryAnswer(Request $request) {
@@ -939,11 +941,10 @@ class QuestionController extends Controller
                 }
             }
             $qa['answer'] = $opt;
-            //array_push($qs, $qa);
-            array_push($QA, $qa);
+            array_push($qs, $qa);
         }
-        //$cl['questions'] = $qs;
-
+        $cl['questions'] = $qs;
+        array_push($QA, $cl);
         $message = "study plan question found";
         $form = array("title"=>$title, "questions" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
