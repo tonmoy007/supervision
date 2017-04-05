@@ -785,29 +785,32 @@ class QuestionController extends Controller
     }
 
     public function diary() {
-        $question = Questions::where('id', '=', 60)->with('options')->get();
+        $questions = Questions::where('id', '=', 60)->with('options')->get();
         $title = ['value' => "প্রতিষ্ঠান প্রধানের রেজিস্টার ও শিক্ষকের ডায়েরী  সংক্রান্ত তথ্য", 'url' => "diary"];
        // die(var_dump($question->id));
         $QA = array();
-        $qa = $question->toArray();
-        $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', 60)->first();
-        $opt = array();
-        if ($ans != null) {
-            if ($ans->option_id != 0) {
-                $opt = Options::where('id', $ans->option_id)->first();
-                $opt = $opt->toArray();
-            } else {
-                $opt = [
-                    "id" => -1,
-                    "option" => "",
-                    "option_value" => $ans->answer,
-                    "created_at" => "",
-                    "updated_at" => ""
-                ];
+        foreach ($questions as $question) {
+            $qa = $question->toArray();
+            $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', 60)->first();
+            $opt = array();
+            if ($ans != null) {
+                if ($ans->option_id != 0) {
+                    $opt = Options::where('id', $ans->option_id)->first();
+                    $opt = $opt->toArray();
+                } else {
+                    $opt = [
+                        "id" => -1,
+                        "option" => "",
+                        "option_value" => $ans->answer,
+                        "created_at" => "",
+                        "updated_at" => ""
+                    ];
+                }
             }
+            $qa['answer'] = $opt;
+            $cl['questions'] = $qa;
+            array_push($QA, $cl);
         }
-        $qa['answer'] = $opt;
-        array_push($QA, $qa);
 
 
         $questions = Questions::where('id', '=', 61)->with('options')->get();
@@ -840,26 +843,29 @@ class QuestionController extends Controller
             array_push($QA, $cl);
         }
 
-        $question = Questions::where('id', '=', 62)->with('options')->get();
-        $qa = $question->toArray();
-        $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', 62)->first();
-        $opt = array();
-        if ($ans != null) {
-            if ($ans->option_id != 0) {
-                $opt = Options::where('id', $ans->option_id)->first();
-                $opt = $opt->toArray();
-            } else {
-                $opt = [
-                    "id" => -1,
-                    "option" => "",
-                    "option_value" => $ans->answer,
-                    "created_at" => "",
-                    "updated_at" => ""
-                ];
+        $questions = Questions::where('id', '=', 62)->with('options')->get();
+        foreach ($questions as $question) {
+            $qa = $question->toArray();
+            $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', 62)->first();
+            $opt = array();
+            if ($ans != null) {
+                if ($ans->option_id != 0) {
+                    $opt = Options::where('id', $ans->option_id)->first();
+                    $opt = $opt->toArray();
+                } else {
+                    $opt = [
+                        "id" => -1,
+                        "option" => "",
+                        "option_value" => $ans->answer,
+                        "created_at" => "",
+                        "updated_at" => ""
+                    ];
+                }
             }
+            $qa['answer'] = $opt;
+            $cl['questions'] = $qa;
+            array_push($QA, $cl);
         }
-        $qa['answer'] = $opt;
-        array_push($QA, $qa);
 
         $message = "Diary question found";
         $form = array("title"=>$title, "questions" => $QA);
