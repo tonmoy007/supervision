@@ -25,7 +25,7 @@ class CreateUsersAnswersTable extends Migration
             $table->date('answer_date');
             $table->timestamps();
 
-            $table->unique(['user_id', 'question_id', 'option_id', 'class_id', 'type_id'], 'users_answers_unique_key');
+            $table->unique(['user_id', 'question_id',  'class_id', 'type_id'], 'users_answers_unique_key');
         });
     }
 

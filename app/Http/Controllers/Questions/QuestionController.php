@@ -122,7 +122,6 @@ class QuestionController extends Controller
                 [
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
-                    'option_id' => $answerID,
                     'class_id' => $classId,
                     'type_id' => $typeId,
                 ],
@@ -130,7 +129,7 @@ class QuestionController extends Controller
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
                 'option_id' => $answerID,
-                    'answer' => $ans,
+                'answer' => $ans,
                 'xtra' => 'education',
                 'answer_date' => Carbon::now()->toDateString()
             ]);
@@ -201,7 +200,6 @@ class QuestionController extends Controller
             $ans =  UsersAnswer::updateOrCreate([
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
-                'option_id' => $answerId,
                 'class_id' => $classId,
                 'type_id' => $typeId,
                 ],
@@ -281,7 +279,6 @@ class QuestionController extends Controller
             $ans = UsersAnswer::updateOrCreate([
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
-                'option_id' => $answerID,
                 'class_id' => $classId,
                 'type_id' => $typeId,
                 ],
@@ -362,7 +359,6 @@ class QuestionController extends Controller
             $ans = UsersAnswer::updateOrCreate([
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
-                'option_id' => $answerID,
                 'class_id' => $classId,
                 'type_id' => $typeID,
                 ],
@@ -472,7 +468,6 @@ class QuestionController extends Controller
                 [
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
-                    'option_id' => $answerID,
                     'class_id' => $classId,
                     'type_id' => $typeId,
                 ],
@@ -584,7 +579,6 @@ class QuestionController extends Controller
                 [
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
-                    'option_id' => $answerID,
                     'class_id' => $classId,
                     'type_id' => $typeId,
                 ],
@@ -696,7 +690,6 @@ class QuestionController extends Controller
                 [
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
-                    'option_id' => $answerID,
                     'class_id' => $classId,
                     'type_id' => $typeId,
                 ],
@@ -775,7 +768,6 @@ class QuestionController extends Controller
                 [
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
-                    'option_id' => $answerID,
                     'class_id' => $classId,
                     'type_id' => $typeId,
                 ],
@@ -900,7 +892,6 @@ class QuestionController extends Controller
                 [
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
-                    'option_id' => $answerID,
                     'class_id' => $classId,
                     'type_id' => $typeId,
                 ],
@@ -978,7 +969,6 @@ class QuestionController extends Controller
                 [
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
-                    'option_id' => $answerID,
                     'class_id' => $classId,
                     'type_id' => $typeId,
                 ],
