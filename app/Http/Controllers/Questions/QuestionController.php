@@ -123,14 +123,14 @@ class QuestionController extends Controller
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
+                    'class_id' => $classId,
+                    'type_id' => $typeId,
                 ],
                 [
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
                 'option_id' => $answerID,
-                'class_id' => $classId,
-                'type_id' => $typeId,
-                'answer' => $ans,
+                    'answer' => $ans,
                 'xtra' => 'education',
                 'answer_date' => Carbon::now()->toDateString()
             ]);
@@ -189,13 +189,13 @@ class QuestionController extends Controller
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
                 'option_id' => $answer['answer_id'],
+                'class_id' => $classId,
+                'type_id' => $typeId,
                 ],
                 [
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
                 'option_id' => $answer['answer_id'],
-                'class_id' => $classId,
-                 'type_id' => $typeId,
                 'answer' => "answer",
                 'xtra' => 'education',
                 'answer_date' => Carbon::now()->toDateString()
@@ -269,13 +269,13 @@ class QuestionController extends Controller
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
                 'option_id' => $answer['answer_id'],
+                'class_id' => $classId,
+                'type_id' => $typeId,
                 ],
                 [
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
                 'option_id' => $answerID,
-                'class_id' => $classId,
-                'type_id' => $typeId,
                 'answer' => $ans,
                 'xtra' => 'education',
                 'answer_date' => Carbon::now()->toDateString()
@@ -320,7 +320,7 @@ class QuestionController extends Controller
             array_push($QA, $cl);
         }
         $message = "Students question found";
-        $form = array("title"=>$title, "students" => $QA);
+        $form = array("title"=>$title, "classes" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
     }
 
@@ -350,13 +350,13 @@ class QuestionController extends Controller
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
                 'option_id' => $answer['answer_id'],
+                'class_id' => $classId,
+                'type_id' => $typeID,
                 ],
                 [
                 'user_id' => $this->user->id,
                 'question_id' => $answer['question_id'],
                 'option_id' => $answerID,
-                'class_id' => $classId,
-                'type_id' => $typeID,
                 'answer' => $ans,
                 'xtra' => 'education',
                 'answer_date' => Carbon::now()->toDateString()
@@ -460,13 +460,13 @@ class QuestionController extends Controller
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
+                    'class_id' => $classId,
+                    'type_id' => $typeId,
                 ],
                 [
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
-                    'class_id' => $classId,
-                    'type_id' => $typeId,
                     'answer' => $ans,
                     'xtra' => 'education',
                     'answer_date' => Carbon::now()->toDateString()
@@ -539,7 +539,7 @@ class QuestionController extends Controller
         }
 
         $message = "Lecture question found";
-        $form = array("title"=>$title, "lectures" => $QA);
+        $form = array("title"=>$title, "classes" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
     }
     public function lecturesAnswer(Request $request) {
@@ -570,13 +570,13 @@ class QuestionController extends Controller
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
+                    'class_id' => $classId,
+                    'type_id' => $typeId,
                 ],
                 [
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
-                    'class_id' => $classId,
-                    'type_id' => $typeId,
                     'answer' => $ans,
                     'xtra' => 'education',
                     'answer_date' => Carbon::now()->toDateString()
@@ -649,7 +649,7 @@ class QuestionController extends Controller
         }
 
         $message = "Lecture question found";
-        $form = array("title"=>$title, "multimedia" => $QA);
+        $form = array("title"=>$title, "classes" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
     }
 
@@ -681,13 +681,13 @@ class QuestionController extends Controller
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
+                    'class_id' => $classId,
+                    'type_id' => $typeId,
                 ],
                 [
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
-                    'class_id' => $classId,
-                    'type_id' => $typeId,
                     'answer' => $ans,
                     'xtra' => 'education',
                     'answer_date' => Carbon::now()->toDateString()
@@ -730,7 +730,7 @@ class QuestionController extends Controller
 
 
         $message = "Yearly plan question found";
-        $form = array("title"=>$title, "plans" => $QA);
+        $form = array("title"=>$title, "questions" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
     }
 
@@ -762,13 +762,13 @@ class QuestionController extends Controller
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
+                    'class_id' => $classId,
+                    'type_id' => $typeId,
                 ],
                 [
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
-                    'class_id' => $classId,
-                    'type_id' => $typeId,
                     'answer' => $ans,
                     'xtra' => 'education',
                     'answer_date' => Carbon::now()->toDateString()
@@ -887,13 +887,13 @@ class QuestionController extends Controller
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
+                    'class_id' => $classId,
+                    'type_id' => $typeId,
                 ],
                 [
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
-                    'class_id' => $classId,
-                    'type_id' => $typeId,
                     'answer' => $ans,
                     'xtra' => 'education',
                     'answer_date' => Carbon::now()->toDateString()
@@ -934,7 +934,7 @@ class QuestionController extends Controller
         $cl['questions'] = $qs;
         array_push($QA, $cl);
         $message = "study plan question found";
-        $form = array("title"=>$title, "plans" => $QA);
+        $form = array("title"=>$title, "questions" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
     }
     public function overallAnswer(Request $request) {
@@ -965,13 +965,13 @@ class QuestionController extends Controller
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
+                    'class_id' => $classId,
+                    'type_id' => $typeId,
                 ],
                 [
                     'user_id' => $this->user->id,
                     'question_id' => $answer['question_id'],
                     'option_id' => $answerID,
-                    'class_id' => $classId,
-                    'type_id' => $typeId,
                     'answer' => $ans,
                     'xtra' => 'education',
                     'answer_date' => Carbon::now()->toDateString()
@@ -1086,7 +1086,7 @@ class QuestionController extends Controller
     $cl['questions'] = $qa;
     array_push($QA, $cl);
         $message = "Lastbenchers question found";
-        $form = array("title"=>$title, "types" => $QA);
+        $form = array("title"=>$title, "questions" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
     }
 
@@ -1117,7 +1117,7 @@ class QuestionController extends Controller
         $cl['questions'] = $qa;
         array_push($QA, $cl);
         $message = "Creative question found";
-        $form = array("title"=>$title, "types" => $QA);
+        $form = array("title"=>$title, "questions" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
     }
 
@@ -1223,7 +1223,7 @@ class QuestionController extends Controller
             array_push($QA, $cl);
         }
         $message = "Students question found";
-        $form = array("title"=>$title, "students" => $QA);
+        $form = array("title"=>$title, "types" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
     }
 
@@ -1292,7 +1292,7 @@ class QuestionController extends Controller
         $cl['questions'] = $qa;
         array_push($QA, $cl);
         $message = "Comment question found";
-        $form = array("title"=>$title, "types" => $QA);
+        $form = array("title"=>$title, "questions" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
     }
 
