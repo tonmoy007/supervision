@@ -732,7 +732,7 @@ class QuestionController extends Controller
                 }
             }
             $qa['answer'] = $opt;
-            array_push($qs, $qa);
+            array_push($QA, $qa);
         }
 
 
