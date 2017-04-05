@@ -655,7 +655,7 @@ class QuestionController extends Controller
             }
             $qa = ['title' => "ডিজিটাল কন্টেন্ট", "questions" => $QAA];
             $cl['inner'] = $qa;
-            aarray_push($QA, $cl);
+            array_push($QA, $cl);
         }
 
         $message = "Lecture question found";
