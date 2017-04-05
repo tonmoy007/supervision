@@ -200,7 +200,7 @@ class AnswerSeeder extends Seeder
                 'answer_date' => Carbon::now()->toDateString()
             ]);
             $ans->save();
-            for ($i = 36; $i <= 45; $i++) {
+            for ($i = 36; $i <= 44; $i++) {
                 $ans = new UsersAnswer([
                     'user_id' => 1,
                     'question_id' => $i,
@@ -212,8 +212,18 @@ class AnswerSeeder extends Seeder
                     'answer_date' => Carbon::now()->toDateString()
                 ]);
                 $ans->save();
-                $x+=3;
             }
+            $ans = new UsersAnswer([
+                'user_id' => 1,
+                'question_id' => 45,
+                'option_id' => rand(37,38),
+                'class_id' => $class->id,
+                'type_id' =>0,
+                'answer' => 0,
+                'xtra' => 'education',
+                'answer_date' => Carbon::now()->toDateString()
+            ]);
+            $ans->save();
             for($i=46; $i<=48; $i++) {
                 $ans = new UsersAnswer([
                     'user_id' => 1,
