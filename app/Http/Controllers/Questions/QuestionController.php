@@ -916,7 +916,7 @@ class QuestionController extends Controller
 
     public function study() {
         $questions = Questions::where('id', '>', 62)->where('id', '<=', 64)->with('options')->get();
-        $title = ['value' => "শ্রেণি পাঠদান পর্যবেক্ষণে প্রতিষ্ঠান প্রধানের ভূমিকা", 'url' => "multimedia"];
+        $title = ['value' => "শ্রেণি পাঠদান পর্যবেক্ষণে প্রতিষ্ঠান প্রধানের ভূমিকা", 'url' => "study"];
         $QA = array();
         $schools = User::find($this->user->id)->schools;
         $classes = $schools->classes;
