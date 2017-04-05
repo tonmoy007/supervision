@@ -836,10 +836,9 @@ class QuestionController extends Controller
                     }
                 }
                 $qa['answer'] = $opt;
-                array_push($qs, $qa);
+                array_push($QA, $qa);
             }
-            $cl['questions'] = $qa;
-            array_push($QA, $cl);
+
         }
 
         $questions = Questions::where('id', '=', 62)->with('options')->get();
