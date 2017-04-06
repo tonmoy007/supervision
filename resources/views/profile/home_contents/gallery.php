@@ -2,7 +2,7 @@
     
     <div class="inner-page-content" >
   
-        <gallery class="image-gallery" >
+        <gallery class="image-gallery"  ng-cloak>
           <md-card ng-repeat="(key, image) in gallery"  class="col-md-3 gallery-card">
               <div ng-include data-src="'getView/template.single_gallery'" >
                   

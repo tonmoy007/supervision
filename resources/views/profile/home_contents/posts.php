@@ -14,7 +14,7 @@
     
         <md-list>
             
-            <div ng-repeat="(category,post_category) in posts">
+            <div ng-repeat="(category,post_category) in posts" ng-cloak>
             <div class="col-md-12">
                 <h3 class="rgba-black-strong white-text" layout-padding><%category%></h3>
             </div>

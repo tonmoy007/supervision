@@ -1,3 +1,5 @@
+
+
 angular.module('super-factory',['ngMaterial','ngAnimate'])
 
 .factory('ShowSimpleToast',function($mdToast,$mdDialog){
@@ -466,15 +468,61 @@ this.deleteContent=function(ev,item_name,url,id){
     })
   }
 this.getAnswers=function(report,type){
-  answers=[];
+  
+  var answers=[];
   if(type=='no_class'){
     angular.forEach(report.questions, function(value, key){
 
-    if(value.type!='input')value.answer.answer_id=value.answer.id;
-
+    if(value.type!='input'&&value.type!='textarea')value.answer.answer_id=value.answer.id;
+    else {value.answer.option_value=value.answer.option_value;}
       value.answer.question_id=value.id;
       answers.push(value.answer)
     });
+  }else if(type=='class'){
+
+      angular.forEach(report.classes,function(value,key){
+          angular.forEach(value.questions, function(val, k){
+            var ans={};
+
+              ans.class_id=value.id;
+              ans.question_id=val.id;
+              if(val.type!='input'&&val.type!='textarea'){ans.answer_id=val.answer.id;}
+              else {ans.option_value=val.answer.option_value;}
+              answers.push(ans);
+        });
+          if(value.inner){
+            angular.forEach(value.inner.questions,function(val,k){
+              var ans={};
+
+              ans.class_id=value.id;
+              ans.question_id=val.id;
+              if(val.type!='input'&&val.type!='textarea'){ans.answer_id=val.answer.id;}
+              else {ans.option_value=val.answer.option_value;}
+              answers.push(ans);
+            })
+          }
+      })
+  }else if(type=='type'||type=='plans'){
+   var form;
+   if(type=='type'){
+    form=report.types
+   }else{
+    form=report.plans;
+   }
+    angular.forEach(form,function(value,key){
+   
+      angular.forEach(value.questions, function(val, k){
+        var ans={};
+        if(type=='type')ans.type_id=value.id;
+        else if(type=='plans')ans.plan_id=value.id;
+        ans.question_id=val.id;
+        
+        if(val.type!='input'&&val.type!='textarea'){ans.answer_id=val.answer.id;}
+        else {ans.option_value=val.answer.option_value;}
+        
+        answers.push(ans);
+      });
+    })
   }
   return answers;
 }

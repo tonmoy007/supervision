@@ -1,8 +1,8 @@
 
 <div class="form" flex layout-align="center center" layout="row">
    
-    <form name="reportForm" ng-submit="submitAnswer(reportForm,form,'no_class')" ng-cloak>
-        <md-input-container ng-repeat="(key, qa) in form.questions track by $index" class="col-md-3 m-u-1" ng-include="'getView/template.input-template'" ng-cloak>
+    <form name="reportForm" ng-submit="submitAnswer(reportForm,form,'no_class')" >
+        <md-input-container ng-repeat="(key, qa) in form.questions track by $index" class="col-md-6 m-u-1" ng-include="'getView/template.input-template'" >
           
 
         </md-input-container>

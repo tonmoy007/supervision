@@ -261,6 +261,34 @@
   border-radius: 0 !important;
 }
 
+.full-width {
+  width: 100%;
+}
+
+.center-table > tbody > tr > th {
+  vertical-align: middle;
+}
+
+.center-table > tbody > tr > td {
+  vertical-align: middle;
+}
+
+.center-table > thead > tr > th {
+  vertical-align: middle;
+}
+
+.center-table > thead > tr > td {
+  vertical-align: middle;
+}
+
+.center-table > tfoot > tr > th {
+  vertical-align: middle;
+}
+
+.center-table > tfoot > tr > td {
+  vertical-align: middle;
+}
+
 .fix_loader {
   position: absolute;
   left: 0;

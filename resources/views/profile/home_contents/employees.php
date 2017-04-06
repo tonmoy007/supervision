@@ -1,11 +1,11 @@
-<div class="inner-page">
+ <div class="inner-page">
     
     
     <div class="inner-page-content" >
     
         <md-list>
             
-            <div ng-repeat="(type,employee_types) in employees">
+            <div ng-repeat="(type,employee_types) in employees" ng-cloak>
             <div class="col-md-12">
                 <h3 class="rgba-black-strong white-text "  layout-padding><%type%></h3>
             </div>

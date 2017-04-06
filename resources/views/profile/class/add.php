@@ -30,7 +30,7 @@
                 </md-input-container>
                 
                 </md-input-container>
-                <md-input-container>
+                <md-input-container layout layout-align="center center">
                     <md-button type="submit" ng-disabled="addNewForm.$invalid" class="md-raised">Submit</md-button>
                 </md-input-container>
             </form>

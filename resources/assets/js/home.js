@@ -143,6 +143,8 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         templateUrl:'getView/profile.reports.form_view',
         resolve:{
             Questions:function(superServices,$stateParams){
+                var form=superServices.getReportForm($stateParams);
+                
                 return superServices.getReportForm($stateParams);
             }
         }
@@ -314,7 +316,7 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams
         $rootScope.notification=$interval(function(){
                 if ($rootScope.globals.currentUser) 
                     superServices.checkNotice();
-            },6000);
+            },60000);
         
         $rootScope.nav={};
         // console.log($rootScope);

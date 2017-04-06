@@ -3,7 +3,7 @@
     
   
     
-    <div class="inner-page-content" ng-show="!add_new">
+    <div class="inner-page-content" ng-show="!add_new" ng-cloak>
     
         <md-list>
             
