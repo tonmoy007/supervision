@@ -1,15 +1,14 @@
 
 <div class="form" flex layout-align="center center" layout="row" ng-cloak>
    
-    <form name="reportForm" ng-submit="submitAnswer(reportForm,form,'class')" >
-        <div ng-repeat="class in form.classes track by $index" flex  class="" layout="column" ng-cloak>
+    <form name="reportForm" ng-submit="submitAnswer(reportForm,form,'type')" >
+        <div ng-repeat="type in form.types track by $index" flex  class="" layout="column" ng-cloak>
         
-          <h4 class="p-a-1 bg-light-gray">Class : <%class.name%></h4>
+          <h4 class="p-a-1 bg-light-gray"> <%type.type%></h4>
          
             <div flex >
-              <md-input-container ng-repeat="(key, qa) in class.questions track by $index" class="col-md-6 m-u-1 md-block" ng-include="'getView/template.input-template'" ng-cloak>
+              <md-input-container ng-repeat="(key, qa) in type.questions track by $index" class="col-md-3 m-u-1 md-block" ng-include="'getView/template.input-template'" ng-cloak>
             
-
           </md-input-container>
             </div>
          

@@ -1,4 +1,4 @@
-<div class="inner-page">
+<div class="inner-page" ng-cloak>
     
     
   
@@ -7,7 +7,7 @@
     
         <md-list>
             
-            <md-list-item class="animate-repeat" ng-repeat="class in classes|filter:actions.search_query as results track by $index" ng-include data-src="'/getView/profile.class.single_class'" ></md-list-item>
+            <md-list-item class="animate-repeat" ng-cloak ng-repeat="class in classes|filter:actions.search_query as results track by $index" ng-include data-src="'/getView/profile.class.single_class'" ></md-list-item>
 
             <md-list-item ng-if="!results.length" class="animate-if" data-ng-include data-src="'/getView/template.not_found'" ng-init="not_found='results'"></md-list-item>
         </md-list>

@@ -7,12 +7,12 @@
         <div class="form-container">
         <div flex layout="row">
         <h4 flex>Add Today's attendance</h4>
-        <%data|json%>
+        
         
         </div>
             <form class="super-form" name="addNewForm" ng-submit="submitAttendance(addNewForm,attendance)">
                 <div flex>
-                  <table class="table table-responsive text-center">
+                  <table class="table center-table table-responsive text-center table-bordered">
                     <thead>
                       <tr>
                         <th>Class Name</th>

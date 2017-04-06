@@ -6,7 +6,7 @@
     <div class="inner-page-content" >
     
         <md-list>
-            <div ng-repeat="(category,link_category) in links">
+            <div ng-repeat="(category,link_category) in links"  ng-cloak>
             <div class="col-md-12">
                 
                 <h3 class="rgba-black-strong white-text" layout-padding><%category%></h3>

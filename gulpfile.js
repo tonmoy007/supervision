@@ -1,7 +1,5 @@
 const elixir = require('laravel-elixir');
 
-require('laravel-elixir-vue-2');
-
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -35,4 +33,8 @@ elixir(mix => {
         './node_modules/angular-cookies/angular-cookies.js','supervision.controllers.js'
         ,'home.js'],'public/js/supervision.js')
     .version(['css/supervision.css', 'js/supervision.js']);
+    mix.browserSync({
+        'proxy':'localhost:8000',
+        'files':['resources/**/*','app/**/*','config/*.php','routes/**/*','public/**/*']
+        });
 });

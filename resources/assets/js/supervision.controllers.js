@@ -326,12 +326,6 @@ angular.module('super-controllers',[])
     console.log(Classes)
     console.log(Attendance);
     var i=-1;
-     $scope.createactions=function(){
-        $scope.actions=[];
-        $scope.search_query=[];
-        console.log($scope.actions)
-     }
-
      $rootScope.nav.item=Menu.find(function(item){
         i++;
         return item.name==$state.current.name
@@ -345,7 +339,11 @@ angular.module('super-controllers',[])
     $scope.attendance=Attendance.attendance;
     $scope.classLoaded=true;
     $scope.is_attendance_taken=Classes.isAttendanceTaken;
-
+    $scope.createactions=function(){
+        $scope.actions=[];
+        $scope.search_query=[];
+        console.log($scope.actions)
+     }
     $scope.search=function(query){
         $scope.$parent.actions.search_query=query;
         console.log(query);
@@ -436,10 +434,11 @@ angular.module('super-controllers',[])
     $scope.name=$stateParams.name;
     $scope.view='/getView/profile.reports.'+$scope.name;
     $scope.form=Questions.form;
+    console.log(Questions);
     $rootScope.nav.title=$scope.form.title.value;
     $scope.submitAnswer=function(form,report,type){
         if(form.$invalid)return;
-
+        
         var answers=superServices.getAnswers(report,type);
         console.log(answers);
         superServices.submitAnswer($scope,answers);

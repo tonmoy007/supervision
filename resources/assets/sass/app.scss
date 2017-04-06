@@ -79,6 +79,42 @@
 .no-radius{
     border-radius:0!important;
 }
+.full-width{
+    width:100%;
+}
+.center-table{
+    &>tbody{
+        &>tr{
+            &>th{
+                vertical-align:middle;
+            }
+            &>td{
+                vertical-align:middle;
+            }
+        }
+    }
+    &>thead{
+        &>tr{
+            &>th{
+                vertical-align:middle;
+            }
+            &>td{
+                vertical-align:middle;
+            }
+        }
+    }
+    &>tfoot{
+        &>tr{
+            &>th{
+                vertical-align:middle;
+            }
+            &>td{
+                vertical-align:middle;
+            }
+        }
+    }
+
+}
 .fix_loader{
     position:absolute;
     left:0;
