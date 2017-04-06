@@ -1078,27 +1078,29 @@ class QuestionController extends Controller
         $questions = Questions::where('id', '=', 72)->with('options')->get();
         $title = ['value' => "স্বল্প কৃতিধারী শিক্ষার্থীদের চিহ্নিতকরণ   সংক্রান্ত তথ্য", 'url' => "lastbenchers"];
         $QA = array();
-        $qa = $questions->toArray();
-        $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', 72)->first();
-        $opt = array();
-        if ($ans != null) {
-            if ($ans->option_id != 0) {
-                $opt = Options::where('id', $ans->option_id)->first();
-                $opt = $opt->toArray();
-            } else {
-                $opt = [
-                    "id" => -1,
-                    "option" => "",
-                    "option_value" => $ans->answer,
-                    "created_at" => "",
-                    "updated_at" => ""
-                ];
+        foreach ($questions as $question) {
+            $qa = $question->toArray();
+            $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', 72)->first();
+            $opt = array();
+            $qs=array();
+            if ($ans != null) {
+                if ($ans->option_id != 0) {
+                    $opt = Options::where('id', $ans->option_id)->first();
+                    $opt = $opt->toArray();
+                } else {
+                    $opt = [
+                        "id" => -1,
+                        "option" => "",
+                        "option_value" => $ans->answer,
+                        "created_at" => "",
+                        "updated_at" => ""
+                    ];
+                }
             }
+            $qa['answer'] = $opt;
+            array_push($QA, $qa);
         }
-        $qa['answer'] = $opt;
 
-
-    array_push($QA, $qa);
         $message = "Lastbenchers question found";
         $form = array("title"=>$title, "questions" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
@@ -1108,28 +1110,29 @@ class QuestionController extends Controller
         $questions = Questions::where('id', '=', 73)->with('options')->get();
         $title = ['value' => "সৃজনশীল প্রশ্ন প্রণয়ন পদ্ধতি বাস্তবায়ন বিষয়ক তথ্য", 'url' => "creative"];
         $QA = array();
-        $qa = $questions->toArray();
-        $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', 73)->first();
-        $opt = array();
-        if ($ans != null) {
-            if ($ans->option_id != 0) {
-                $opt = Options::where('id', $ans->option_id)->first();
-                $opt = $opt->toArray();
-            } else {
-                $opt = [
-                    "id" => -1,
-                    "option" => "",
-                    "option_value" => $ans->answer,
-                    "created_at" => "",
-                    "updated_at" => ""
-                ];
+        foreach ($questions as $question) {
+            $qa = $question->toArray();
+            $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', 73)->first();
+            $opt = array();
+            if ($ans != null) {
+                if ($ans->option_id != 0) {
+                    $opt = Options::where('id', $ans->option_id)->first();
+                    $opt = $opt->toArray();
+                } else {
+                    $opt = [
+                        "id" => -1,
+                        "option" => "",
+                        "option_value" => $ans->answer,
+                        "created_at" => "",
+                        "updated_at" => ""
+                    ];
+                }
             }
+            $qa['answer'] = $opt;
+
+            //$cl['questions'] = $qa;
+            array_push($QA, $qa);
         }
-        $qa['answer'] = $opt;
-
-
-        //$cl['questions'] = $qa;
-        array_push($QA, $qa);
         $message = "Creative question found";
         $form = array("title"=>$title, "questions" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
@@ -1283,28 +1286,28 @@ class QuestionController extends Controller
         $questions = Questions::where('id', '=', 84)->with('options')->get();
         $title = ['value' => "পরিদর্শনকারী কর্মকর্তার সার্বিক মন্তব্য", 'url' => "comment"];
         $QA = array();
-        $qa = $questions->toArray();
-        $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', 84)->first();
-        $opt = array();
-        if ($ans != null) {
-            if ($ans->option_id != 0) {
-                $opt = Options::where('id', $ans->option_id)->first();
-                $opt = $opt->toArray();
-            } else {
-                $opt = [
-                    "id" => -1,
-                    "option" => "",
-                    "option_value" => $ans->answer,
-                    "created_at" => "",
-                    "updated_at" => ""
-                ];
+        foreach ($questions as $question) {
+            $qa = $question->toArray();
+            $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', 84)->first();
+            $opt = array();
+            if ($ans != null) {
+                if ($ans->option_id != 0) {
+                    $opt = Options::where('id', $ans->option_id)->first();
+                    $opt = $opt->toArray();
+                } else {
+                    $opt = [
+                        "id" => -1,
+                        "option" => "",
+                        "option_value" => $ans->answer,
+                        "created_at" => "",
+                        "updated_at" => ""
+                    ];
+                }
             }
+            $qa['answer'] = $opt;
+
+            array_push($QA, $qa);
         }
-        $qa['answer'] = $opt;
-
-
-        $cl['questions'] = $qa;
-        array_push($QA, $cl);
         $message = "Comment question found";
         $form = array("title"=>$title, "questions" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
