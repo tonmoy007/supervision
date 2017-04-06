@@ -671,7 +671,7 @@ class QuestionSeeder extends Seeder
         $qa->options()->saveMany($yesno);
         $qa = new Questions([
             'question' => "সর্বশেষ সভার তারিখ",
-            'type' => 'input'
+            'type' => 'datepicker'
         ]);
         $qa->save();
         $qa = new Questions([
