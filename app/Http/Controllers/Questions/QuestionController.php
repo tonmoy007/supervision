@@ -815,8 +815,6 @@ class QuestionController extends Controller
             array_push($QA, $cl);
         }
 
-
-
         $questions = Questions::where('id', '=', 61)->with('options')->get();
         $types = QuestionType::where('id', '>=', 7)->where('id', '<=', 9)->get();
         foreach ($types as $type) {
@@ -1100,8 +1098,7 @@ class QuestionController extends Controller
         $qa['answer'] = $opt;
 
 
-    $cl['questions'] = $qa;
-    array_push($QA, $cl);
+    array_push($QA, $qa);
         $message = "Lastbenchers question found";
         $form = array("title"=>$title, "questions" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
@@ -1131,8 +1128,8 @@ class QuestionController extends Controller
         $qa['answer'] = $opt;
 
 
-        $cl['questions'] = $qa;
-        array_push($QA, $cl);
+        //$cl['questions'] = $qa;
+        array_push($QA, $qa);
         $message = "Creative question found";
         $form = array("title"=>$title, "questions" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
