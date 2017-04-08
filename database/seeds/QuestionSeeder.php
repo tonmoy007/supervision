@@ -864,5 +864,84 @@ class QuestionSeeder extends Seeder
             'type' => 'textarea'
         ]);
         $qa->save();
+
+        //supervisor question
+        $qa = new Questions([
+            'question' => "জেলার নাম",
+            'type' => 'input'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "উপজেলার সংখ্যা",
+            'type' => 'input'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "জেলা শিক্ষা কর্মকর্তার নাম",
+            'type' => 'input'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "মোবাইল নং",
+            'type' => 'input'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "জেলার মোট শিক্ষা প্রতিষ্ঠানের সংখ্যা",
+            'type' => 'textarea'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "জেলার মোট ক্লাস্টারের সংখ্যা",
+            'type' => 'textarea'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "রিপোর্টিং মাসে পরিদর্শণকৃত শিক্ষা প্রতিষ্ঠানের সংখ্যা",
+            'type' => 'textarea'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "ই-মেইল",
+            'type' => 'textarea'
+        ]);
+        $qa->save();
+
+        /*$qa = new Questions([
+            'question' => "ক্রমিক নং",
+            'type' => 'input'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "ক্লাস্টারের দায়িত্বপ্রাপ্ত কর্মকর্তার নাম ও পদবী",
+            'type' => 'input'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "ক্লাস্টার ভুক্ত মোট শিক্ষা প্রতিষ্ঠানের সংখ্যা",
+            'type' => 'input'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "রিপোর্টিং মাসে পরিদর্শণকৃত শিক্ষা প্রতিষ্ঠানের সংখ্যা",
+            'type' => 'input'
+        ]);
+        $qa->save(); */
+        $qa = new Questions([
+            'question' => "ক. রিপোর্টিং মাসে কোন কর্মকর্তা বদলি হয়ে থাকলে তার নামঃ",
+            'type' => 'input'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "খ. বদলিকৃত কর্মকর্তা স্থলে নতুন কর্মকর্তা যোগদান করে থাকলে তার নামঃ",
+            'type' => 'input'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "গ. রিপোর্টিং মাসে ক্লাস্টার বণ্টনে কোন পরিবর্তন হয়ে থাকলে তার বিবরণঃ",
+            'type' => 'input'
+        ]);
+        $qa->save();
+
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <style>
         table, td, th {
@@ -15,7 +15,7 @@
             height: 50px;
         }
     </style>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8">
     <style>
         *{ font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; }
     </style>
