@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Questions;
 
 use App\Models\SarventQuestion;
 use App\Models\UsersAnswer;
+use App\Models\Questions;
 use PDF;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
