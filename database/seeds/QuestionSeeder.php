@@ -888,22 +888,22 @@ class QuestionSeeder extends Seeder
         $qa->save();
         $qa = new Questions([
             'question' => "জেলার মোট শিক্ষা প্রতিষ্ঠানের সংখ্যা",
-            'type' => 'textarea'
+            'type' => 'input'
         ]);
         $qa->save();
         $qa = new Questions([
             'question' => "জেলার মোট ক্লাস্টারের সংখ্যা",
-            'type' => 'textarea'
+            'type' => 'input'
         ]);
         $qa->save();
         $qa = new Questions([
             'question' => "রিপোর্টিং মাসে পরিদর্শণকৃত শিক্ষা প্রতিষ্ঠানের সংখ্যা",
-            'type' => 'textarea'
+            'type' => 'input'
         ]);
         $qa->save();
         $qa = new Questions([
             'question' => "ই-মেইল",
-            'type' => 'textarea'
+            'type' => 'email'
         ]);
         $qa->save();
 
