@@ -262,10 +262,10 @@ class AnswerSeeder extends Seeder
                 ]);
                 $ans->save();
             }
-            for($i=55; $i<=59; $i++) {
+
                 $ans = new UsersAnswer([
                     'user_id' => 1,
-                    'question_id' => $i,
+                    'question_id' => 55,
                     'option_id' => rand(35,36),
                     'class_id' => $class->id,
                     'type_id' =>0,
@@ -274,7 +274,20 @@ class AnswerSeeder extends Seeder
                     'answer_date' => Carbon::now()->toDateString()
                 ]);
                 $ans->save();
-            }
+
+        }
+        for($i=56; $i<=59; $i++) {
+            $ans = new UsersAnswer([
+                'user_id' => 1,
+                'question_id' => $i,
+                'option_id' => rand(35,36),
+                'class_id' => 0,
+                'type_id' =>0,
+                'answer' => 0,
+                'xtra' => 'education',
+                'answer_date' => Carbon::now()->toDateString()
+            ]);
+            $ans->save();
         }
         $ans = new UsersAnswer([
             'user_id' => 1,
@@ -541,19 +554,19 @@ class AnswerSeeder extends Seeder
 
         $ans = new SarventQuestion([
             'user_id' =>2,
-            'ক্রমিক নং' => '১',
-            'ক্লাস্টারের দায়িত্বপ্রাপ্ত কর্মকর্তার নাম ও পদবী' => $faker->title,
-            'ক্লাস্টার ভুক্ত মোট শিক্ষা প্রতিষ্ঠানের সংখ্যা' => rand(10,20),
-            'রিপোর্টিং মাসে পরিদর্শণকৃত শিক্ষা প্রতিষ্ঠানের সংখ্যা' => rand(10,20),
+            'serial_no' => '১',
+            'responsible' => $faker->title,
+            'total_school' => rand(10,20),
+            'present_school' => rand(10,20),
 
         ]);
         $ans->save();
         $ans = new SarventQuestion([
             'user_id' =>2,
-            'ক্রমিক নং' => '২',
-            'ক্লাস্টারের দায়িত্বপ্রাপ্ত কর্মকর্তার নাম ও পদবী' => $faker->title,
-            'ক্লাস্টার ভুক্ত মোট শিক্ষা প্রতিষ্ঠানের সংখ্যা' => rand(10,20),
-            'রিপোর্টিং মাসে পরিদর্শণকৃত শিক্ষা প্রতিষ্ঠানের সংখ্যা' => rand(10,20),
+            'serial_no' => '২',
+            'responsible' => $faker->title,
+            'total_school' => rand(10,20),
+            'present_school' => rand(10,20),
 
         ]);
         $ans->save();

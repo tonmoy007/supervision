@@ -16,12 +16,12 @@ class CreateSarventQuestionsTable extends Migration
         Schema::create('sarvent_questions', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->string('ক্রমিক নং');
-            $table->string('ক্লাস্টারের দায়িত্বপ্রাপ্ত কর্মকর্তার নাম ও পদবী');
-            $table->string('ক্লাস্টার ভুক্ত মোট শিক্ষা প্রতিষ্ঠানের সংখ্যা');
-            $table->string('রিপোর্টিং মাসে পরিদর্শণকৃত শিক্ষা প্রতিষ্ঠানের সংখ্যা');
+            $table->string('serial_no');
+            $table->string('responsible');
+            $table->string('total_school');
+            $table->string('present_school');
             $table->timestamps();
-            $table->unique(['user_id', 'ক্রমিক নং'], 'sarvent_answers_unique_key');
+            $table->unique(['user_id', 'serial_no'], 'sarvent_answers_unique_key');
         });
     }
 

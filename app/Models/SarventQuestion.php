@@ -11,7 +11,6 @@ class SarventQuestion extends Model
         'user_id',
         'question_id',
         'serial_no',
-        'answer',
 
     ];
 }

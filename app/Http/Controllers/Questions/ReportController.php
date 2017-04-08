@@ -117,7 +117,11 @@ class ReportController extends Controller
         $answer = SarventQuestion::where('user_id', $this->user->id)->get();
         //$questions =
         $title = ['value'=>' ক্লাস্টারের দায়িত্বপ্রাপ্ত কর্মকর্তাগণের তথ্যঃ', 'url'=>'responsibility'];
-        $form = array("title"=>$title, "questions" => $answer->toArray());
+        $header['serial_no']='ক্রমিক নং';
+        $header['responsible']='ক্লাস্টারের দায়িত্বপ্রাপ্ত কর্মকর্তার নাম ও পদবী';
+        $header['total_school']='ক্লাস্টার ভুক্ত মোট শিক্ষা প্রতিষ্ঠানের সংখ্যা';
+        $header['present_school']='রিপোর্টিং মাসে পরিদর্শণকৃত শিক্ষা প্রতিষ্ঠানের সংখ্যা';
+        $form = array("title"=>$title, "questions" => $answer->toArray(), 'header'=>$header,);
         return response()->json(['success'=>1,'message'=> 'Responsibility questions found', 'form' => $form]);
     }
 
@@ -138,12 +142,12 @@ class ReportController extends Controller
                 $ua = SarventQuestion::updateOrCreate(
                     [
                         'user_id' => $this->user->id,
-                        'ক্রমিক নং' => $answer['ক্রমিক নং'],
+                        'serial_no' => $answer['serial_no'],
                     ],
                     [
-                        'ক্লাস্টারের দায়িত্বপ্রাপ্ত কর্মকর্তার নাম ও পদবী' => $answer['ক্লাস্টারের দায়িত্বপ্রাপ্ত কর্মকর্তার নাম ও পদবী'],
-                        'ক্লাস্টার ভুক্ত মোট শিক্ষা প্রতিষ্ঠানের সংখ্যা' => $answer['ক্লাস্টার ভুক্ত মোট শিক্ষা প্রতিষ্ঠানের সংখ্যা'],
-                        'রিপোর্টিং মাসে পরিদর্শণকৃত শিক্ষা প্রতিষ্ঠানের সংখ্যা' => $answer['রিপোর্টিং মাসে পরিদর্শণকৃত শিক্ষা প্রতিষ্ঠানের সংখ্যা'],
+                        'responsible' => $answer['responsible'],
+                        'total_schoole' => $answer['total_schoole'],
+                        'present_school' => $answer['present_school'],
                     ]);
                 $ua->save();
             }
@@ -191,10 +195,38 @@ class ReportController extends Controller
         $water = UsersAnswer::where('question_id', 9)->where('option_id', 11)->count();
         $class = UsersAnswer::where('question_id', 4)->where('option_id', 2)->count();
 
-        $data = ['data' =>[$wall, $toilet, $water, $class]];
+        $data = ['infrastucture' =>[$wall, $toilet, $water, $class]];
+        $data['completeRegister'] = UsersAnswer::where('question_id', 60)->where('option_id', 39)->count();
+        $data['partialyRegister'] = UsersAnswer::where('question_id', 60)->where('option_id', 40)->count();
+        $data['noRegister'] = UsersAnswer::where('question_id', 60)->where('option_id', 41)->count();
+
+        $data['totalTeacherDiary'] = UsersAnswer::where('question_id', 61)->where('type_id', 7)->sum('answer');
+        $data['partialyTeacherDiary'] = UsersAnswer::where('question_id', 61)->where('type_id', 8)->sum('answer');
+        $data['noTeacherDiary'] = UsersAnswer::where('question_id', 61)->where('type_id', 9)->sum('answer');
+
+        $data['totalImplement'] = UsersAnswer::where('question_id', 81)->where('type_id',19)->where('option_id', 48)->count();
+        $data['partialyImplement'] = UsersAnswer::where('question_id', 81)->where('type_id',19)->where('option_id', 49)->count();
+        $data['noImplement'] = UsersAnswer::where('question_id', 81)->where('type_id',19)->where('option_id', 50)->count();
+
+        $yf = UsersAnswer::where('question_id', 56)->where('option_id', 35)->count();
+        $nf = UsersAnswer::where('question_id', 56)->where('option_id', 36)->count();
+        $data['fiveyearly'] = [$yf, $nf];
+        $yy = UsersAnswer::where('question_id', 57)->where('option_id', 35)->count();
+        $ny = UsersAnswer::where('question_id', 57)->where('option_id', 36)->count();
+        $data['yearly'] = [$yy, $ny];
 
         $pdf = PDF::loadView('report.infrastructure', $data);
+        return $pdf->stream('document.pdf');
+       // $snappy = App::make('report.infrastructure');
+        //$html = view('report.infrastructure', ['data' => $data]);
+        $pdf = SPDF::loadView('report.infrastructure', $data);
         return $pdf->download('infrastructure.pdf');
+        /*$view = \View::make('report.infrastructure', $data);
+        $html = $view->render();
+
+
+        $pdf = PDF::loadView('report.infrastructure', $data);
+        return $pdf->download('infrastructure.pdf');*/
 
     }
 }

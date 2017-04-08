@@ -180,7 +180,7 @@ return [
         //JWT
         'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
         Zizaco\Entrust\EntrustServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class,
+        niklasravnsborg\LaravelPdf\PdfServiceProvider::class
 
     ],
 
@@ -234,7 +234,7 @@ return [
         'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory',
         // Entrust
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
-        'PDF' => Barryvdh\DomPDF\Facade::class,
+        'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class
 
     ],
 
