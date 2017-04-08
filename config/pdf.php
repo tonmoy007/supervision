@@ -21,7 +21,8 @@ return [
     'custom_font_path' => base_path('/resources/fonts/'), // don't forget the trailing slash!
     'custom_font_data' => [
     'siyam' => [
-        'R'  => 'SolaimanLipi_20-04-07.ttf',    // regular font
+        'R'  => 'Shonar.ttf',    // regular font
+
     ],
     ]
 ];
