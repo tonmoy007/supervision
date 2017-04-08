@@ -19,7 +19,7 @@ class ReportController extends Controller
         return $pdf->download('test.pdf');
     }
     protected $user;
-    /*public function __construct(Request $request)
+    public function __construct(Request $request)
     {
         $method = $request->method();
 
@@ -31,7 +31,7 @@ class ReportController extends Controller
             $newToken = JWTAuth::refresh($token);
             $this->user = JWTAuth::setToken($newToken)->toUser();
         }
-    }*/
+    }
 
     public function general() {
         $questions = Questions::where('id', '>=', 85)->where('id', '<=', 92)->with('options')->get();
