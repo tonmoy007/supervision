@@ -86,7 +86,10 @@ Route::get('/questions/comment', "Questions\\QuestionController@comment");
 Route::post('/questions/comment', "Questions\\QuestionController@overallAnswer");
 
 Route::get('/questions/general', "Questions\\ReportController@general");
+Route::post('/questions/general', "Questions\\ReportController@allAnswer");
 Route::get('/questions/responsibility', "Questions\\ReportController@responsibility");
+Route::post('/questions/responsibility', "Questions\\ReportController@responsibilityAnswer");
 Route::get('/questions/transfer', "Questions\\ReportController@transfer");
+Route::post('/questions/transfer', "Questions\\ReportController@allAnswer");
 Route::get('/questions/infrastructure', "Questions\\ReportController@infrastructure");
 //Route::resource('questions', "Questions\\QuestionController");
