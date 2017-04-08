@@ -47,6 +47,7 @@ class QuestionController extends Controller
                 ['title' => "প্রতিষ্ঠান প্রধানের রেজিস্টার ও শিক্ষকের ডায়েরী  সংক্রান্ত তথ্য", 'url' => "diary"],
                 ['title' => "শ্রেণি পাঠদান পর্যবেক্ষণে প্রতিষ্ঠান প্রধানের ভূমিকা", 'url' => "study"],
                 ['title' => "সভা সংক্রান্ত তথ্য", 'url' => "meetings"],
+                ['title' => "শিক্ষক উপস্থিতি ", 'url' => "teacherpresent"],
                 ['title' => "সহ-শিক্ষাক্রমিক কার্যক্রম", 'url' => "extracuriculumn"],
                 ['title' => "স্বল্প কৃতিধারী শিক্ষার্থীদের চিহ্নিতকরণ   সংক্রান্ত তথ্য", 'url' => 'lastbenchers'],
                 ['title' => "সৃজনশীল প্রশ্ন প্রণয়ন পদ্ধতি বাস্তবায়ন বিষয়ক তথ্য", 'url' => "creative"],
@@ -62,20 +63,7 @@ class QuestionController extends Controller
                 ['title' => "কর্মকর্তাগণের বদলি এবং ক্লাস্টার পরিবর্তনের বিবরণ", 'url' => "transfer"],
                 ['title' => "ভৌত অবকাঠামোগত সুবিধাবঞ্চিত প্রতিষ্ঠানসমূহের তথ্য (সংখ্যা)", 'url' => "infrastructure"],
                 ['title' => " রিপোর্টিং মাসে পিবিএম বাস্তবায়ন সংক্রান্ত তথ্য", 'url' => "pbm"],
-                ['title' => " পঞ্চবার্ষিক / বার্ষিক উন্নয়ন সংক্রান্ত তথ্য", 'url' => "yearly"],
-                ['title' => "মাল্টিমিডিয়া ক্লাসরুম ব্যবহার সংক্রান্ত তথ্য ( বিগত মাসের )", 'url' => "multimedia"],
-                ['title' => "পঞ্চবার্ষিক / বার্ষিক উন্নয়ন পরিকল্পনা সংক্রান্ত তথ্য", 'url' => "yearlyplan"],
-                ['title' => "প্রতিষ্ঠান প্রধানের রেজিস্টার ও শিক্ষকের ডায়েরী  সংক্রান্ত তথ্য", 'url' => "diary"],
-                ['title' => "শ্রেণি পাঠদান পর্যবেক্ষণে প্রতিষ্ঠান প্রধানের ভূমিকা", 'url' => "study"],
-                ['title' => "সভা সংক্রান্ত তথ্য", 'url' => "meetings"],
-                ['title' => "সহ-শিক্ষাক্রমিক কার্যক্রম", 'url' => "extracuriculumn"],
-                ['title' => "স্বল্প কৃতিধারী শিক্ষার্থীদের চিহ্নিতকরণ   সংক্রান্ত তথ্য", 'url' => 'lastbenchers'],
-                ['title' => "সৃজনশীল প্রশ্ন প্রণয়ন পদ্ধতি বাস্তবায়ন বিষয়ক তথ্য", 'url' => "creative"],
-                ['title' => "ধারাবাহিক মূল্যায়ন (CA) সংক্রান্ত তথ্য", 'url' => "assessment"],
-                ['title' => "পরীক্ষার ফলাফল সম্পর্কিত তথ্য", 'url' => "result"],
-                ['title' => "সংশ্লিষ্ট প্রতিষ্ঠানের সার্বিক মানোন্নয়ন পরিদর্শনকারী কর্মকর্তা কর্তিক প্রদত্ত সুপারিশসমুহ", 'url' => "academic"],
-                ['title' => "পরিদর্শনকারী কর্মকর্তার সার্বিক মন্তব্য", 'url' => "comment"],
-            ];
+                            ];
         }
         $message = "Menue found";
         return response()->json(['success'=>1,'message'=> $message, 'menu' => $menu]);
@@ -1337,6 +1325,45 @@ class QuestionController extends Controller
         $form = array("title"=>$title, "questions" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
     }
+
+    public function teacherpresent() {
+        $questions = Questions::where('id', '>', 95)->where('id', '<=', 97)->with('options')->get();
+        $title = ['value' => "শিক্ষক উপস্থিতি", 'url' => "teacherpresent"];
+        // die(var_dump($questions->toArray()));
+        $QA = array();
+        $types = QuestionType::where('id', '>=', 24)->where('id', '<=', 25)->get();
+        foreach ($types as $type) {
+            $cl = $type->toArray();
+            $qs = array();
+            foreach ($questions as $question) {
+                $qa = $question->toArray();
+                $ans = UsersAnswer::where('user_id', $this->user->id)->where('question_id', $question->id)->where('type_id', $type->id)->first();
+                $opt = array();
+                if ($ans != null) {
+                    if ($ans->option_id != 0) {
+                        $opt = Options::where('id', $ans->option_id)->first();
+                        $opt = $opt->toArray();
+                    } else {
+                        $opt = [
+                            "id" => -1,
+                            "option" => "",
+                            "option_value" => $ans->answer,
+                            "created_at" => "",
+                            "updated_at" => ""
+                        ];
+                    }
+                }
+                $qa['answer'] = $opt;
+                array_push($qs, $qa);
+            }
+            $cl['questions'] = $qs;
+            array_push($QA, $cl);
+        }
+        $message = "Classroom question found";
+        $form = array("title"=>$title, "types" => $QA);
+        return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
+    }
+
 
 }
 

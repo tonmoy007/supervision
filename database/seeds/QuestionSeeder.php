@@ -943,5 +943,28 @@ class QuestionSeeder extends Seeder
         ]);
         $qa->save();
 
+        //teacher present
+        $qa = new Questions([
+            'question' => "মোট",
+            'type' => 'input'
+        ]);
+        $qa->save();
+        $qa = new Questions([
+            'question' => "মহিলা",
+            'type' => 'input'
+        ]);
+        $qa->save();
+
+        $type =new QuestionType([
+            'type' => "কর্মরত"
+        ]);
+        $type->save();
+
+        $type = new QuestionType([
+            'type' => "উপস্থিত"
+        ]);
+        $type->save();
+        //end teacher present
+
     }
 }

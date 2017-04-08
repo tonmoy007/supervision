@@ -84,7 +84,8 @@ Route::get('/questions/academic', "Questions\\QuestionController@academic");
 Route::post('/questions/academic', "Questions\\QuestionController@overallAnswer");
 Route::get('/questions/comment', "Questions\\QuestionController@comment");
 Route::post('/questions/comment', "Questions\\QuestionController@overallAnswer");
-
+Route::get('/questions/teacherpresent', "Questions\\QuestionController@teacherpresent");
+Route::post('/questions/teacherpresent', "Questions\\QuestionController@overallAnswer");
 Route::get('/questions/general', "Questions\\ReportController@general");
 Route::post('/questions/general', "Questions\\ReportController@allAnswer");
 Route::get('/questions/responsibility', "Questions\\ReportController@responsibility");

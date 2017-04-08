@@ -571,6 +571,23 @@ class AnswerSeeder extends Seeder
         ]);
         $ans->save();
 
+        $types = QuestionType::where('id', '>=', 24)->where('id', '<=', 25)->get();
+        foreach ($types as $type) {
+            for ($i = 96; $i <= 97; $i++) {
+                $ans = new UsersAnswer([
+                    'user_id' => 1,
+                    'question_id' => $i,
+                    'option_id' => 0,
+                    'class_id' => 0,
+                    'type_id' => $type->id,
+                    'answer' => rand(100, 200),
+                    'xtra' => 'education',
+                    'answer_date' => Carbon::now()->toDateString()
+                ]);
+                $ans->save();
+            }
+        }
+
 
     }
 }
