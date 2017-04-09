@@ -1490,19 +1490,35 @@ class QuestionController extends Controller
     public function getAllQuestions($schoolID) {
         $environment = $this->environment($schoolID);
         $environment = $environment->getData(true);
-        $classrooms = $this->classroom();
+        $classrooms = $this->classroom($schoolID);
+        $classrooms = $classrooms->getData(true);
+        $scienceLab = $this->scienceLab($schoolID);
+        $scienceLab = $scienceLab->getData(true);
+        $students = $this->students($schoolID);
+        $students = $students->getData(true);
+        $teachers = $this->teachers($schoolID);
+        $teachers = $teachers->getData(true);
+        $lectures = $this->lectures($schoolID);
+        $lectures = $lectures->getData(true);
+        $multimedia = $this->multimedia($schoolID);
+        $multimedia = $multimedia->getData(true);
+        $yearlyplan = $this->yearlyplan($schoolID);
+        $yearlyplan = $yearlyplan->getData(true);
+        $diary = $this->diary($schoolID);
+        $diary = $diary->getData(true);
+        $study = $this->study($schoolID);
+        $study = $study->getData(true);
+        $meetings = $this->meetings($schoolID);
+        $meetings = $meetings->getData(true);
+        $data = [$environment, $classrooms, $scienceLab, $students, $teachers, $lectures,
+                $multimedia, $yearlyplan, $diary, $study, $meetings];
+        $message = "All question found";
+        return response()->json(['success'=>1,'message'=> $message, 'form' => $data]);
         die(var_dump($environment['form']));
 
         /*
-         * ['title' => "শিক্ষা প্রতিষ্ঠানের  শিখন শেখানো পরিবেশ", 'url' => "environments"],
-                ['title' => "শ্রেণীকক্ষ সংক্রান্ত তথ্য", 'url' => "classrooms"],
-                ['title' => "বিজ্ঞানাগার, কম্পিউটার ল্যাব ও লাইব্রেরী সংক্রান্ত তথ্য ( বিগত মাসের রেকর্ড)", 'url' => "sciencelab"],
-                ['title' => "শিক্ষার্থী সংক্রান্ত তথ্য (পরিদর্শন তারিখে)", 'url' => "students"],
-                ['title' => "শিক্ষক সংক্রান্ত  তথ্য", 'url' => "teachers"],
-                ['title' => "শ্রেণী পাঠদান পর্যবেক্ষণ  ( নূয়নতম দুটি ক্লাস পর্যবেক্ষণ করে শ্রেণির তথ্য পূরণ করুন )", 'url' => "lectures"],
-                ['title' => "মাল্টিমিডিয়া ক্লাসরুম ব্যবহার সংক্রান্ত তথ্য ( বিগত মাসের )", 'url' => "multimedia"],
-                ['title' => "পঞ্চবার্ষিক / বার্ষিক উন্নয়ন পরিকল্পনা সংক্রান্ত তথ্য", 'url' => "yearlyplan"],
-                ['title' => "প্রতিষ্ঠান প্রধানের রেজিস্টার ও শিক্ষকের ডায়েরী  সংক্রান্ত তথ্য", 'url' => "diary"],
+         *
+
                 ['title' => "শ্রেণি পাঠদান পর্যবেক্ষণে প্রতিষ্ঠান প্রধানের ভূমিকা", 'url' => "study"],
                 ['title' => "সভা সংক্রান্ত তথ্য", 'url' => "meetings"],
                 ['title' => "শিক্ষক উপস্থিতি ", 'url' => "teacherpresent"],
