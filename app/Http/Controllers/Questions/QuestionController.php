@@ -1533,12 +1533,6 @@ class QuestionController extends Controller
                 $academic, $comment];
         $message = "All question found";
         return response()->json(['success'=>1,'message'=> $message, 'form' => $data]);
-        die(var_dump($environment['form']));
-
-        /*
-                ['title' => "সংশ্লিষ্ট প্রতিষ্ঠানের সার্বিক মানোন্নয়ন পরিদর্শনকারী কর্মকর্তা কর্তিক প্রদত্ত সুপারিশসমুহ", 'url' => "academic"],
-                ['title' => "পরিদর্শনকারী কর্মকর্তার সার্বিক মন্তব্য", 'url' => "comment"],
-         */
     }
 
 
