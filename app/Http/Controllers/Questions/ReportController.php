@@ -144,7 +144,7 @@ class ReportController extends Controller
                     ],
                     [
                         'responsible' => $answer['responsible'],
-                        'total_schoole' => $answer['total_schoole'],
+                        'total_school' => $answer['total_school'],
                         'present_school' => $answer['present_school'],
                     ]);
                 $ua->save();
