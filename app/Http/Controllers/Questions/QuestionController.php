@@ -1411,7 +1411,7 @@ class QuestionController extends Controller
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
     }
     public function comment($schoolID = 0) {
-        $questions = Questions::where('id', '=', 84)->with('options')->get();
+        $questions = Questions::where('id', '=', 84)->orWhere('id', '=', 98)->with('options')->get();
         $title = ['value' => "পরিদর্শনকারী কর্মকর্তার সার্বিক মন্তব্য", 'url' => "comment"];
         $QA = array();
         $userID=$schoolID;
@@ -1510,23 +1510,32 @@ class QuestionController extends Controller
         $study = $study->getData(true);
         $meetings = $this->meetings($schoolID);
         $meetings = $meetings->getData(true);
+        $teacherpresent = $this->teacherpresent($schoolID);
+        $teacherpresent = $teacherpresent->getData(true);
+        $extracuriculumn = $this->extracuriculumn($schoolID);
+        $extracuriculumn = $extracuriculumn->getData(true);
+        $lastbenchers = $this->lastbenchers($schoolID);
+        $lastbenchers = $lastbenchers->getData(true);
+        $creative = $this->creative($schoolID);
+        $creative = $creative->getData(true);
+        $assessment = $this->assessment($schoolID);
+        $assessment = $assessment->getData(true);
+        $result = $this->result($schoolID);
+        $result = $result->getData(true);
+        $academic = $this->academic($schoolID);
+        $academic = $academic->getData(true);
+        $comment = $this->comment($schoolID);
+        $comment = $comment->getData(true);
+
         $data = [$environment, $classrooms, $scienceLab, $students, $teachers, $lectures,
-                $multimedia, $yearlyplan, $diary, $study, $meetings];
+                $multimedia, $yearlyplan, $diary, $study, $meetings,
+                $teacherpresent,$extracuriculumn, $lastbenchers, $creative, $assessment, $result,
+                $academic, $comment];
         $message = "All question found";
         return response()->json(['success'=>1,'message'=> $message, 'form' => $data]);
         die(var_dump($environment['form']));
 
         /*
-         *
-
-                ['title' => "শ্রেণি পাঠদান পর্যবেক্ষণে প্রতিষ্ঠান প্রধানের ভূমিকা", 'url' => "study"],
-                ['title' => "সভা সংক্রান্ত তথ্য", 'url' => "meetings"],
-                ['title' => "শিক্ষক উপস্থিতি ", 'url' => "teacherpresent"],
-                ['title' => "সহ-শিক্ষাক্রমিক কার্যক্রম", 'url' => "extracuriculumn"],
-                ['title' => "স্বল্প কৃতিধারী শিক্ষার্থীদের চিহ্নিতকরণ   সংক্রান্ত তথ্য", 'url' => 'lastbenchers'],
-                ['title' => "সৃজনশীল প্রশ্ন প্রণয়ন পদ্ধতি বাস্তবায়ন বিষয়ক তথ্য", 'url' => "creative"],
-                ['title' => "ধারাবাহিক মূল্যায়ন (CA) সংক্রান্ত তথ্য", 'url' => "assessment"],
-                ['title' => "পরীক্ষার ফলাফল সম্পর্কিত তথ্য", 'url' => "result"],
                 ['title' => "সংশ্লিষ্ট প্রতিষ্ঠানের সার্বিক মানোন্নয়ন পরিদর্শনকারী কর্মকর্তা কর্তিক প্রদত্ত সুপারিশসমুহ", 'url' => "academic"],
                 ['title' => "পরিদর্শনকারী কর্মকর্তার সার্বিক মন্তব্য", 'url' => "comment"],
          */

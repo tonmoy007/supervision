@@ -549,6 +549,17 @@ class AnswerSeeder extends Seeder
             'answer_date' => Carbon::now()->toDateString()
         ]);
         $ans->save();
+        $ans = new UsersAnswer([
+            'user_id' => 1,
+            'question_id' => 98,
+            'option_id' => rand(51,55),
+            'class_id' => 0,
+            'type_id' =>0,
+            'answer' => 0,
+            'xtra' => 'education',
+            'answer_date' => Carbon::now()->toDateString()
+        ]);
+        $ans->save();
 
         //supervisor
 
