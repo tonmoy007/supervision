@@ -93,4 +93,7 @@ Route::post('/questions/responsibility', "Questions\\ReportController@responsibi
 Route::get('/questions/transfer', "Questions\\ReportController@transfer");
 Route::post('/questions/transfer', "Questions\\ReportController@allAnswer");
 Route::get('/questions/infrastructure', "Questions\\ReportController@infrastructure");
+
+
+Route::get('/questions/all/{schoolID}', 'Questions\\QuestionController@getAllQuestions');
 //Route::resource('questions', "Questions\\QuestionController");

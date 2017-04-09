@@ -966,5 +966,38 @@ class QuestionSeeder extends Seeder
         $type->save();
         //end teacher present
 
+        //school category for admin report
+        $options = [
+            new Options([
+                'option' => "এ ক্যাটাগরি",
+                'option_value' => 0
+            ]),
+            new Options([
+                'option' => "বি ক্যাটাগরি",
+                'option_value' => 1
+            ]),
+            new Options([
+                'option' => "সি ক্যাটাগরি",
+                'option_value' => 2
+            ]),
+            new Options([
+                'option' => "ডি ক্যাটাগরি",
+                'option_value' => 3
+            ]),
+            new Options([
+                'option' => "ই ক্যাটাগরি",
+                'option_value' => 4
+            ]),
+
+        ];
+        $qa = new Questions([
+            'question' => "শিক্ষা প্রতিষ্ঠানের  ক্যাটাগরি",
+            'type' => 'select'
+
+        ]);
+        $qa->save();
+        $qa->options()->saveMany($options);
+
+
     }
 }
