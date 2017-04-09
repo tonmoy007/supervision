@@ -9,8 +9,9 @@ class SarventQuestion extends Model
     protected $table = 'sarvent_questions';
     protected $fillable = [
         'user_id',
-        'question_id',
         'serial_no',
-
+        'responsible',
+        'total_school',
+        'present_school'
     ];
 }
