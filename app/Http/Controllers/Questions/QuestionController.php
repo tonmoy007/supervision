@@ -1531,8 +1531,9 @@ class QuestionController extends Controller
                 $multimedia, $yearlyplan, $diary, $study, $meetings,
                 $teacherpresent,$extracuriculumn, $lastbenchers, $creative, $assessment, $result,
                 $academic];
+        $all = ['form' => $data, 'comment'=> $comment];
         $message = "All question found";
-        return response()->json(['success'=>1,'message'=> $message, 'form' => $data, 'comment'=> $comment]);
+        return response()->json(['success'=>1,'message'=> $message, 'report' => $all]);
     }
 
 
