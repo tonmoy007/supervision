@@ -17,7 +17,7 @@ class CreateSchoolVisitsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('visitor_id');
             $table->unsignedInteger('school_id');
-            $table->date('visit_date');
+            $table->string('visit_date');
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Questions;
 
 use App\Models\SarventQuestion;
+use App\Models\SchoolVisit;
 use App\Models\UsersAnswer;
 use App\Models\Questions;
 use PDF;
@@ -187,6 +188,57 @@ class ReportController extends Controller
         $form = array("title"=>$title, "questions" => $QA);
         return response()->json(['success'=>1,'message'=> $message, 'form' => $form]);
     }
+
+    public function visitAnswer(Request $request, $schoolID) {
+        $answers = $request->get('answers');
+        if(!is_array($answers)) {
+            $answers = json_decode($answers, true);
+        }
+
+        foreach ($answers as $answer) {
+            $answerID = 0;
+            if(isset($answer['answer_id'])){
+                $answerID = $answer['answer_id'];
+            }
+            $ans = 0;
+            if(isset($answer['option_value'])) {
+                $ans = $answer['option_value'];
+            }
+            $classId= 0;
+            $typeID = 0;
+            if(isset($answer['type_id'])) {
+                $typeID = $answer['type_id'];
+            }
+            if(isset($answer['class_id'])) {
+                $classId = $answer['class_id'];
+            }
+            $ans = UsersAnswer::updateOrCreate([
+                'user_id' => $schoolID,
+                'question_id' => $answer['question_id'],
+                'class_id' => $classId,
+                'type_id' => $typeID,
+            ],
+                [
+                    'question_id' => $answer['question_id'],
+                    'option_id' => $answerID,
+                    'answer' => $ans,
+                    'xtra' => 'education',
+                    'answer_date' => Carbon::now()->toDateString()
+                ]);
+            $ans->save();
+        }
+
+        $visit = SchoolVisit::create([
+            'school_id' => $schoolID,
+            'visitor_id' => $this->user->id,
+            'visit_date' => Carbon::now()->toDateString()
+
+        ]);
+        $visit->save();
+        return response()->json(['success'=>1,'message'=> "answer submitted",]);
+
+    }
+
     public function infrastructure() {
         $wall = UsersAnswer::where('question_id', 1)->where('option_id', 2)->count();
         $toilet = UsersAnswer::where('question_id', 8)->where('option_id', 8)->count();
@@ -227,4 +279,6 @@ class ReportController extends Controller
         return $pdf->download('infrastructure.pdf');*/
 
     }
+
+
 }

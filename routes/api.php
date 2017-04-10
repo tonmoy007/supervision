@@ -82,8 +82,8 @@ Route::get('/questions/result', "Questions\\QuestionController@result");
 Route::post('/questions/result', "Questions\\QuestionController@overallAnswer");
 Route::get('/questions/academic', "Questions\\QuestionController@academic");
 Route::post('/questions/academic', "Questions\\QuestionController@overallAnswer");
-Route::get('/questions/comment', "Questions\\QuestionController@comment");
-Route::post('/questions/comment', "Questions\\QuestionController@overallAnswer");
+//Route::get('/questions/comment', "Questions\\QuestionController@comment");
+//Route::post('/questions/comment', "Questions\\QuestionController@overallAnswer");
 Route::get('/questions/teacherpresent', "Questions\\QuestionController@teacherpresent");
 Route::post('/questions/teacherpresent', "Questions\\QuestionController@overallAnswer");
 Route::get('/questions/general', "Questions\\ReportController@general");
@@ -96,4 +96,6 @@ Route::get('/questions/infrastructure', "Questions\\ReportController@infrastruct
 
 
 Route::get('/questions/all/{schoolID}', 'Questions\\QuestionController@getAllQuestions');
+Route::get('/visits/{schoolID}', "Questions\\QuestionController@comment");
+Route::post('/visits/{schoolID}', "Questions\\ReportController@visitAnswer");
 //Route::resource('questions', "Questions\\QuestionController");
