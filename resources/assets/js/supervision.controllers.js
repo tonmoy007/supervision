@@ -456,6 +456,9 @@ angular.module('super-controllers',[])
     $scope.getNumber=function(number){
         return SiteEssentials.getNumber(number);
     }
+    $scope.getDate=function(date){
+        return SiteEssentials.getDate(date);
+    }
     $scope.clusterSubmit=function(data,contents){
         data.new=true;
         if(!data.responsible&&!data.total_school&&!data.present_school)return;

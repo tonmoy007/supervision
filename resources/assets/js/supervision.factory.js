@@ -474,7 +474,9 @@ this.getAnswers=function(report,type){
     angular.forEach(report.questions, function(value, key){
     var ans={};
 
-    if(value.type!='input'&&value.type!='textarea'&&value.type!='email')ans.answer_id=value.answer.id;
+    if(value.type!='input'&&value.type!='textarea'&&value.type!='datepicker'&&value.type!='email')
+      ans.answer_id=value.answer.id;
+    else if(value.type=='datepicker')ans.option_value=SiteEssentials.getDateFormate(value.answer.option_value);
     else {ans.option_value=value.answer.option_value;}
       ans.question_id=value.id;
       answers.push(ans);
@@ -487,7 +489,9 @@ this.getAnswers=function(report,type){
 
               ans.class_id=value.id;
               ans.question_id=val.id;
-              if(val.type!='input'&&val.type!='textarea'){ans.answer_id=val.answer.id;}
+              if(val.type!='input'&&val.type!='textarea'&&val.type!='datepicker'&&val.type!='email')
+                {ans.answer_id=val.answer.id;}
+              else if(val.type=='datepicker')ans.option_value=SiteEssentials.getDateFormate(val.answer.option_value);
               else {ans.option_value=val.answer.option_value;}
               answers.push(ans);
         });
@@ -496,7 +500,8 @@ this.getAnswers=function(report,type){
               var ans={};
               ans.class_id=value.id;
               ans.question_id=val.id;
-              if(val.type!='input'&&val.type!='textarea'){ans.answer_id=val.answer.id;}
+              if(val.type!='input'&&val.type!='textarea'&&val.type!='datepicker'&&val.type!='email'){ans.answer_id=val.answer.id;}
+              else if(val.type=='datepicker')ans.option_value=SiteEssentials.getDateFormate(val.answer.option_value);
               else {ans.option_value=val.answer.option_value;}
               answers.push(ans);
             })
@@ -517,7 +522,8 @@ this.getAnswers=function(report,type){
         else if(type=='plans')ans.plan_id=value.id;
         ans.question_id=val.id;
         
-        if(val.type!='input'&&val.type!='textarea'){ans.answer_id=val.answer.id;}
+        if(val.type!='input'&&val.type!='textarea'&&val.type!='datepicker'&&value.type!='email'){ans.answer_id=val.answer.id;}
+        else if(val.type=='datepicker')ans.option_value=SiteEssentials.getDateFormate(val.answer.option_value);
         else {ans.option_value=val.answer.option_value;}
         
         answers.push(ans);

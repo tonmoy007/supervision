@@ -8,6 +8,7 @@
     <textarea name="" md-maxlength="300" ng-model="qa.answer.option_value" ng-click="changed=true"  aria-label="<%qa.question%>" ng-if="qa.type=='textarea'||qa.type=='text'" rows="2"></textarea>
     <input type="text" ng-model="qa.answer.option_value" ng-click="changed=true"  aria-label="<%qa.question%>" ng-if="qa.type=='input'">
     <input type="email" ng-model="qa.answer.option_value" ng-click="changed=true" aria-label="<%qa.question%>" ng-if="qa.type=='email'" >
+    <md-datepicker ng-model="qa.answer.option_value" ng-init="qa.answer.option_value=getDate(qa.answer.option_value)" ng-change="changed=true"  aria-label="date picker"  ng-if="qa.type=='datepicker'"></md-datepicker>
     <md-select ng-if="qa.type=='select'" ng-model="qa.answer.id" aria-label="<%qa.question%>" ng-click="changed=true">
         
         <md-option ng-repeat="option in qa.options" ng-value="option.id"><%option.option%></md-option>
