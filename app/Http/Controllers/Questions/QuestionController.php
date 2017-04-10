@@ -1420,7 +1420,7 @@ class QuestionController extends Controller
         }
         foreach ($questions as $question) {
             $qa = $question->toArray();
-            $ans = UsersAnswer::where('user_id', $userID)->where('question_id', 84)->first();
+            $ans = UsersAnswer::where('user_id', $userID)->where('question_id', $question->id)->first();
             $opt = array();
             if ($ans != null) {
                 if ($ans->option_id != 0) {
