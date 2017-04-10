@@ -227,14 +227,15 @@ class ReportController extends Controller
                 ]);
             $ans->save();
         }
+        if($request->has('is_visited')) {
+            $visit = SchoolVisit::create([
+                'school_id' => $schoolID,
+                'visitor_id' => $this->user->id,
+                'visit_date' => Carbon::now()->toDateString()
 
-        $visit = SchoolVisit::create([
-            'school_id' => $schoolID,
-            'visitor_id' => $this->user->id,
-            'visit_date' => Carbon::now()->toDateString()
-
-        ]);
-        $visit->save();
+            ]);
+            $visit->save();
+        }
         return response()->json(['success'=>1,'message'=> "answer submitted",]);
 
     }
