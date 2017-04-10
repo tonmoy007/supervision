@@ -664,7 +664,7 @@ class QuestionController extends Controller
         return response()->json(['success'=>1,'message'=> "answer submitted",]);
     }
 
-    public function multimedia($schoolID) {
+    public function multimedia($schoolID = 0) {
         $allquestions = Questions::where('id', '>', 48)->where('id', '<=', 50)->with('options')->get();
         $title = ['value' => "মাল্টিমিডিয়া ক্লাসরুম ব্যবহার সংক্রান্ত তথ্য ( বিগত মাসের )", 'url' => "multimedia"];
         $QA = array();
