@@ -1530,9 +1530,9 @@ class QuestionController extends Controller
         $data = [$environment, $classrooms, $scienceLab, $students, $teachers, $lectures,
                 $multimedia, $yearlyplan, $diary, $study, $meetings,
                 $teacherpresent,$extracuriculumn, $lastbenchers, $creative, $assessment, $result,
-                $academic, $comment];
+                $academic];
         $message = "All question found";
-        return response()->json(['success'=>1,'message'=> $message, 'form' => $data]);
+        return response()->json(['success'=>1,'message'=> $message, 'form' => $data, 'comment'=> $comment]);
     }
 
 
