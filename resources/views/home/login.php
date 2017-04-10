@@ -1,13 +1,13 @@
 <md-content class="gray" layout-align="center center" layout="row" ng-show="coverLoaded">
     <div flex layout="row" layout-align="center center">
         
-        <md-card flex="100"   flex-sm="80" flex-md="50" flex-lg="40">
+        <md-card flex="100"   flex-sm="80" flex-md="50" flex-gt-md="40">
            
         <div class="card-header cool-shadow rgba-black-strong white-text" layout-padding>
            <i class="fa fa-sign-in"></i> <span ng-if="!validating&&!reseting_password">Login</span>
             <span ng-if="validating">Validaing email address</span>
              <span ng-if="reseting_password">Reset password</span>
-           <md-progress-circular ng-if="loginChecking" class="md-accent pull-right" md-diameter="40"></md-progress-circular>
+           <md-progress-circular ng-if="loginChecking" class="md-accent pull-right" md-diameter="25"></md-progress-circular>
         </div>
 
          <div class="card-block" layout-padding>

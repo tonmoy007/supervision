@@ -190,7 +190,7 @@ this.loadCategory=function($scope,link){
     if(!$scope.categories){
       $scope.categoryLoading=true
       $http.get('api/'+link).then(function(response){
-          console.log(response);
+          // console.log(response);
           if(response.data.success){
               $scope.categories=response.data.categories;
               $scope.categoryLoading=false;
@@ -242,7 +242,7 @@ this.getContent=function(link,title,id){
   }
   // console.log(url);
   return $http.get(url).then(function(response){
-          console.log(response);
+          // console.log(response);
           $rootScope.loadingData=false;
             if(response.data.success){
               return response.data[title];
@@ -379,7 +379,7 @@ this.deleteContent=function(ev,item_name,url,id){
 
       
     var success=function(response){
-        console.log(response);
+        // console.log(response);
         $scope.form.updatingContent=false;
         if(response.data.success){
             if(typeof dialog!=undefined||dialog!=null){
@@ -472,11 +472,14 @@ this.getAnswers=function(report,type){
   var answers=[];
   if(type=='no_class'){
     angular.forEach(report.questions, function(value, key){
+    var ans={};
 
-    if(value.type!='input'&&value.type!='textarea')value.answer.answer_id=value.answer.id;
-    else {value.answer.option_value=value.answer.option_value;}
-      value.answer.question_id=value.id;
-      answers.push(value.answer)
+    if(value.type!='input'&&value.type!='textarea'&&value.type!='datepicker'&&value.type!='email')
+      ans.answer_id=value.answer.id;
+    else if(value.type=='datepicker')ans.option_value=SiteEssentials.getDateFormate(value.answer.option_value);
+    else {ans.option_value=value.answer.option_value;}
+      ans.question_id=value.id;
+      answers.push(ans);
     });
   }else if(type=='class'){
 
@@ -486,17 +489,19 @@ this.getAnswers=function(report,type){
 
               ans.class_id=value.id;
               ans.question_id=val.id;
-              if(val.type!='input'&&val.type!='textarea'){ans.answer_id=val.answer.id;}
+              if(val.type!='input'&&val.type!='textarea'&&val.type!='datepicker'&&val.type!='email')
+                {ans.answer_id=val.answer.id;}
+              else if(val.type=='datepicker')ans.option_value=SiteEssentials.getDateFormate(val.answer.option_value);
               else {ans.option_value=val.answer.option_value;}
               answers.push(ans);
         });
           if(value.inner){
             angular.forEach(value.inner.questions,function(val,k){
               var ans={};
-
               ans.class_id=value.id;
               ans.question_id=val.id;
-              if(val.type!='input'&&val.type!='textarea'){ans.answer_id=val.answer.id;}
+              if(val.type!='input'&&val.type!='textarea'&&val.type!='datepicker'&&val.type!='email'){ans.answer_id=val.answer.id;}
+              else if(val.type=='datepicker')ans.option_value=SiteEssentials.getDateFormate(val.answer.option_value);
               else {ans.option_value=val.answer.option_value;}
               answers.push(ans);
             })
@@ -517,12 +522,25 @@ this.getAnswers=function(report,type){
         else if(type=='plans')ans.plan_id=value.id;
         ans.question_id=val.id;
         
-        if(val.type!='input'&&val.type!='textarea'){ans.answer_id=val.answer.id;}
+        if(val.type!='input'&&val.type!='textarea'&&val.type!='datepicker'&&value.type!='email'){ans.answer_id=val.answer.id;}
+        else if(val.type=='datepicker')ans.option_value=SiteEssentials.getDateFormate(val.answer.option_value);
         else {ans.option_value=val.answer.option_value;}
         
         answers.push(ans);
       });
     })
+  }else if(type=='responsibility'){
+    angular.forEach(report, function(value, key){
+      ans={}
+      // console.log(value);
+      ans.serial_no=value.serial_no;
+      ans.total_school=value.total_school;
+      ans.present_school=value.present_school;
+      ans.responsible=value.responsible;
+      if(value.is_delete==1)ans.is_delete=1;
+      if(!(value.new&&value.is_delete==1))
+        answers.push(ans);
+    });
   }
   return answers;
 }
@@ -611,7 +629,33 @@ this.submitAnswer=function(scope,answer){
            
         });
  }
+ methods.getNumber=function(number){
 
+        var format=[{'০':'0'},{'0':'০'},{'১':'1'},{'২':'2'},{'৩':'3'},{'৪':'4'},{'৫':'6'},{'৬':'7'},
+        {'৭':'7'},{'৮':'8'},{'৯':'9'},{'1':'১'},{'2':'২'},{'3':'৩'},{'4':'৪'},{'5':'৫'},{'6':'৬'},
+        {'7':'৭'},{'8':'৮'},{'9':'৯'}];
+        
+        number =number.toString().split('');
+
+        var data=[];
+        var o=[];
+        angular.forEach(number, function(value, key){
+          
+            o=format.find(function(object){
+                return object[value]!=undefined;
+            });
+             
+            data[key]=o[value];
+        });
+        var str='';
+        angular.forEach(data, function(value, key){
+            // console.log(value);
+            str+=value;
+        });
+        // console.log(str);
+        return str;
+
+    }
  methods.generateMenu=function(menu_content){
   var gallery={"গ্যালারী":[{
     name:'ভিডিও গ্যালারী',

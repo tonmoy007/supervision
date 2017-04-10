@@ -16,7 +16,7 @@
         padding-left:10px*$i;
     }
     .#{$pad-all}-#{$i}{
-        padding:10px*$i;
+        padding:10px*$i!important;
         
     }
     .#{$pad-top}-#{$i}{
@@ -156,7 +156,18 @@
     }
 }
 
-
+.md-accent{
+    svg {
+        path{
+            fill:transparent!important;
+            stroke:$body-bg!important;
+        }
+        rect{
+            fill:transparent!important;
+            stroke:$body-bg!important;
+        }
+    }
+}
 .search-form md-input-container input{
     box-shadow:none;
     border-bottom-color:transparent;
@@ -613,3 +624,15 @@ svg path,svg rect{
     left:calc(50% - 60px);
     
    }
+
+.form_view{
+    &_header{
+        display:inline-block;
+        padding:10px 0;
+        font-size:14px;
+        font-weight:bold;
+    }
+    &_body{
+        font-size:70%;
+    }
+}
