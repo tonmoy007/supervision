@@ -6,10 +6,11 @@
         <div flex class="list-card-details" layout-padding flex ng-click="expand($index)">
             <span class="md-title"><%school.user.name%></span>
             <span><%school.management%></span>
+
         </div>
         
         <div class="md-secondary list-card-actions" layout-padding>
-            
+            <a  ui-sref="profile.schools.report({id:school.user.id})" class="md-button md-raised">Report</a>
             <md-button class="md-icon-button" ng-click="showEdit(this,'schools',school,$index,null,null)" aria-label="edit"><md-icon md-svg-src="/img/accessories/edit.svg"></md-icon></md-button>
             <md-button class="md-icon-button" ng-click="delete(this,school.name,'school',school.id)" aria-label="delete"><md-icon md-svg-src="/img/accessories/waste-bin.svg"></md-icon></md-button>
         </div>
@@ -34,6 +35,10 @@
                     </ul>
                    
                 </div>
+                </div>
+
+                <div flex>
+                  
                 </div>
         
         </div>

@@ -12,7 +12,7 @@ angular.module('super-controllers',[])
     $scope.$watch('coverLoaded',function(value){
         if(value){
             $rootScope.globals.siteLoaded=true;
-            console.log($rootScope);
+            // console.log($rootScope);
         }
     })
 })
@@ -124,6 +124,7 @@ angular.module('super-controllers',[])
 
 .controller('schoolCtrl',function($scope,SiteEssentials,superServices,
     $rootScope,ShowSimpleToast,Schools,Menu,$state){
+
     $scope.schools=[];
     $scope.categories=['স্কুল','কলেজ','মাদ্রাসা'];
     $scope.types=['বালক','বালিকা','কো-এডুকেসন'];
@@ -138,7 +139,12 @@ angular.module('super-controllers',[])
     if(Schools){
 
         $scope.schools=Schools
-        console.log(Schools);
+        // console.log(Schools);
+    }
+
+    $scope.go=function(state,param){
+        console.log(param)
+        $state.go(state,param);
     }
     $scope.expand=function(index){
 
@@ -163,7 +169,7 @@ angular.module('super-controllers',[])
   
     $scope.search=function(query){
         $scope.$parent.actions.search_query=query;
-        console.log(query);
+        // console.log(query);
     }
     $scope.addNew=function(ev,type){
         if(type==null){
@@ -323,8 +329,8 @@ angular.module('super-controllers',[])
 })
 
 .controller('classCtrl',function($scope,$rootScope,Classes,Attendance,Menu,$state,superServices,SiteEssentials){
-    console.log(Classes)
-    console.log(Attendance);
+    // console.log(Classes)
+    // console.log(Attendance);
     var i=-1;
      $rootScope.nav.item=Menu.find(function(item){
         i++;
@@ -348,7 +354,10 @@ angular.module('super-controllers',[])
         $scope.$parent.actions.search_query=query;
         console.log(query);
     }
-
+    $scope.go=function(state,param){
+        console.log(param)
+        $state.go(state,param);
+    }
     $scope.expand=function(index,content,data,double,key){
         console.log(key);
         SiteEssentials.expand($scope[content],index,'expand',double,key);
@@ -429,21 +438,51 @@ angular.module('super-controllers',[])
 
     }
 })
-.controller('formCtrl',function($scope,$rootScope,Questions,$state,$stateParams,superServices){
+.controller('formCtrl',function($scope,$rootScope,Questions,$state,$stateParams,superServices,SiteEssentials){
     
     $scope.name=$stateParams.name;
     $scope.view='/getView/profile.reports.'+$scope.name;
     $scope.form=Questions.form;
+    $scope.in_data={};
     console.log(Questions);
     $rootScope.nav.title=$scope.form.title.value;
     $scope.submitAnswer=function(form,report,type){
         if(form.$invalid)return;
-        
         var answers=superServices.getAnswers(report,type);
         console.log(answers);
         superServices.submitAnswer($scope,answers);
 
     }
+    $scope.getNumber=function(number){
+        return SiteEssentials.getNumber(number);
+    }
+    $scope.clusterSubmit=function(data,contents){
+        data.new=true;
+        if(!data.responsible&&!data.total_school&&!data.present_school)return;
+        var n_data=SiteEssentials.cloneJSON(data);
+        $scope.in_data={};
+        contents.push(n_data);
+        $scope.changed=true;
+        $scope.in_data.serial_no=$scope.getNumber(contents.length+1);
+    }
+    $scope.delete_cluster=function(item){
+        item.is_delete=1;
+        $scope.changed=true;
+    }
+    $scope.edit=function(item){
+        item.edit=1;
+        $scope.changed=true;
+    }
 
 
+})
+
+.controller('reportViewCtrl', function(Questions,$scope,$rootScope,SiteEssentials,Profile){
+    $scope.questions=Questions;
+    // console.log(Profile);
+    $rootScope.nav.title=Profile.user.name+' এর রিপোর্ট';
+    
+    $scope.getNumber=function(number){
+        return SiteEssentials.getNumber(number);
+    }
 })

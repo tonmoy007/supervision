@@ -1,7 +1,7 @@
 
 <div class="form" flex layout-align="center center" layout="row">
    
-    <form name="reportForm" ng-submit="submitAnswer(reportForm,form,'no_class')" >
+    <form name="reportForm" ng-submit="submitAnswer(reportForm,form,'no_class')" class="full-width">
         <md-input-container ng-repeat="(key, qa) in form.questions track by $index" class="col-md-6 m-u-1" ng-include="'getView/template.input-template'" >
           
 

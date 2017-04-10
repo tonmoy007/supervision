@@ -138,7 +138,7 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         name:'profile.reports.form',
         title:'Reports',
         url:'/:name',
-        role:'general_user',
+        role:'all',
         controller:'formCtrl',
         templateUrl:'getView/profile.reports.form_view',
         resolve:{
@@ -172,6 +172,31 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         resolve:{
             Schools:function(superServices){
                 return superServices.getSchools();
+            }
+        }
+    },
+    {
+        name:'profile.schools.report',
+        title:'School Report',
+        role:'all',
+        url:'/:id',
+        controller:'reportViewCtrl',
+        templateUrl:'getView/profile.schools.report',
+        resolve:{
+            Questions:function(superServices,$stateParams){
+                
+                var data= superServices.getContent('questions/all','form',$stateParams.id);
+                // console.log(data);
+                return data;
+            },
+            Profile:function(Schools,$stateParams){
+                console.log(Schools);
+                var school=Schools.find(function (school){
+                    
+                    return school.id==$stateParams.id;
+                });
+                console.log(school);
+                return school;
             }
         }
     },
@@ -307,7 +332,7 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams
    // keep user logged in after page refresh
        
         $rootScope.globals = $cookieStore.get('globals') || {};
-        
+        console.log($stateParams.id);
         if ($rootScope.globals.currentUser) {
             $http.defaults.headers.common['Authorization'] = 'Bearer ' + $rootScope.globals.currentUser.token; // jshint ignore:line
 
@@ -325,7 +350,7 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams
             
                SiteEssentials.goTop();
 
-                // console.log(toState);
+                console.log($stateParams);
                 var state=toState.name.split('.');
                 $rootScope.data=[];
                 $rootScope.site=[];
@@ -344,6 +369,7 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams
                }else{
                 if($rootScope.globals.currentUser){
                     role=$rootScope.globals.currentUser.role;
+                    
                     if(toState.role!='all'&&toState.role!=role){
                         $state.go('home');
 
@@ -368,7 +394,7 @@ app.run(function($rootScope,$http,$cookieStore,$location,$stateParams
                         $rootScope.site.title= 'একাডেমিক সুপারভিশন';
                }
                 
-                // console.log($rootScope.nav)
+                
             
         });
         

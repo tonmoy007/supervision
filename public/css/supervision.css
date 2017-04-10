@@ -10445,7 +10445,7 @@ body.no_scroll{
 }
 
 .p-a-0 {
-  padding: 0px;
+  padding: 0px !important;
 }
 
 .p-t-0 {
@@ -10505,7 +10505,7 @@ body.no_scroll{
 }
 
 .p-a-1 {
-  padding: 10px;
+  padding: 10px !important;
 }
 
 .p-t-1 {
@@ -10565,7 +10565,7 @@ body.no_scroll{
 }
 
 .p-a-2 {
-  padding: 20px;
+  padding: 20px !important;
 }
 
 .p-t-2 {
@@ -10625,7 +10625,7 @@ body.no_scroll{
 }
 
 .p-a-3 {
-  padding: 30px;
+  padding: 30px !important;
 }
 
 .p-t-3 {
@@ -10761,6 +10761,16 @@ body.no_scroll{
 
 .list-card-details:focus:not(.link), .list-card-details:hover:not(.link) {
   background-color: #faf8fa;
+}
+
+.md-accent svg path {
+  fill: transparent !important;
+  stroke: #fcfbfc !important;
+}
+
+.md-accent svg rect {
+  fill: transparent !important;
+  stroke: #fcfbfc !important;
 }
 
 .search-form md-input-container input {
@@ -11270,6 +11280,17 @@ svg path, svg rect {
   position: fixed;
   bottom: 0;
   left: calc(50% - 60px);
+}
+
+.form_view_header {
+  display: inline-block;
+  padding: 10px 0;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.form_view_body {
+  font-size: 70%;
 }
 
 /*# sourceMappingURL=app.css.map */
