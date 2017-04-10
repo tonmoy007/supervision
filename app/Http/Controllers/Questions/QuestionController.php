@@ -67,8 +67,8 @@ class QuestionController extends Controller
                 ['title' => "সাধারণ তথ্য", 'url' => "general"],
                 ['title' => "ক্লাস্টারের দায়িত্বপ্রাপ্ত কর্মকর্তাগণের তথ্য", 'url' => "responsibility"],
                 ['title' => "কর্মকর্তাগণের বদলি এবং ক্লাস্টার পরিবর্তনের বিবরণ", 'url' => "transfer"],
-                ['title' => "ভৌত অবকাঠামোগত সুবিধাবঞ্চিত প্রতিষ্ঠানসমূহের তথ্য (সংখ্যা)", 'url' => "infrastructure"],
-                ['title' => " রিপোর্টিং মাসে পিবিএম বাস্তবায়ন সংক্রান্ত তথ্য", 'url' => "pbm"],
+               // ['title' => "ভৌত অবকাঠামোগত সুবিধাবঞ্চিত প্রতিষ্ঠানসমূহের তথ্য (সংখ্যা)", 'url' => "infrastructure"],
+                //['title' => " রিপোর্টিং মাসে পিবিএম বাস্তবায়ন সংক্রান্ত তথ্য", 'url' => "pbm"],
                             ];
         }
         $message = "Menue found";
@@ -664,7 +664,7 @@ class QuestionController extends Controller
         return response()->json(['success'=>1,'message'=> "answer submitted",]);
     }
 
-    public function multimedia($schoolID) {
+    public function multimedia($schoolID = 0) {
         $allquestions = Questions::where('id', '>', 48)->where('id', '<=', 50)->with('options')->get();
         $title = ['value' => "মাল্টিমিডিয়া ক্লাসরুম ব্যবহার সংক্রান্ত তথ্য ( বিগত মাসের )", 'url' => "multimedia"];
         $QA = array();
