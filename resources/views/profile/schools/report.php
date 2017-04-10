@@ -1,7 +1,12 @@
 <div flex  layout-padding layout="column">
-    <div class="form_view" ng-repeat="item in questions track by $index">
+
+<div ng-include="'getView/profile.schools.general_info_form'">
+    
+</div>
+
+    <div class="form_view" ng-repeat="item in questions.form track by $index">
         <div class="form_view_header">
-            <%getNumber($index+1)%> | <%item.form.title.value%>
+            <%getNumber($index+2)%> | <%item.form.title.value%>
         </div>
         <div class="form_view_body">
             <div ng-include="'getView/profile.schools.general_report'" ng-if="item.form.questions">

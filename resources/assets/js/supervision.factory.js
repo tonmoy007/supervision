@@ -242,7 +242,8 @@ this.getContent=function(link,title,id){
   }
   // console.log(url);
   return $http.get(url).then(function(response){
-          // console.log(response);
+          console.log(response);
+          
           $rootScope.loadingData=false;
             if(response.data.success){
               return response.data[title];

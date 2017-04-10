@@ -6,7 +6,11 @@
     </thead>
     <tbody>
         <tr>
-            <td ng-repeat="data in item.form.questions"><span ng-if="data.question.type!='input'&&data.question.type!='textarea'"><%answer.answer%></span><span ng-if="data.question.type=='input'||data.question.type=='textarea'"><%answer.answer_value%></span></td>
+            <td ng-repeat="data in item.form.questions">
+
+            <span ng-if="data.type!='input'&&data.type!='textarea'||data.type!='datepicker'||data.type!='email'"><%data.answer.option%></span>
+            <span ng-if="data.type=='input'||data.type=='textarea'||data.type=='datepicker'||data.type=='email'"><%data.answer.option_value%></span>
+            </td>
         </tr>
     </tbody>
 </table>

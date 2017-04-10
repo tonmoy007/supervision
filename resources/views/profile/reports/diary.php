@@ -7,7 +7,7 @@
           
          
             
-              <md-input-container ng-repeat="(key, qa) in type.questions track by $index" class="col-md-6 m-u-1 md-block" >
+        <md-input-container ng-repeat="(key, qa) in type.questions track by $index" class="col-md-6 m-u-1 md-block" >
             <strong><%$index+1%>)</strong> &nbsp; <span class="md-body-2 "><span class="" ng-if="type.type"> <%type.type%> এরূপ</span> <%qa.question%></span>
              <hr class="m-u-1">
              <md-radio-group class=" md-block" ng-model="qa.answer.id" ng-click="changed=true" ng-if="qa.type=='radio'">

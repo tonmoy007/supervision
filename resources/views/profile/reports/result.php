@@ -7,7 +7,7 @@
           <h4 class="p-a-1 bg-light-gray"> <%type.type%><%type.name%></h4>
          
             <div flex >
-              <md-input-container ng-repeat="(key, qa) in type.questions track by $index" class="col-md-6 m-u-1 md-block" ng-include="'getView/template.input-template'" ng-cloak>
+          <md-input-container ng-repeat="(key, qa) in type.questions track by $index" class="col-md-6 m-u-1 md-block" ng-include="'getView/template.input-template'" ng-cloak>
             
           </md-input-container>
             </div>

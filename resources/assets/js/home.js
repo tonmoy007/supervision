@@ -185,17 +185,17 @@ app.config(function($stateProvider,$interpolateProvider,$urlRouterProvider,$mdIc
         resolve:{
             Questions:function(superServices,$stateParams){
                 
-                var data= superServices.getContent('questions/all','form',$stateParams.id);
-                // console.log(data);
+                var data= superServices.getContent('questions/all','report',$stateParams.id);
+                console.log(data);
                 return data;
             },
             Profile:function(Schools,$stateParams){
-                console.log(Schools);
+                
                 var school=Schools.find(function (school){
                     
                     return school.id==$stateParams.id;
                 });
-                console.log(school);
+                
                 return school;
             }
         }

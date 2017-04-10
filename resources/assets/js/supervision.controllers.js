@@ -481,9 +481,11 @@ angular.module('super-controllers',[])
 })
 
 .controller('reportViewCtrl', function(Questions,$scope,$rootScope,SiteEssentials,Profile){
+    console.log(Questions)
     $scope.questions=Questions;
     // console.log(Profile);
     $rootScope.nav.title=Profile.user.name+' এর রিপোর্ট';
+    $scope.profile=Profile;
     
     $scope.getNumber=function(number){
         return SiteEssentials.getNumber(number);

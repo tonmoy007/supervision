@@ -9,12 +9,35 @@
 
     </thead>
     <tbody>
-        <tr ng-repeat="data in item.form.types">
-            <td><%data.type%></td>
-            <td ng-repeat="q in data.questions">
-                <span ng-if="data.question.type!='input'&&data.question.type!='textarea'"><%answer.answer%></span><span ng-if="data.question.type=='input'||data.question.type=='textarea'"><%answer.answer_value%></span>
+        <tr ng-repeat="d in item.form.types" ng-if="d.questions.length==item.form.types[0].questions.length&&d.type||d.name">
+
+            <td><%d.type%><%d.name%></td>
+
+            <td ng-repeat="q in d.questions">
+                
+            <span ng-if="q.type!='input'&&q.type!='textarea'||q.type!='datepicker'||q.type!='email'"><%q.answer.option%></span>
+            <span ng-if="q.type=='input'||q.type=='textarea'||q.type=='datepicker'||q.type=='email'"><%q.answer.option_value%></span>
             </td>
         </tr>
-        
     </tbody>
+    
 </table>
+<div ng-repeat="d in item.form.types" ng-if="d.questions.length!=item.form.types[0].questions.length">
+        
+            <h5><%d.type%></h5>
+    <table class="table table-responsive table-bordered table-striped">
+        <thead>
+            <tr>
+                <th ng-repeat="ques in d.questions"><%ques.question%></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td ng-repeat="ques in d.questions">
+                    <span ng-if="ques.type!='input'&&ques.type!='textarea'||ques.type!='datepicker'||ques.type!='email'"><%ques.answer.option%></span>
+            <span ng-if="ques.type=='input'||ques.type=='textarea'||ques.type=='datepicker'||ques.type=='email'"><%ques.answer.option_value%></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
